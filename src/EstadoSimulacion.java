@@ -1,3 +1,5 @@
+import interfaz.InterfazServidor;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,5 +44,53 @@ public class EstadoSimulacion
     public synchronized int getCapturadosColmena()
     {
         return capturadosColmena;
+    }
+
+    public synchronized InterfazServidor.SimulationSnapshot crearSnapshot() {
+        Map<String, InterfazServidor.ZoneData> mapaZonas = new HashMap<>();
+
+        int totalNinosActivos = 0;
+        int totalDemogorgonsActivos = 0;
+
+        for (Map.Entry<String, Zona> entry : zonas.entrySet()) {
+            String nombre = entry.getKey();
+            Zona zona = entry.getValue();
+
+            int numeroNinos = zona.getNumeroNinos();
+            int numeroDemogorgons = zona.getNumeroDemogorgons();
+
+            InterfazServidor.ZoneData data = new InterfazServidor.ZoneData(
+                    numeroNinos,
+                    numeroDemogorgons,
+                    zona.getIdsNinos(),
+                    zona.getIdsDemogorgons()
+            );
+
+            mapaZonas.put(nombre, data);
+
+            if (!nombre.equals("COLMENA")) {
+                totalNinosActivos += numeroNinos;
+            }
+
+            totalDemogorgonsActivos += numeroDemogorgons;
+        }
+
+        Map<String, InterfazServidor.PortalData> mapaPortales = new HashMap<>();
+        mapaPortales.put("BOSQUE", new InterfazServidor.PortalData(0, 0, false, ""));
+        mapaPortales.put("LABORATORIO", new InterfazServidor.PortalData(0, 0, false, ""));
+        mapaPortales.put("CENTRO_COMERCIAL", new InterfazServidor.PortalData(0, 0, false, ""));
+        mapaPortales.put("ALCANTARILLADO", new InterfazServidor.PortalData(0, 0, false, ""));
+
+        return new InterfazServidor.SimulationSnapshot(
+                "SIN EVENTO ACTIVO",
+                "00:00",
+                sangreVecna,
+                totalNinosActivos,
+                totalDemogorgonsActivos,
+                mapaZonas,
+                mapaPortales,
+                List.of(),
+                List.of()
+        );
     }
 }

@@ -43,7 +43,7 @@ public abstract class Zona
     {
         lockZona.lock();
         try{
-            ninos.remove(demogorgon);
+            ninos.add(demogorgon);
         } finally {
             lockZona.unlock();
         }
