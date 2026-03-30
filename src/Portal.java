@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class Portal {
+public class Portal { //
     private String nombre;
     private String zonaDestino;
     private int tamGrupoIda;
