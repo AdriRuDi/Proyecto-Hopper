@@ -1,13 +1,139 @@
 package interfaz;
 
-public class Demogorgon {
-    private String id;
+import java.util.List;
 
-    public Demogorgon(String id) {
-        this.id = id;
+public class Demogorgon extends Thread {
+
+    private String idDemogorgon;
+    private EstadoSimulacion estado;
+    private String zonaActual;
+    private int capturas;
+
+    public Demogorgon(String idDemogorgon, EstadoSimulacion estado, String zonaActual) {
+        this.idDemogorgon = idDemogorgon;
+        this.estado = estado;
+        this.zonaActual = zonaActual;
+        this.capturas = 0;
     }
 
     public String getIdDemogorgon() {
-        return id;
+        return idDemogorgon;
+    }
+
+    public String getZonaActual() {
+        return zonaActual;
+    }
+
+    public int getCapturas() {
+        return capturas;
+    }
+
+    public void incrementarCapturas() {
+        capturas++;
+    }
+
+    @Override
+    public void run() {
+        estado.getZona(zonaActual).entrarDemogorgon(this);
+        Logger.log("El demogorgon " + idDemogorgon + " aparece en " + zonaActual);
+
+        while (true) {
+            try {
+                cicloDeVida();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                Logger.log("El demogorgon " + idDemogorgon + " ha sido interrumpido");
+                break;
+            }
+        }
+    }
+
+    private void cicloDeVida() throws InterruptedException {
+        if (hayNinosEnZona()) {
+            atacar();
+        } else {
+            esperarEnZona();
+        }
+
+        cambiarDeZona();
+    }
+
+    private boolean hayNinosEnZona() {
+        return estado.getZona(zonaActual).getNumeroNinos() > 0;
+    }
+
+    private void atacar() throws InterruptedException {
+        Zona zona = estado.getZona(zonaActual);
+        List<String> idsNinos = zona.getIdsNinos();
+
+        if (idsNinos.isEmpty()) {
+            return;
+        }
+
+        String idNinoObjetivo = elegirNinoAleatorio(idsNinos);
+
+        Logger.log("El demogorgon " + idDemogorgon + " ataca al niño " + idNinoObjetivo);
+
+        Thread.sleep(4000 + (int)(Math.random() * 1000));
+
+        boolean capturado = decidirCaptura();
+
+        if (capturado) {
+            incrementarCapturas();
+            estado.incrementarCapturadosColmena();
+            estado.sumarSangre(1);
+
+            Logger.log("El demogorgon " + idDemogorgon +
+                    " captura al niño " + idNinoObjetivo +
+                    " (capturas: " + capturas + ")");
+        } else {
+            Logger.log("El niño " + idNinoObjetivo +
+                    " resiste el ataque del demogorgon " + idDemogorgon);
+        }
+    }
+
+    private String elegirNinoAleatorio(List<String> idsNinos) {
+        int posicion = (int)(Math.random() * idsNinos.size());
+        return idsNinos.get(posicion);
+    }
+
+    private boolean decidirCaptura() {
+        return Math.random() > (2.0 / 3.0);
+    }
+
+    private void esperarEnZona() throws InterruptedException {
+        Logger.log("El demogorgon " + idDemogorgon + " permanece en " + zonaActual);
+        Thread.sleep(4000 + (int)(Math.random() * 1000));
+    }
+
+    private void cambiarDeZona() {
+        String nuevaZona = elegirZonaPeligrosaAleatoria();
+
+        if (nuevaZona.equals(zonaActual)) {
+            return;
+        }
+
+        estado.getZona(zonaActual).salirDemogorgon(this);
+        Logger.log("El demogorgon " + idDemogorgon + " sale de " + zonaActual);
+
+        zonaActual = nuevaZona;
+
+        estado.getZona(zonaActual).entrarDemogorgon(this);
+        Logger.log("El demogorgon " + idDemogorgon + " entra en " + zonaActual);
+    }
+
+    private String elegirZonaPeligrosaAleatoria() {
+        int opcion = (int)(Math.random() * 4);
+
+        switch (opcion) {
+            case 0:
+                return "BOSQUE";
+            case 1:
+                return "LABORATORIO";
+            case 2:
+                return "CENTRO_COMERCIAL";
+            default:
+                return "ALCANTARILLADO";
+        }
     }
 }
