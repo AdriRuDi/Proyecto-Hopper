@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class Portal { //
+public class Portal {
     private String nombre;
     private String zonaDestino;
     private int tamGrupoIda;
@@ -134,7 +134,7 @@ public class Portal { //
         try{
             colaVuelta.addLast(idNino);
             Logger.log(idNino + " entra en cola de vuelta del " + nombre);
-            while (apagonActivo || ocupado || !idNino.equals(colaVuelta.getFirst())){
+            while (apagonActivo || ocupado || colaVuelta.isEmpty() || !idNino.equals(colaVuelta.getFirst())){
                 condVuelta.await();
             }
         } finally {
@@ -239,6 +239,22 @@ public class Portal { //
         lock.lock();
         try{
             return ocupado;
+        } finally {
+            lock.unlock();
+        }
+    }
+    public boolean isApagonActivo(){
+        lock.lock();
+        try{
+            return apagonActivo;
+        } finally{
+            lock.unlock();
+        }
+    }
+    public int getPendientesGrupoIda() {
+        lock.lock();
+        try {
+            return pendientesGrupoIda;
         } finally {
             lock.unlock();
         }
