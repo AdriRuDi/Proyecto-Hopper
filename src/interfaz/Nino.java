@@ -1,3 +1,5 @@
+package interfaz;
+
 import java.util.Random;
 
 public class Nino extends Thread{
@@ -20,6 +22,7 @@ public class Nino extends Thread{
     public void setCapturado(boolean capturado){
         this.capturado = capturado;
     }
+    /*/
     @Override
     public void run(){
         while(true){
@@ -27,17 +30,17 @@ public class Nino extends Thread{
                 cicloDeVida();
             } catch(InterruptedException e){
                 Thread.currentThread().interrupt();
-                Logger.log("El niño " + idNino + " ha sido interrumpido");
+                interfaz.Logger.log("El niño " + idNino + " ha sido interrumpido");
                 break;
             }
         }
     }
     private void cicloDeVida() throws InterruptedException{
         irASotanoByers();
-        Portal portal = elegirPortal();
+        interfaz.Portal portal = elegirPortal();
         explorarUpsideDown(portal);
         volverAHawkins(portal);
         descansarEnRadio();
         deambularEnCallePrincipal();
-    }
+    } /*/
 }

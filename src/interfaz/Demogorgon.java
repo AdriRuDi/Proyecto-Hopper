@@ -1,3 +1,5 @@
+package interfaz;
+
 public class Demogorgon {
     private String id;
 
