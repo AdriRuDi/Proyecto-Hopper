@@ -15,8 +15,8 @@ public class Main {
         estado.getZona("SOTANO_BYERS").entrarNino(n2);
         estado.getZona("COLMENA").entrarNino(n3);
 
-        estado.getZona("BOSQUE").entrarDemogorgons(d1);
-        estado.getZona("LABORATORIO").entrarDemogorgons(d2);
+        estado.getZona("BOSQUE").entrarDemogorgon(d1);
+        estado.getZona("LABORATORIO").entrarDemogorgon(d2);
 
         estado.sumarSangre(35);
         estado.incrementarCapturadosColmena();

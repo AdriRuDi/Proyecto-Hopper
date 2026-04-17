@@ -17,7 +17,7 @@ public abstract class Zona
         this.nombre = nombre;
         this.ninos = new ArrayList<>();
         this.demogorgons = new ArrayList<>();
-        this.lockZona = new ReentrantLock();
+        this.lockZona = new ReentrantLock(true);
     }
     public String getNombre()
     {
@@ -41,7 +41,7 @@ public abstract class Zona
             lockZona.unlock();
         }
     }
-    public void entrarDemogorgons(Demogorgon demogorgon)
+    public void entrarDemogorgon(Demogorgon demogorgon)
     {
         lockZona.lock();
         try{
@@ -50,7 +50,7 @@ public abstract class Zona
             lockZona.unlock();
         }
     }
-    public void salirNino(Demogorgon demogorgon)
+    public void salirDemogorgon(Demogorgon demogorgon)
     {
         lockZona.lock();
         try{
@@ -104,6 +104,31 @@ public abstract class Zona
         }
     }
 
+    public List<Nino> getNinos(){
+        lockZona.lock();
+        try{
+            return new ArrayList<>(ninos);
+        } finally{
+            lockZona.unlock();
+        }
+    }
 
+    public List<Demogorgon> getDemogorgons(){
+        lockZona.lock();
+        try{
+            return new ArrayList<>(demogorgons);
+        } finally {
+            lockZona.unlock();
+        }
+    }
+
+    public boolean isVaciaDeNinos(){
+        lockZona.lock();
+        try{
+            return ninos.isEmpty();
+        } finally {
+            lockZona.unlock();
+        }
+    }
 
 }
