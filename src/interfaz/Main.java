@@ -1,31 +1,63 @@
 package interfaz;
 
+import javax.swing.SwingUtilities;
+
 public class Main {
+
     public static void main(String[] args) {
+
         EstadoSimulacion estado = new EstadoSimulacion();
 
-        Nino n1 = new Nino("N0001", estado);
-        Nino n2 = new Nino("N0002", estado);
-        Nino n3 = new Nino("N0003", estado);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                InterfazServidor interfaz = new InterfazServidor();
+                interfaz.setVisible(true);
 
-        Demogorgon d1 = new Demogorgon("D0001");
-        Demogorgon d2 = new Demogorgon("D0002");
+                lanzarRefrescoInterfaz(interfaz, estado);
+            }
+        });
 
-        estado.getZona("CALLE_PRINCIPAL").entrarNino(n1);
-        estado.getZona("SOTANO_BYERS").entrarNino(n2);
-        estado.getZona("COLMENA").entrarNino(n3);
+        crearYArrancarNinosIniciales(estado, 8);
+    }
 
-        estado.getZona("BOSQUE").entrarDemogorgon(d1);
-        estado.getZona("LABORATORIO").entrarDemogorgon(d2);
+    private static void crearYArrancarNinosIniciales(EstadoSimulacion estado, int cantidad) {
+        for (int i = 1; i <= cantidad; i++) {
+            String id = String.format("N%04d", i);
 
-        estado.sumarSangre(35);
-        estado.incrementarCapturadosColmena();
-        estado.incrementarCapturadosColmena();
+            Nino nino = new Nino(id, estado);
+            estado.getZona("CALLE_PRINCIPAL").entrarNino(nino);
 
-        InterfazServidor gui = new InterfazServidor();
-        gui.setVisible(true);
+            Logger.log("Se crea el niño " + id + " en CALLE_PRINCIPAL");
 
-        InterfazServidor.SimulationSnapshot snapshot = estado.crearSnapshot();
-        gui.updateSnapshot(snapshot);
+            nino.start();
+        }
+    }
+
+    private static void lanzarRefrescoInterfaz(InterfazServidor interfaz, EstadoSimulacion estado) {
+        Thread refrescador = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                interfaz.updateSnapshot(estado.crearSnapshot());
+                            }
+                        });
+
+                        Thread.sleep(300);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        Logger.log("El hilo de refresco de interfaz fue interrumpido");
+                        break;
+                    }
+                }
+            }
+        });
+
+        refrescador.setDaemon(true);
+        refrescador.start();
     }
 }

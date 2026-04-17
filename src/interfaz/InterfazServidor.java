@@ -86,20 +86,19 @@ public class InterfazServidor extends JFrame {
         gbc.insets = new Insets(0, 0, 0, 10);
 
         gbc.gridx = 0;
-        gbc.weightx = 1.20;
+        gbc.weightx = 1.05;
         main.add(buildHawkinsColumn(), gbc);
 
         gbc.gridx = 1;
-        gbc.weightx = 1.08;
+        gbc.weightx = 1.45;
         main.add(buildPortalColumn(), gbc);
 
         gbc.gridx = 2;
-        gbc.weightx = 1.10;
+        gbc.weightx = 1.00;
         main.add(buildUpsideDownColumn(), gbc);
 
         gbc.gridx = 3;
-        gbc.weightx = 0.62;
-        gbc.insets = new Insets(0, 10, 0, 0);
+        gbc.weightx = 0.50;
         main.add(buildColmenaColumn(), gbc);
 
         return main;
@@ -308,9 +307,9 @@ public class InterfazServidor extends JFrame {
         }
     }
 
-    public record PortalData(int esperandoIda, int esperandoVuelta, boolean ocupado, String cruzando) {
+    public record PortalData(List<String> idsIda, List<String> idsVuelta, boolean ocupado, String cruzando) {
         static PortalData empty() {
-            return new PortalData(0, 0, false, "");
+            return new PortalData(List.of(), List.of(), false, "");
         }
     }
 
@@ -343,10 +342,10 @@ public class InterfazServidor extends JFrame {
                             "COLMENA", new ZoneData(7, 0, List.of(), List.of())
                     ),
                     Map.of(
-                            "BOSQUE", new PortalData(0, 0, false, ""),
-                            "LABORATORIO", new PortalData(0, 0, false, ""),
-                            "CENTRO_COMERCIAL", new PortalData(0, 0, false, ""),
-                            "ALCANTARILLADO", new PortalData(0, 0, false, "")
+                            "BOSQUE", new PortalData(List.of(), List.of(), false, ""),
+                            "LABORATORIO", new PortalData(List.of(), List.of(), false, ""),
+                            "CENTRO_COMERCIAL", new PortalData(List.of(), List.of(), false, ""),
+                            "ALCANTARILLADO", new PortalData(List.of(), List.of(), false, "")
                     ),
                     List.of(),
                     List.of()
@@ -494,26 +493,26 @@ public class InterfazServidor extends JFrame {
             setOpaque(false);
             setLayout(new GridBagLayout());
             setBorder(new NeonBorder());
-            setPreferredSize(new Dimension(242, 108));
+            setPreferredSize(new Dimension(300, 125));
 
             configureArea(waitingArea);
             configureArea(returnArea);
 
             JPanel leftBox = transparentPanel(new BorderLayout());
             leftBox.setBorder(new NeonBorder());
-            leftBox.setPreferredSize(new Dimension(74, 54));
+            leftBox.setPreferredSize(new Dimension(84, 110));
             leftBox.add(waitingArea, BorderLayout.CENTER);
 
             JPanel centerBox = transparentPanel(new BorderLayout());
             centerBox.setBorder(new NeonBorder());
-            centerBox.setPreferredSize(new Dimension(18, 18));
+            centerBox.setPreferredSize(new Dimension(72, 42));
             crossingLabel.setForeground(TEXT);
             crossingLabel.setFont(strangerFont(Font.BOLD, 13f));
             centerBox.add(crossingLabel, BorderLayout.CENTER);
 
             JPanel rightBox = transparentPanel(new BorderLayout());
             rightBox.setBorder(new NeonBorder());
-            rightBox.setPreferredSize(new Dimension(74, 54));
+            rightBox.setPreferredSize(new Dimension(84, 110));
             rightBox.add(returnArea, BorderLayout.CENTER);
 
             GridBagConstraints gbc = new GridBagConstraints();
@@ -541,8 +540,18 @@ public class InterfazServidor extends JFrame {
         }
 
         void update(PortalData data) {
-            waitingArea.setText(data.esperandoIda() > 0 ? "IDA\n" + data.esperandoIda() : "");
-            returnArea.setText(data.esperandoVuelta() > 0 ? "VUELTA\n" + data.esperandoVuelta() : "");
+            if (data.idsIda().isEmpty()) {
+                waitingArea.setText("");
+            } else {
+                waitingArea.setText(String.join("\n", data.idsIda()));
+            }
+
+            if (data.idsVuelta().isEmpty()) {
+                returnArea.setText("");
+            } else {
+                returnArea.setText(String.join("\n", data.idsVuelta()));
+            }
+
             crossingLabel.setText(data.ocupado() ? data.cruzando() : "");
         }
     }

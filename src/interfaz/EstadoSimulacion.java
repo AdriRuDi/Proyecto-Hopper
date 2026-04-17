@@ -6,8 +6,8 @@ import java.util.Map;
 
 public class EstadoSimulacion {
 
-    private final Map<String, Zona> zonas;
-    private final Map<String, Portal> portales;
+    private Map<String, Zona> zonas;
+    private Map<String, Portal> portales;
 
     private int sangreVecna;
     private int capturadosColmena;
@@ -92,11 +92,11 @@ public class EstadoSimulacion {
         return tiempoRestanteEvento;
     }
 
-    public synchronized Map<String, Zona> getZonas() {
+    public Map<String, Zona> getZonas() {
         return new HashMap<>(zonas);
     }
 
-    public synchronized Map<String, Portal> getPortales() {
+    public Map<String, Portal> getPortales() {
         return new HashMap<>(portales);
     }
 
@@ -135,8 +135,8 @@ public class EstadoSimulacion {
             Portal portal = entry.getValue();
 
             InterfazServidor.PortalData dataPortal = new InterfazServidor.PortalData(
-                    portal.getColaIda().size(),
-                    portal.getColaVuelta().size(),
+                    portal.getColaIda(),
+                    portal.getColaVuelta(),
                     portal.isOcupado(),
                     portal.getCruzandoAhora()
             );
