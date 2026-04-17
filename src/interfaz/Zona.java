@@ -1,3 +1,5 @@
+package interfaz;
+
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.List;
@@ -43,7 +45,7 @@ public abstract class Zona
     {
         lockZona.lock();
         try{
-            ninos.add(demogorgon);
+            demogorgons.add(demogorgon);
         } finally {
             lockZona.unlock();
         }
@@ -52,7 +54,7 @@ public abstract class Zona
     {
         lockZona.lock();
         try{
-            ninos.remove(demogorgon);
+            demogorgons.remove(demogorgon);
         } finally {
             lockZona.unlock();
         }

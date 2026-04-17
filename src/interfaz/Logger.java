@@ -1,8 +1,8 @@
+package interfaz;
+
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.concurrent.locks.Condition;
-import java.lang.Thread;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
