@@ -131,4 +131,17 @@ public abstract class Zona
         }
     }
 
+    public Nino getNinoAleatorio() {
+        lockZona.lock();
+        try {
+            if (ninos.isEmpty()) {
+                return null;
+            }
+            int posicion = (int)(Math.random() * ninos.size());
+            return ninos.get(posicion);
+        } finally {
+            lockZona.unlock();
+        }
+    }
+
 }

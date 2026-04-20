@@ -1,7 +1,5 @@
 package interfaz;
 
-import java.util.List;
-
 public class Demogorgon extends Thread {
 
     private String idDemogorgon;
@@ -64,45 +62,57 @@ public class Demogorgon extends Thread {
 
     private void atacar() throws InterruptedException {
         Zona zona = estado.getZona(zonaActual);
-        List<String> idsNinos = zona.getIdsNinos();
+        Nino ninoObjetivo = zona.getNinoAleatorio();
 
-        if (idsNinos.isEmpty()) {
+        if (ninoObjetivo == null) {
             return;
         }
 
-        String idNinoObjetivo = elegirNinoAleatorio(idsNinos);
+        Logger.log("El demogorgon " + idDemogorgon +
+                " ataca al niño " + ninoObjetivo.getIdNino());
 
-        Logger.log("El demogorgon " + idDemogorgon + " ataca al niño " + idNinoObjetivo);
-
-        Thread.sleep(4000 + (int)(Math.random() * 1000));
+        // Duración del ataque: entre 0,5 y 1,5 s
+        Thread.sleep(500 + (int)(Math.random() * 1000));
 
         boolean capturado = decidirCaptura();
 
         if (capturado) {
-            incrementarCapturas();
-            estado.incrementarCapturadosColmena();
-            estado.sumarSangre(1);
-
-            Logger.log("El demogorgon " + idDemogorgon +
-                    " captura al niño " + idNinoObjetivo +
-                    " (capturas: " + capturas + ")");
+            llevarAColmena(ninoObjetivo, zona);
         } else {
-            Logger.log("El niño " + idNinoObjetivo +
+            Logger.log("El niño " + ninoObjetivo.getIdNino() +
                     " resiste el ataque del demogorgon " + idDemogorgon);
         }
     }
 
-    private String elegirNinoAleatorio(List<String> idsNinos) {
-        int posicion = (int)(Math.random() * idsNinos.size());
-        return idsNinos.get(posicion);
+    private boolean decidirCaptura() {
+        // 2/3 resiste, 1/3 es capturado
+        return Math.random() < (1.0 / 3.0);
     }
 
-    private boolean decidirCaptura() {
-        return Math.random() > (2.0 / 3.0);
+    private void llevarAColmena(Nino ninoObjetivo, Zona zona) throws InterruptedException {
+        zona.salirNino(ninoObjetivo);
+        ninoObjetivo.setCapturado(true);
+
+        Logger.log("El niño " + ninoObjetivo.getIdNino() + " ha sido capturado");
+
+        estado.getZona("COLMENA").entrarNino(ninoObjetivo);
+
+        // Tiempo de introducir al niño en colmena: entre 0,5 y 1 s
+        Thread.sleep(500 + (int)(Math.random() * 500));
+
+        incrementarCapturas();
+        estado.incrementarCapturadosColmena();
+
+        Logger.log("El demogorgon " + idDemogorgon +
+                " deposita al niño " + ninoObjetivo.getIdNino() +
+                " en la COLMENA (capturas: " + capturas + ")");
     }
 
     private void esperarEnZona() throws InterruptedException {
-        Logger.log("El demogorgon " + idDemogorgon + " permanece en " + zonaActual);
+        Logger.log("El demogorgon " + idDemogorgon +
+                " no encuentra niños en " + zonaActual);
+
+        // Si no hay niños, espera entre 4 y 5 s
         Thread.sleep(4000 + (int)(Math.random() * 1000));
     }
 
