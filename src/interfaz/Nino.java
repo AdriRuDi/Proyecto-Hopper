@@ -4,6 +4,7 @@ public class Nino extends Thread{
     private String idNino;
     private EstadoSimulacion estado;
     private boolean capturado = false;
+    private int sangreRecogida = 0;
 
     public Nino(String idNino, EstadoSimulacion estado) {
         this.idNino = idNino;
@@ -19,9 +20,12 @@ public class Nino extends Thread{
     public void setCapturado(boolean capturado){
         this.capturado = capturado;
     }
+    public int getSangreRecogida(){
+        return sangreRecogida;
+    }
     @Override
     public void run(){
-        while(true){
+        while(!capturado){
             try{
                 cicloDeVida();
             } catch(InterruptedException e){
@@ -33,9 +37,19 @@ public class Nino extends Thread{
     }
     private void cicloDeVida() throws InterruptedException{
         irASotanoByers();
+
+        if (capturado) return;
+
         Portal portal = elegirPortal();
         explorarUpsideDown(portal);
+
+        if (capturado) return;
+
         volverAHawkins(portal);
+
+        if (capturado) return;
+
+        depositarSangre();
         descansarEnRadio();
         deambularEnCallePrincipal();
     }
@@ -76,6 +90,9 @@ public class Nino extends Thread{
         Logger.log("El niño " + idNino + " entra en " + portal.getZonaDestino());
 
         Thread.sleep(3000 + (int)(Math.random() * 2000));
+
+        sangreRecogida = 1;
+        Logger.log("El niño " + idNino + " recoge sangre en " + portal.getZonaDestino());
     }
 
     private void volverAHawkins(Portal portal) throws InterruptedException {
@@ -87,6 +104,14 @@ public class Nino extends Thread{
 
         estado.getZona("CALLE_PRINCIPAL").entrarNino(this);
         Logger.log("El niño " + idNino + " vuelve a Hawkins");
+    }
+
+    private void depositarSangre(){
+        if(sangreRecogida > 0){
+            estado.sumarSangre(sangreRecogida);
+            Logger.log("El niño " + idNino + " deposita " + sangreRecogida + " unidad de sangre");
+            sangreRecogida = 0;
+        }
     }
 
     private void descansarEnRadio() throws InterruptedException {

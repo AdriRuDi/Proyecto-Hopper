@@ -93,6 +93,7 @@ public class Portal {
                 condCruce.await();
             }
             ocupado = true;
+            colaIda.remove(idNino); //quito al niño que va a cruzar de la cola
             cruzandoAhora = idNino;
             Logger.log(idNino + " empieza a cruzar ida por " + nombre +
                     " hacia " + zonaDestino);
@@ -105,7 +106,6 @@ public class Portal {
         } finally{
             lock.lock();
             try{
-                colaIda.remove(idNino);
                 grupoActualIda.remove(idNino);
                 pendientesGrupoIda--;
                 Logger.log(idNino + " termina de cruzar ida por " + nombre +
@@ -150,6 +150,7 @@ public class Portal {
                 condVuelta.await();
             }
             ocupado = true;
+            colaVuelta.removeFirst(); //quito al niño de la cola en cuanto va a cruzar
             cruzandoAhora = idNino;
             Logger.log(idNino + " empieza a cruzar vuelta por " + nombre +
                     " hacia Hawkins");
@@ -161,11 +162,6 @@ public class Portal {
         } finally{
             lock.lock();
             try{
-                if(!colaVuelta.isEmpty() && idNino.equals(colaVuelta.getFirst())){
-                    colaVuelta.removeFirst();
-                } else{
-                    colaVuelta.remove(idNino);
-                }
                 Logger.log(idNino + " termina de cruzar vuelta por " + nombre +
                         " hacia Hawkins");
                 cruzandoAhora = "";

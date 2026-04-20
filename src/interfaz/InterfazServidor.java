@@ -222,8 +222,10 @@ public class InterfazServidor extends JFrame {
     }
 
     public void updateSnapshot(SimulationSnapshot snapshot) {
-        lblSangre.setText("");
-        lblColmena.setText("");
+        lblSangre.setText(String.valueOf(snapshot.sangreVecna()));
+        lblColmena.setText(String.valueOf(
+                snapshot.zonas().getOrDefault("COLMENA", ZoneData.empty()).ninos()
+        ));
 
         callePrincipalPanel.update(snapshot.zonas().getOrDefault("CALLE_PRINCIPAL", ZoneData.empty()).idsNinos());
         sotanoPanel.update(snapshot.zonas().getOrDefault("SOTANO_BYERS", ZoneData.empty()).idsNinos());
@@ -480,7 +482,7 @@ public class InterfazServidor extends JFrame {
 
         void update(List<String> ids, int sangre) {
             peopleArea.setText(ids.isEmpty() ? "" : String.join(", ", ids));
-            sangreValue.setText("");
+            sangreValue.setText(String.valueOf(sangre));
         }
     }
 

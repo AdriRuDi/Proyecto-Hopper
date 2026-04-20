@@ -122,15 +122,6 @@ public abstract class Zona
         }
     }
 
-    public boolean isVaciaDeNinos(){
-        lockZona.lock();
-        try{
-            return ninos.isEmpty();
-        } finally {
-            lockZona.unlock();
-        }
-    }
-
     public Nino getNinoAleatorio() {
         lockZona.lock();
         try {
@@ -144,4 +135,21 @@ public abstract class Zona
         }
     }
 
+    public boolean isVaciaDeNinos(){
+        lockZona.lock();
+        try{
+            return ninos.isEmpty();
+        } finally {
+            lockZona.unlock();
+        }
+    }
+
+    public boolean isVaciaDeDemogorgons() {
+        lockZona.lock();
+        try{
+            return demogorgons.isEmpty();
+        } finally{
+            lockZona.unlock();
+        }
+    }
 }
