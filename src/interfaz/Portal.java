@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -17,6 +19,7 @@ public class Portal {
     private Condition condVuelta = lock.newCondition();
     private Condition condCruce = lock.newCondition();
     private Condition condApagon = lock.newCondition();
+    private CyclicBarrier barreraIda;
 
     private LinkedList<String> colaIda = new LinkedList<>();    //para niños esperando grupo en sótano byers
     private LinkedList<String> colaVuelta = new LinkedList<>(); //cola con preferencia de niños que vuelven del UpsideDown
@@ -34,55 +37,50 @@ public class Portal {
         this.nombre = nombre;
         this.zonaDestino = zonaDestino;
         this.tamGrupoIda = tamGrupoIda;
+        this.barreraIda = new CyclicBarrier(tamGrupoIda);
     }
 
-    public void solicitarIda(String idNino) throws InterruptedException{
+    public void solicitarIda(String idNino) throws InterruptedException {
+        boolean ultimoEnLlegar = false;
+
         lock.lock();
-        try{
+        try {
             colaIda.addLast(idNino);
             Logger.log(idNino + " entra en cola de ida del " + nombre);
 
-            while(true){
-                //Si hay un grupo de ida cruzando solo esperan a que se termine
-                if(grupoIdaActivo){
-                    if(grupoActualIda.contains(idNino)){
-                        return;
-                    }
-                    condIda.await();
-                    continue;
-                }
-                //Si hay un apagon o alguien esperando volver,no se puede formar un grupo nuevo
-                if(apagonActivo || !colaVuelta.isEmpty()){
-                    condIda.await();
-                    continue;
-                }
-                //Si no hay suficientes para formar grupo espera
-                if(colaIda.size() < tamGrupoIda){
-                    condIda.await();
-                    continue;
-                }
-                //Si lo anterior no se cumple se forma grupo nuevo con los primeros tamGrupoIda de la cola
-                grupoActualIda.clear();
-                for(int i = 0; i < tamGrupoIda;i++){
-                    grupoActualIda.add(colaIda.get(i));
-                }
+            while (apagonActivo || !colaVuelta.isEmpty() || grupoIdaActivo ||
+                    colaIda.size() < tamGrupoIda ||
+                    !colaIda.subList(0, tamGrupoIda).contains(idNino)) {
+                condIda.await();
+            }
 
+            grupoActualIda.add(idNino);
+
+        } finally {
+            lock.unlock();
+        }
+
+        try {
+            int indice = barreraIda.await();
+            if (indice == 0) {
+                ultimoEnLlegar = true;
+            }
+        } catch (BrokenBarrierException e) {
+            throw new InterruptedException("Barrera de ida rota en " + nombre);
+        }
+
+        lock.lock();
+        try {
+            if (ultimoEnLlegar) {
                 grupoIdaActivo = true;
                 pendientesGrupoIda = tamGrupoIda;
 
                 Logger.log("Se forma grupo de ida en " + nombre + " hacia " + zonaDestino +
                         ": " + grupoActualIda);
 
-                //Si pertenece al grupo recien formado entonces puede salir hacia el UpsideDown
-                if(grupoActualIda.contains(idNino)){
-                    condCruce.signalAll();
-                    return;
-                }
-
-                //Sino espera a otro grupo
-                condIda.await();
+                condCruce.signalAll();
             }
-        } finally{
+        } finally {
             lock.unlock();
         }
     }
