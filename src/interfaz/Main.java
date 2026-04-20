@@ -5,59 +5,53 @@ import javax.swing.SwingUtilities;
 public class Main {
 
     public static void main(String[] args) {
-
         EstadoSimulacion estado = new EstadoSimulacion();
+        InterfazServidor gui = new InterfazServidor();
+        gui.setVisible(true);
 
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                InterfazServidor interfaz = new InterfazServidor();
-                interfaz.setVisible(true);
+        for (int i = 1; i <= 10; i++) {
+            String idNino = String.format("N%04d", i);
+            try {
 
-                lanzarRefrescoInterfaz(interfaz, estado);
+                Thread.sleep(500);
+
+            } catch (InterruptedException e) {
+
+                Thread.currentThread().interrupt();
+
             }
-        });
+            Nino nino = new Nino(idNino, estado);
 
-        crearYArrancarNinosIniciales(estado, 8);
-    }
-
-    private static void crearYArrancarNinosIniciales(EstadoSimulacion estado, int cantidad) {
-        for (int i = 1; i <= cantidad; i++) {
-            String id = String.format("N%04d", i);
-
-            Nino nino = new Nino(id, estado);
             estado.getZona("CALLE_PRINCIPAL").entrarNino(nino);
-
-            Logger.log("Se crea el niño " + id + " en CALLE_PRINCIPAL");
-
             nino.start();
         }
-    }
 
-    private static void lanzarRefrescoInterfaz(InterfazServidor interfaz, EstadoSimulacion estado) {
-        Thread refrescador = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        SwingUtilities.invokeLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                interfaz.updateSnapshot(estado.crearSnapshot());
-                            }
-                        });
+        for (int i = 1; i <= 2; i++) {
+            String idDemogorgon = String.format("D%04d", i);
+            String zonaInicial;
 
-                        Thread.sleep(300);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                        Logger.log("El hilo de refresco de interfaz fue interrumpido");
-                        break;
-                    }
+            if (i == 1) {
+                zonaInicial = "BOSQUE";
+            } else {
+                zonaInicial = "LABORATORIO";
+            }
+
+            Demogorgon demogorgon = new Demogorgon(idDemogorgon, estado, zonaInicial);
+            demogorgon.start();
+        }
+
+        new Thread(() -> {
+            while (true) {
+                try {
+                    SwingUtilities.invokeLater(() ->
+                            gui.updateSnapshot(estado.crearSnapshot())
+                    );
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    break;
                 }
             }
-        });
-
-        refrescador.setDaemon(true);
-        refrescador.start();
+        }).start();
     }
 }
