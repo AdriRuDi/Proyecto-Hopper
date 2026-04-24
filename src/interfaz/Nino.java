@@ -91,6 +91,10 @@ public class Nino extends Thread{
 
         Thread.sleep(3000 + (int)(Math.random() * 2000));
 
+        if (capturado) {
+            return;
+        }
+
         sangreRecogida = 1;
         Logger.log("El niño " + idNino + " recoge sangre en " + portal.getZonaDestino());
     }

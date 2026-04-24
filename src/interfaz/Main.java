@@ -6,52 +6,67 @@ public class Main {
 
     public static void main(String[] args) {
         EstadoSimulacion estado = new EstadoSimulacion();
-        InterfazServidor gui = new InterfazServidor();
-        gui.setVisible(true);
 
-        for (int i = 1; i <= 10; i++) {
-            String idNino = String.format("N%04d", i);
-            try {
+        final InterfazServidor[] guiRef = new InterfazServidor[1];
 
-                Thread.sleep(500);
-
-            } catch (InterruptedException e) {
-
-                Thread.currentThread().interrupt();
-
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                guiRef[0] = new InterfazServidor();
+                guiRef[0].setVisible(true);
             }
-            Nino nino = new Nino(idNino, estado);
+        });
 
-            estado.getZona("CALLE_PRINCIPAL").entrarNino(nino);
-            nino.start();
-        }
+        Thread generadorNinos = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 1; i <= 10; i++) {
+                    String idNino = String.format("N%04d", i);
 
-        for (int i = 1; i <= 2; i++) {
-            String idDemogorgon = String.format("D%04d", i);
-            String zonaInicial;
+                    try {
+                        Thread.sleep(500 + (int)(Math.random() * 1500));
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        return;
+                    }
 
-            if (i == 1) {
-                zonaInicial = "BOSQUE";
-            } else {
-                zonaInicial = "LABORATORIO";
-            }
-
-            Demogorgon demogorgon = new Demogorgon(idDemogorgon, estado, zonaInicial);
-            demogorgon.start();
-        }
-
-        new Thread(() -> {
-            while (true) {
-                try {
-                    SwingUtilities.invokeLater(() ->
-                            gui.updateSnapshot(estado.crearSnapshot())
-                    );
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    break;
+                    Nino nino = new Nino(idNino, estado);
+                    estado.getZona("CALLE_PRINCIPAL").entrarNino(nino);
+                    Logger.log("Se crea el niño " + idNino + " en CALLE_PRINCIPAL");
+                    nino.start();
                 }
             }
-        }).start();
+        });
+
+        generadorNinos.start();
+
+        Demogorgon demogorgonInicial = new Demogorgon("D0000", estado, "BOSQUE");
+        demogorgonInicial.start();
+
+        Thread refrescador = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        if (guiRef[0] != null) {
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    guiRef[0].updateSnapshot(estado.crearSnapshot());
+                                }
+                            });
+                        }
+
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        break;
+                    }
+                }
+            }
+        });
+
+        refrescador.setDaemon(true);
+        refrescador.start();
     }
 }

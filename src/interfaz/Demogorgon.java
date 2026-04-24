@@ -64,15 +64,18 @@ public class Demogorgon extends Thread {
         Zona zona = estado.getZona(zonaActual);
         Nino ninoObjetivo = zona.getNinoAleatorio();
 
-        if (ninoObjetivo == null) {
+        if (ninoObjetivo == null || ninoObjetivo.isCapturado()) {
             return;
         }
 
         Logger.log("El demogorgon " + idDemogorgon +
                 " ataca al niño " + ninoObjetivo.getIdNino());
 
-        // Duración del ataque: entre 0,5 y 1,5 s
         Thread.sleep(500 + (int)(Math.random() * 1000));
+
+        if (ninoObjetivo.isCapturado()) {
+            return;
+        }
 
         boolean capturado = decidirCaptura();
 
@@ -90,6 +93,10 @@ public class Demogorgon extends Thread {
     }
 
     private void llevarAColmena(Nino ninoObjetivo, Zona zona) throws InterruptedException {
+        if (ninoObjetivo == null || ninoObjetivo.isCapturado()) {
+            return;
+        }
+
         zona.salirNino(ninoObjetivo);
         ninoObjetivo.setCapturado(true);
 
