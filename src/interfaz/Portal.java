@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -18,8 +19,8 @@ public class Portal {
     private Condition condIda = lock.newCondition();
     private Condition condVuelta = lock.newCondition();
     private Condition condCruce = lock.newCondition();
-    private Condition condApagon = lock.newCondition();
     private CyclicBarrier barreraIda;
+    private Semaphore pasoPortal = new Semaphore(1, true);
 
     private LinkedList<String> colaIda = new LinkedList<>();    //para niños esperando grupo en sótano byers
     private LinkedList<String> colaVuelta = new LinkedList<>(); //cola con preferencia de niños que vuelven del UpsideDown
@@ -27,7 +28,6 @@ public class Portal {
     //Grupo cruzando y actualizándose
     private LinkedHashSet<String> grupoActualIda = new LinkedHashSet<>();
 
-    private boolean ocupado = false;                //porque solo puede cruzar un niño a la vez
     private boolean grupoIdaActivo = false;         //grupo de ida en marcha
     private int pendientesGrupoIda = 0;             //pendientes de cruzar
     private String cruzandoAhora = "";              //para que se vea que nadie está cruzando
@@ -45,8 +45,11 @@ public class Portal {
 
         lock.lock();
         try {
-            colaIda.addLast(idNino);
-            Logger.log(idNino + " entra en cola de ida del " + nombre);
+            if (!colaIda.contains(idNino)) {
+                colaIda.addLast(idNino);
+                Logger.log(idNino + " entra en cola de ida del " + nombre);
+                condIda.signalAll();
+            }
 
             while (apagonActivo || !colaVuelta.isEmpty() || grupoIdaActivo ||
                     colaIda.size() < tamGrupoIda ||
@@ -84,116 +87,147 @@ public class Portal {
             lock.unlock();
         }
     }
-    public void cruzarIda(String idNino) throws InterruptedException{
+    public void cruzarIda(String idNino) throws InterruptedException {
         lock.lock();
-        try{
-            while(apagonActivo || ocupado || !grupoIdaActivo || !grupoActualIda.contains(idNino)){
+        try {
+            while (apagonActivo || !grupoIdaActivo || !grupoActualIda.contains(idNino)) {
                 condCruce.await();
             }
-            ocupado = true;
-            colaIda.remove(idNino); //quito al niño que va a cruzar de la cola
-            cruzandoAhora = idNino;
-            Logger.log(idNino + " empieza a cruzar ida por " + nombre +
-                    " hacia " + zonaDestino);
-
-        } finally{
+        } finally {
             lock.unlock();
         }
-        try{
-            Thread.sleep(1000);
-        } finally{
+
+        pasoPortal.acquire();
+        try {
             lock.lock();
-            try{
+            try {
+                if (apagonActivo || !grupoIdaActivo || !grupoActualIda.contains(idNino)) {
+                    condCruce.signalAll();
+                    return;
+                }
+
+                colaIda.remove(idNino);
+                cruzandoAhora = idNino;
+                Logger.log(idNino + " empieza a cruzar ida por " + nombre +
+                        " hacia " + zonaDestino);
+            } finally {
+                lock.unlock();
+            }
+
+            Thread.sleep(1000);
+
+            lock.lock();
+            try {
                 grupoActualIda.remove(idNino);
                 pendientesGrupoIda--;
                 Logger.log(idNino + " termina de cruzar ida por " + nombre +
                         " hacia " + zonaDestino);
-                cruzandoAhora= "";
-                ocupado = false;
+                cruzandoAhora = "";
 
-                //Si era el ultimo del grupo se cierra el grupo actual
-                if(pendientesGrupoIda == 0){
+                if (pendientesGrupoIda == 0) {
                     grupoIdaActivo = false;
                     grupoActualIda.clear();
                     pendientesGrupoIda = 0;
                     Logger.log("Termina el grupo de ida del " + nombre);
                 }
+
                 condCruce.signalAll();
                 condIda.signalAll();
                 condVuelta.signalAll();
-                condApagon.signalAll();
 
-            } finally{
+            } finally {
                 lock.unlock();
             }
+        } finally {
+            pasoPortal.release();
         }
     }
 
-    public void solicitarVuelta(String idNino) throws InterruptedException{
+    public void solicitarVuelta(String idNino) throws InterruptedException {
         lock.lock();
-        try{
-            colaVuelta.addLast(idNino);
-            Logger.log(idNino + " entra en cola de vuelta del " + nombre);
-            while (apagonActivo || ocupado || colaVuelta.isEmpty() || !idNino.equals(colaVuelta.getFirst())){
+        try {
+            if (!colaVuelta.contains(idNino)) {
+                colaVuelta.addLast(idNino);
+                Logger.log(idNino + " entra en cola de vuelta del " + nombre);
+                condVuelta.signalAll();
+            }
+
+            while (apagonActivo || colaVuelta.isEmpty() || !idNino.equals(colaVuelta.getFirst())) {
                 condVuelta.await();
             }
         } finally {
             lock.unlock();
         }
     }
-    public void cruzarVuelta(String idNino) throws InterruptedException{
+
+    public void cruzarVuelta(String idNino) throws InterruptedException {
         lock.lock();
-        try{
-            while(apagonActivo || ocupado || colaVuelta.isEmpty() || !idNino.equals(colaVuelta.getFirst())) {
+        try {
+            while (apagonActivo || colaVuelta.isEmpty() || !idNino.equals(colaVuelta.getFirst())) {
                 condVuelta.await();
             }
-            ocupado = true;
-            colaVuelta.removeFirst(); //quito al niño de la cola en cuanto va a cruzar
-            cruzandoAhora = idNino;
-            Logger.log(idNino + " empieza a cruzar vuelta por " + nombre +
-                    " hacia Hawkins");
-        } finally{
+        } finally {
             lock.unlock();
         }
-        try{
-            Thread.sleep(1000);
-        } finally{
+
+        pasoPortal.acquire();
+        try {
             lock.lock();
-            try{
+            try {
+                if (apagonActivo || colaVuelta.isEmpty() || !idNino.equals(colaVuelta.getFirst())) {
+                    condVuelta.signalAll();
+                    return;
+                }
+
+                colaVuelta.removeFirst();
+                cruzandoAhora = idNino;
+                Logger.log(idNino + " empieza a cruzar vuelta por " + nombre +
+                        " hacia Hawkins");
+            } finally {
+                lock.unlock();
+            }
+
+            Thread.sleep(1000);
+
+            lock.lock();
+            try {
                 Logger.log(idNino + " termina de cruzar vuelta por " + nombre +
                         " hacia Hawkins");
                 cruzandoAhora = "";
-                ocupado = false;
 
                 condVuelta.signalAll();
                 condIda.signalAll();
                 condCruce.signalAll();
-                condApagon.signalAll();
-            } finally{
+            } finally {
                 lock.unlock();
             }
+        } finally {
+            pasoPortal.release();
         }
     }
 
-    public void activarApagon(){
+    public void activarApagon() {
         lock.lock();
-        try{
+        try {
             apagonActivo = true;
             Logger.log("Se activa apagón en " + nombre);
-        } finally{
-            lock.unlock();
-        }
-    }
-    public void desactivarApagon(){
-        lock.lock();
-        try{
-            apagonActivo = false;
-            Logger.log("Se desactiva apagón en " + nombre);
-            condApagon.signalAll();
             condIda.signalAll();
             condVuelta.signalAll();
             condCruce.signalAll();
-        } finally{
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public void desactivarApagon() {
+        lock.lock();
+        try {
+            apagonActivo = false;
+            Logger.log("Se desactiva apagón en " + nombre);
+            condIda.signalAll();
+            condVuelta.signalAll();
+            condCruce.signalAll();
+        } finally {
             lock.unlock();
         }
     }
@@ -231,13 +265,8 @@ public class Portal {
             lock.unlock();
         }
     }
-    public boolean isOcupado(){
-        lock.lock();
-        try{
-            return ocupado;
-        } finally {
-            lock.unlock();
-        }
+    public boolean isOcupado() {
+        return pasoPortal.availablePermits() == 0;
     }
     public boolean isApagonActivo(){
         lock.lock();

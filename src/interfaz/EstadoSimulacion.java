@@ -3,17 +3,22 @@ package interfaz;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class EstadoSimulacion {
 
     private Map<String, Zona> zonas;
     private Map<String, Portal> portales;
 
-    private int sangreVecna;
-    private int capturadosColmena;
+    private AtomicInteger sangreVecna;
+    private AtomicInteger capturadosColmena;
+    private AtomicInteger siguienteIdDemogorgon;
 
     private String eventoActivo;
     private String tiempoRestanteEvento;
+
+    private boolean apagonActivo;
+    private boolean tormentaActiva;
 
     public EstadoSimulacion() {
         zonas = new HashMap<>();
@@ -39,11 +44,15 @@ public class EstadoSimulacion {
         portales.put("CENTRO_COMERCIAL", new Portal("PORTAL_CENTRO_COMERCIAL", "CENTRO_COMERCIAL", 4));
         portales.put("ALCANTARILLADO", new Portal("PORTAL_ALCANTARILLADO", "ALCANTARILLADO", 2));
 
-        sangreVecna = 0;
-        capturadosColmena = 0;
+        sangreVecna = new AtomicInteger(0);
+        capturadosColmena = new AtomicInteger(0);
+        siguienteIdDemogorgon = new AtomicInteger(1);
 
         eventoActivo = "SIN EVENTO ACTIVO";
         tiempoRestanteEvento = "00:00";
+
+        apagonActivo = false;
+        tormentaActiva = false;
     }
 
     public Zona getZona(String nombre) {
@@ -60,20 +69,49 @@ public class EstadoSimulacion {
         return portales.get(nombreZonaDestino);
     }
 
-    public synchronized void sumarSangre(int cantidad) {
-        sangreVecna += cantidad;
+    public void sumarSangre(int cantidad) {
+        sangreVecna.addAndGet(cantidad);
     }
 
-    public synchronized int getSangreVecna() {
-        return sangreVecna;
+    public int getSangreVecna() {
+        return sangreVecna.get();
     }
 
     public synchronized void incrementarCapturadosColmena() {
-        capturadosColmena++;
+        int total = capturadosColmena.incrementAndGet();
+
+        if (total % 8 == 0) {
+            crearNuevoDemogorgon();
+        }
     }
 
-    public synchronized int getCapturadosColmena() {
-        return capturadosColmena;
+    private void crearNuevoDemogorgon() {
+        String id = String.format("D%04d", siguienteIdDemogorgon.getAndIncrement());
+        String zonaInicial = elegirZonaPeligrosaAleatoria();
+
+        Demogorgon nuevo = new Demogorgon(id, this, zonaInicial);
+        nuevo.start();
+
+        Logger.log("Vecna genera un nuevo demogorgon: " + id + " en " + zonaInicial);
+    }
+
+    private String elegirZonaPeligrosaAleatoria() {
+        int opcion = (int)(Math.random() * 4);
+
+        switch (opcion) {
+            case 0:
+                return "BOSQUE";
+            case 1:
+                return "LABORATORIO";
+            case 2:
+                return "CENTRO_COMERCIAL";
+            default:
+                return "ALCANTARILLADO";
+        }
+    }
+
+    public int getCapturadosColmena() {
+        return capturadosColmena.get();
     }
 
     public synchronized void setEventoActivo(String eventoActivo) {
@@ -147,7 +185,7 @@ public class EstadoSimulacion {
         return new InterfazServidor.SimulationSnapshot(
                 eventoActivo,
                 tiempoRestanteEvento,
-                sangreVecna,
+                sangreVecna.get(),
                 totalNinosActivos,
                 totalDemogorgonsActivos,
                 mapaZonas,
@@ -156,4 +194,35 @@ public class EstadoSimulacion {
                 List.of()
         );
     }
+
+    public synchronized boolean isApagonActivo() {
+        return apagonActivo;
+    }
+
+    public synchronized void activarApagon() {
+        apagonActivo = true;
+        eventoActivo = "APAGON DEL LABORATORIO";
+    }
+
+    public synchronized void desactivarApagon() {
+        apagonActivo = false;
+        eventoActivo = "SIN EVENTO ACTIVO";
+    }
+
+    public synchronized boolean isTormentaActiva() {
+        return tormentaActiva;
+    }
+
+    public synchronized void activarTormenta() {
+        tormentaActiva = true;
+        eventoActivo = "TORMENTA DEL UPSIDE DOWN";
+    }
+
+    public synchronized void desactivarTormenta() {
+        tormentaActiva = false;
+        eventoActivo = "SIN EVENTO ACTIVO";
+    }
+
+
+
 }

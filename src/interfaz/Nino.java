@@ -5,6 +5,8 @@ public class Nino extends Thread{
     private EstadoSimulacion estado;
     private boolean capturado = false;
     private int sangreRecogida = 0;
+    private boolean siendoAtacado = false;
+    private boolean ataqueResuelto = false;
 
     public Nino(String idNino, EstadoSimulacion estado) {
         this.idNino = idNino;
@@ -78,7 +80,7 @@ public class Nino extends Thread{
         }
     }
 
-    private void explorarUpsideDown(Portal portal) throws InterruptedException{
+    private void explorarUpsideDown(Portal portal) throws InterruptedException {
         Logger.log("El niño " + idNino + " elige " + portal.getNombre());
 
         portal.solicitarIda(idNino);
@@ -89,7 +91,13 @@ public class Nino extends Thread{
         estado.getZona(portal.getZonaDestino()).entrarNino(this);
         Logger.log("El niño " + idNino + " entra en " + portal.getZonaDestino());
 
-        Thread.sleep(3000 + (int)(Math.random() * 2000));
+        int tiempo = 3000 + (int)(Math.random() * 2000);
+
+        if (estado.isTormentaActiva()) {
+            tiempo = tiempo * 2;
+        }
+
+        dormirReanudableZonaPeligrosa(tiempo);
 
         if (capturado) {
             return;
@@ -99,7 +107,36 @@ public class Nino extends Thread{
         Logger.log("El niño " + idNino + " recoge sangre en " + portal.getZonaDestino());
     }
 
+    public synchronized boolean iniciarAtaque() {
+        if (capturado || siendoAtacado) {
+            return false;
+        }
+        siendoAtacado = true;
+        ataqueResuelto = false;
+        interrupt();
+        return true;
+    }
+
+    public synchronized void resolverAtaque(boolean capturado) {
+        if (capturado) {
+            this.capturado = true;
+        }
+        siendoAtacado = false;
+        ataqueResuelto = true;
+        notifyAll();
+    }
+
+    public synchronized void esperarFinAtaque() throws InterruptedException {
+        while (siendoAtacado && !ataqueResuelto) {
+            wait();
+        }
+        ataqueResuelto = false;
+    }
+
     private void volverAHawkins(Portal portal) throws InterruptedException {
+        if (capturado) {
+            return;
+        }
         estado.getZona(portal.getZonaDestino()).salirNino(this);
         Logger.log("El niño " + idNino + " regresa desde " + portal.getZonaDestino());
 
@@ -126,6 +163,10 @@ public class Nino extends Thread{
 
         Thread.sleep(2000 + (int) (Math.random()*2000));
 
+        if (capturado) {
+            return;
+        }
+
         estado.getZona("RADIO_WSQK").salirNino(this);
         estado.getZona("CALLE_PRINCIPAL").entrarNino(this);
     }
@@ -135,5 +176,37 @@ public class Nino extends Thread{
         Thread.sleep(3000+(int)(Math.random()*2000));
     }
 
+    private void dormirReanudableZonaPeligrosa(int tiempoTotal) throws InterruptedException {
+        long inicio = System.currentTimeMillis();
+        long restante = tiempoTotal;
 
+        while (restante > 0) {
+            try {
+                Thread.sleep(restante);
+                return;
+            } catch (InterruptedException e) {
+                long ahora = System.currentTimeMillis();
+                long transcurrido = ahora - inicio;
+                restante = tiempoTotal - transcurrido;
+
+                if (restante < 0) {
+                    restante = 0;
+                }
+
+                synchronized (this) {
+                    if (!siendoAtacado) {
+                        throw e;
+                    }
+                }
+
+                esperarFinAtaque();
+
+                if (capturado) {
+                    return;
+                }
+
+                inicio = System.currentTimeMillis() - (tiempoTotal - restante);
+            }
+        }
+    }
 }

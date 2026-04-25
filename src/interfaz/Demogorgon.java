@@ -64,7 +64,11 @@ public class Demogorgon extends Thread {
         Zona zona = estado.getZona(zonaActual);
         Nino ninoObjetivo = zona.getNinoAleatorio();
 
-        if (ninoObjetivo == null || ninoObjetivo.isCapturado()) {
+        if (ninoObjetivo == null) {
+            return;
+        }
+
+        if (!ninoObjetivo.iniciarAtaque()) {
             return;
         }
 
@@ -73,15 +77,13 @@ public class Demogorgon extends Thread {
 
         Thread.sleep(500 + (int)(Math.random() * 1000));
 
-        if (ninoObjetivo.isCapturado()) {
-            return;
-        }
-
         boolean capturado = decidirCaptura();
 
         if (capturado) {
+            ninoObjetivo.resolverAtaque(true);
             llevarAColmena(ninoObjetivo, zona);
         } else {
+            ninoObjetivo.resolverAtaque(false);
             Logger.log("El niño " + ninoObjetivo.getIdNino() +
                     " resiste el ataque del demogorgon " + idDemogorgon);
         }
@@ -93,18 +95,16 @@ public class Demogorgon extends Thread {
     }
 
     private void llevarAColmena(Nino ninoObjetivo, Zona zona) throws InterruptedException {
-        if (ninoObjetivo == null || ninoObjetivo.isCapturado()) {
+        if (ninoObjetivo == null || !ninoObjetivo.isCapturado()) {
             return;
         }
 
         zona.salirNino(ninoObjetivo);
-        ninoObjetivo.setCapturado(true);
 
         Logger.log("El niño " + ninoObjetivo.getIdNino() + " ha sido capturado");
 
         estado.getZona("COLMENA").entrarNino(ninoObjetivo);
 
-        // Tiempo de introducir al niño en colmena: entre 0,5 y 1 s
         Thread.sleep(500 + (int)(Math.random() * 500));
 
         incrementarCapturas();
@@ -119,16 +119,22 @@ public class Demogorgon extends Thread {
         Logger.log("El demogorgon " + idDemogorgon +
                 " no encuentra niños en " + zonaActual);
 
-        // Si no hay niños, espera entre 4 y 5 s
-        Thread.sleep(4000 + (int)(Math.random() * 1000));
+        int tiempo = 4000 + (int)(Math.random() * 1000);
+
+        if (estado.isTormentaActiva()) {
+            tiempo = tiempo / 2;
+        }
+
+        Thread.sleep(tiempo);
     }
 
     private void cambiarDeZona() {
-        String nuevaZona = elegirZonaPeligrosaAleatoria();
-
-        if (nuevaZona.equals(zonaActual)) {
+        if (estado.isApagonActivo()) {
+            Logger.log("El demogorgon " + idDemogorgon + " permanece en " + zonaActual + " por el apagón");
             return;
         }
+
+        String nuevaZona = elegirZonaPeligrosaAleatoriaDistinta();
 
         estado.getZona(zonaActual).salirDemogorgon(this);
         Logger.log("El demogorgon " + idDemogorgon + " sale de " + zonaActual);
@@ -139,18 +145,28 @@ public class Demogorgon extends Thread {
         Logger.log("El demogorgon " + idDemogorgon + " entra en " + zonaActual);
     }
 
-    private String elegirZonaPeligrosaAleatoria() {
-        int opcion = (int)(Math.random() * 4);
+    private String elegirZonaPeligrosaAleatoriaDistinta() {
+        String nuevaZona;
 
-        switch (opcion) {
-            case 0:
-                return "BOSQUE";
-            case 1:
-                return "LABORATORIO";
-            case 2:
-                return "CENTRO_COMERCIAL";
-            default:
-                return "ALCANTARILLADO";
-        }
+        do {
+            int opcion = (int)(Math.random() * 4);
+
+            switch (opcion) {
+                case 0:
+                    nuevaZona = "BOSQUE";
+                    break;
+                case 1:
+                    nuevaZona = "LABORATORIO";
+                    break;
+                case 2:
+                    nuevaZona = "CENTRO_COMERCIAL";
+                    break;
+                default:
+                    nuevaZona = "ALCANTARILLADO";
+                    break;
+            }
+        } while (nuevaZona.equals(zonaActual));
+
+        return nuevaZona;
     }
 }
