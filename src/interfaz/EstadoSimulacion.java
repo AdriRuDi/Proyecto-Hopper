@@ -19,6 +19,9 @@ public class EstadoSimulacion {
 
     private boolean apagonActivo;
     private boolean tormentaActiva;
+    private boolean intervencionElevenActiva;
+    private int sangreRecolectadaDuranteEleven;
+    private boolean redMentalActiva;
 
     public EstadoSimulacion() {
         zonas = new HashMap<>();
@@ -53,6 +56,9 @@ public class EstadoSimulacion {
 
         apagonActivo = false;
         tormentaActiva = false;
+        intervencionElevenActiva = false;
+        sangreRecolectadaDuranteEleven = 0;
+        redMentalActiva = false;
     }
 
     public Zona getZona(String nombre) {
@@ -69,8 +75,12 @@ public class EstadoSimulacion {
         return portales.get(nombreZonaDestino);
     }
 
-    public void sumarSangre(int cantidad) {
+    public synchronized void sumarSangre(int cantidad) {
         sangreVecna.addAndGet(cantidad);
+
+        if (intervencionElevenActiva) {
+            sangreRecolectadaDuranteEleven += cantidad;
+        }
     }
 
     public int getSangreVecna() {
@@ -223,6 +233,86 @@ public class EstadoSimulacion {
         eventoActivo = "SIN EVENTO ACTIVO";
     }
 
+    public synchronized boolean isIntervencionElevenActiva() {
+        return intervencionElevenActiva;
+    }
 
+    public synchronized void activarIntervencionEleven() {
+        intervencionElevenActiva = true;
+        sangreRecolectadaDuranteEleven = 0;
+        eventoActivo = "INTERVENCION DE ELEVEN";
+        paralizarDemogorgons();
+    }
 
+    public synchronized void desactivarIntervencionEleven() {
+        intervencionElevenActiva = false;
+        eventoActivo = "SIN EVENTO ACTIVO";
+        notifyAll();
+    }
+
+    public synchronized void esperarFinIntervencionEleven() throws InterruptedException {
+        while (intervencionElevenActiva) {
+            wait();
+        }
+    }
+    public synchronized void liberarNinosColmenaSegunSangreDuranteEleven() {
+        Zona colmena = getZona("COLMENA");
+
+        for (int i = 0; i < sangreRecolectadaDuranteEleven; i++) {
+            Nino nino = colmena.getNinoAleatorio();
+
+            if (nino == null) {
+                break;
+            }
+
+            colmena.salirNino(nino);
+            getZona("CALLE_PRINCIPAL").entrarNino(nino);
+            nino.liberarDeColmena();
+
+            Logger.log("Eleven libera al niño " + nino.getIdNino() + " y regresa a CALLE_PRINCIPAL");
+        }
+    }
+    private void paralizarDemogorgons() {
+        String[] zonasPeligrosas = {"BOSQUE", "LABORATORIO", "CENTRO_COMERCIAL", "ALCANTARILLADO"};
+
+        for (String nombreZona : zonasPeligrosas) {
+            for (Demogorgon demogorgon : zonas.get(nombreZona).getDemogorgons()) {
+                demogorgon.interrupt();
+            }
+        }
+    }
+    public synchronized boolean isRedMentalActiva() {
+        return redMentalActiva;
+    }
+
+    public synchronized void activarRedMental() {
+        redMentalActiva = true;
+        eventoActivo = "LA RED MENTAL";
+    }
+
+    public synchronized void desactivarRedMental() {
+        redMentalActiva = false;
+        eventoActivo = "SIN EVENTO ACTIVO";
+    }
+    public String getZonaPeligrosaConMasNinos() {
+        String[] zonasPeligrosas = {"BOSQUE", "LABORATORIO", "CENTRO_COMERCIAL", "ALCANTARILLADO"};
+
+        int maximo = -1;
+        java.util.List<String> candidatas = new java.util.ArrayList<>();
+
+        for (String nombreZona : zonasPeligrosas) {
+            int numeroNinos = getZona(nombreZona).getNumeroNinos();
+
+            if (numeroNinos > maximo) {
+                maximo = numeroNinos;
+                candidatas.clear();
+                candidatas.add(nombreZona);
+            } else if (numeroNinos == maximo) {
+                candidatas.add(nombreZona);
+            }
+        }
+
+        int posicion = (int)(Math.random() * candidatas.size());
+        return candidatas.get(posicion);
+    }
 }

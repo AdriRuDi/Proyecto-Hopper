@@ -26,11 +26,12 @@ public class Nino extends Thread{
         return sangreRecogida;
     }
     @Override
-    public void run(){
-        while(!capturado){
-            try{
+    public void run() {
+        while (true) {
+            try {
+                esperarSiCapturado();
                 cicloDeVida();
-            } catch(InterruptedException e){
+            } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 Logger.log("El niño " + idNino + " ha sido interrumpido");
                 break;
@@ -209,5 +210,16 @@ public class Nino extends Thread{
             }
         }
     }
+    public synchronized void liberarDeColmena() {
+        capturado = false;
+        notifyAll();
+    }
+
+    public synchronized void esperarSiCapturado() throws InterruptedException {
+        while (capturado) {
+            wait();
+        }
+    }
+
 
 }

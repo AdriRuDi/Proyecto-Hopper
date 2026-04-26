@@ -3283,6 +3283,465 @@
 2026-04-25 16:49:35 - El niño N0002 deambula por CALLE_PRINCIPAL
 2026-04-25 16:49:35 - El niño N0003 deambula por CALLE_PRINCIPAL
 2026-04-25 16:49:36 - El niño N0001 deambula por CALLE_PRINCIPAL
+2026-04-26 17:12:44 - El demogorgon D0000 aparece en BOSQUE
+2026-04-26 17:12:44 - El demogorgon D0000 no encuentra niños en BOSQUE
+2026-04-26 17:12:45 - Se crea el niño N0001 en CALLE_PRINCIPAL
+2026-04-26 17:12:46 - Se crea el niño N0002 en CALLE_PRINCIPAL
+2026-04-26 17:12:46 - El niño N0001 entra en SOTANO_BYERS
+2026-04-26 17:12:47 - El niño N0001 elige PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:12:47 - N0001 entra en cola de ida del PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:12:47 - El niño N0002 entra en SOTANO_BYERS
+2026-04-26 17:12:47 - Se crea el niño N0003 en CALLE_PRINCIPAL
+2026-04-26 17:12:48 - Se crea el niño N0004 en CALLE_PRINCIPAL
+2026-04-26 17:12:48 - El niño N0003 entra en SOTANO_BYERS
+2026-04-26 17:12:49 - El niño N0002 elige PORTAL_LABORATORIO
+2026-04-26 17:12:49 - N0002 entra en cola de ida del PORTAL_LABORATORIO
+2026-04-26 17:12:49 - El niño N0004 entra en SOTANO_BYERS
+2026-04-26 17:12:49 - Se crea el niño N0005 en CALLE_PRINCIPAL
+2026-04-26 17:12:49 - El demogorgon D0000 sale de BOSQUE
+2026-04-26 17:12:49 - El demogorgon D0000 entra en CENTRO_COMERCIAL
+2026-04-26 17:12:49 - El demogorgon D0000 no encuentra niños en CENTRO_COMERCIAL
+2026-04-26 17:12:50 - El niño N0003 elige PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:12:50 - N0003 entra en cola de ida del PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:12:50 - El niño N0004 elige PORTAL_LABORATORIO
+2026-04-26 17:12:50 - N0004 entra en cola de ida del PORTAL_LABORATORIO
+2026-04-26 17:12:51 - El niño N0005 entra en SOTANO_BYERS
+2026-04-26 17:12:51 - Se crea el niño N0006 en CALLE_PRINCIPAL
+2026-04-26 17:12:52 - El niño N0005 elige PORTAL_BOSQUE
+2026-04-26 17:12:52 - N0005 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:12:52 - El niño N0006 entra en SOTANO_BYERS
+2026-04-26 17:12:52 - Se crea el niño N0007 en CALLE_PRINCIPAL
+2026-04-26 17:12:53 - El niño N0007 entra en SOTANO_BYERS
+2026-04-26 17:12:53 - Se crea el niño N0008 en CALLE_PRINCIPAL
+2026-04-26 17:12:54 - El demogorgon D0000 sale de CENTRO_COMERCIAL
+2026-04-26 17:12:54 - El demogorgon D0000 entra en BOSQUE
+2026-04-26 17:12:54 - El demogorgon D0000 no encuentra niños en BOSQUE
+2026-04-26 17:12:54 - El niño N0006 elige PORTAL_BOSQUE
+2026-04-26 17:12:54 - N0006 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:12:55 - Se crea el niño N0009 en CALLE_PRINCIPAL
+2026-04-26 17:12:55 - El niño N0008 entra en SOTANO_BYERS
+2026-04-26 17:12:55 - El niño N0007 elige PORTAL_BOSQUE
+2026-04-26 17:12:55 - N0007 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:12:55 - El niño N0009 entra en SOTANO_BYERS
+2026-04-26 17:12:55 - Se crea el niño N0010 en CALLE_PRINCIPAL
+2026-04-26 17:12:56 - El niño N0008 elige PORTAL_BOSQUE
+2026-04-26 17:12:56 - N0008 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:12:56 - El niño N0009 elige PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:12:56 - N0009 entra en cola de ida del PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:12:57 - El niño N0010 entra en SOTANO_BYERS
+2026-04-26 17:12:58 - El demogorgon D0000 sale de BOSQUE
+2026-04-26 17:12:58 - El demogorgon D0000 entra en CENTRO_COMERCIAL
+2026-04-26 17:12:58 - El demogorgon D0000 no encuentra niños en CENTRO_COMERCIAL
+2026-04-26 17:12:58 - El niño N0010 elige PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:12:58 - N0010 entra en cola de ida del PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:13:03 - El demogorgon D0000 sale de CENTRO_COMERCIAL
+2026-04-26 17:13:03 - El demogorgon D0000 entra en ALCANTARILLADO
+2026-04-26 17:13:03 - El demogorgon D0000 no encuentra niños en ALCANTARILLADO
+2026-04-26 17:13:07 - El demogorgon D0000 sale de ALCANTARILLADO
+2026-04-26 17:13:07 - El demogorgon D0000 entra en CENTRO_COMERCIAL
+2026-04-26 17:13:07 - El demogorgon D0000 no encuentra niños en CENTRO_COMERCIAL
+2026-04-26 17:13:12 - El demogorgon D0000 sale de CENTRO_COMERCIAL
+2026-04-26 17:13:12 - El demogorgon D0000 entra en LABORATORIO
+2026-04-26 17:13:12 - El demogorgon D0000 no encuentra niños en LABORATORIO
+2026-04-26 17:13:17 - El demogorgon D0000 sale de LABORATORIO
+2026-04-26 17:13:17 - El demogorgon D0000 entra en ALCANTARILLADO
+2026-04-26 17:13:17 - El demogorgon D0000 no encuentra niños en ALCANTARILLADO
+2026-04-26 17:13:21 - El demogorgon D0000 sale de ALCANTARILLADO
+2026-04-26 17:13:21 - El demogorgon D0000 entra en LABORATORIO
+2026-04-26 17:13:21 - El demogorgon D0000 no encuentra niños en LABORATORIO
+2026-04-26 17:13:26 - El demogorgon D0000 sale de LABORATORIO
+2026-04-26 17:13:26 - El demogorgon D0000 entra en BOSQUE
+2026-04-26 17:13:26 - El demogorgon D0000 no encuentra niños en BOSQUE
+2026-04-26 17:13:29 - Comienza el evento global: APAGON DEL LABORATORIO
+2026-04-26 17:13:29 - Se activa apagón en PORTAL_BOSQUE
+2026-04-26 17:13:29 - Se activa apagón en PORTAL_LABORATORIO
+2026-04-26 17:13:29 - Se activa apagón en PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:13:29 - Se activa apagón en PORTAL_ALCANTARILLADO
+2026-04-26 17:13:31 - El demogorgon D0000 permanece en BOSQUE por el apagón
+2026-04-26 17:13:31 - El demogorgon D0000 no encuentra niños en BOSQUE
+2026-04-26 17:13:35 - El demogorgon D0000 permanece en BOSQUE por el apagón
+2026-04-26 17:13:35 - El demogorgon D0000 no encuentra niños en BOSQUE
+2026-04-26 17:13:39 - Se desactiva apagón en PORTAL_BOSQUE
+2026-04-26 17:13:39 - Se desactiva apagón en PORTAL_LABORATORIO
+2026-04-26 17:13:39 - Se desactiva apagón en PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:13:39 - Se desactiva apagón en PORTAL_ALCANTARILLADO
+2026-04-26 17:13:39 - Finaliza el evento global: APAGON DEL LABORATORIO
+2026-04-26 17:13:39 - Se forma grupo de ida en PORTAL_BOSQUE hacia BOSQUE: [N0006, N0005]
+2026-04-26 17:13:39 - Se forma grupo de ida en PORTAL_CENTRO_COMERCIAL hacia CENTRO_COMERCIAL: [N0010, N0001, N0003, N0009]
+2026-04-26 17:13:39 - N0005 empieza a cruzar ida por PORTAL_BOSQUE hacia BOSQUE
+2026-04-26 17:13:39 - N0009 empieza a cruzar ida por PORTAL_CENTRO_COMERCIAL hacia CENTRO_COMERCIAL
+2026-04-26 17:13:40 - N0005 termina de cruzar ida por PORTAL_BOSQUE hacia BOSQUE
+2026-04-26 17:13:40 - El niño N0005 entra en BOSQUE
+2026-04-26 17:13:40 - N0006 empieza a cruzar ida por PORTAL_BOSQUE hacia BOSQUE
+2026-04-26 17:13:40 - N0009 termina de cruzar ida por PORTAL_CENTRO_COMERCIAL hacia CENTRO_COMERCIAL
+2026-04-26 17:13:40 - El niño N0009 entra en CENTRO_COMERCIAL
+2026-04-26 17:13:40 - N0010 empieza a cruzar ida por PORTAL_CENTRO_COMERCIAL hacia CENTRO_COMERCIAL
+2026-04-26 17:13:40 - El demogorgon D0000 sale de BOSQUE
+2026-04-26 17:13:40 - El demogorgon D0000 entra en ALCANTARILLADO
+2026-04-26 17:13:40 - El demogorgon D0000 no encuentra niños en ALCANTARILLADO
+2026-04-26 17:13:41 - N0006 termina de cruzar ida por PORTAL_BOSQUE hacia BOSQUE
+2026-04-26 17:13:41 - Termina el grupo de ida del PORTAL_BOSQUE
+2026-04-26 17:13:41 - El niño N0006 entra en BOSQUE
+2026-04-26 17:13:41 - Se forma grupo de ida en PORTAL_BOSQUE hacia BOSQUE: [N0007, N0008]
+2026-04-26 17:13:41 - N0008 empieza a cruzar ida por PORTAL_BOSQUE hacia BOSQUE
+2026-04-26 17:13:41 - N0010 termina de cruzar ida por PORTAL_CENTRO_COMERCIAL hacia CENTRO_COMERCIAL
+2026-04-26 17:13:41 - El niño N0010 entra en CENTRO_COMERCIAL
+2026-04-26 17:13:41 - N0001 empieza a cruzar ida por PORTAL_CENTRO_COMERCIAL hacia CENTRO_COMERCIAL
+2026-04-26 17:13:42 - N0008 termina de cruzar ida por PORTAL_BOSQUE hacia BOSQUE
+2026-04-26 17:13:42 - N0001 termina de cruzar ida por PORTAL_CENTRO_COMERCIAL hacia CENTRO_COMERCIAL
+2026-04-26 17:13:42 - El niño N0008 entra en BOSQUE
+2026-04-26 17:13:42 - N0007 empieza a cruzar ida por PORTAL_BOSQUE hacia BOSQUE
+2026-04-26 17:13:42 - El niño N0001 entra en CENTRO_COMERCIAL
+2026-04-26 17:13:42 - N0003 empieza a cruzar ida por PORTAL_CENTRO_COMERCIAL hacia CENTRO_COMERCIAL
+2026-04-26 17:13:43 - N0007 termina de cruzar ida por PORTAL_BOSQUE hacia BOSQUE
+2026-04-26 17:13:43 - N0003 termina de cruzar ida por PORTAL_CENTRO_COMERCIAL hacia CENTRO_COMERCIAL
+2026-04-26 17:13:43 - Termina el grupo de ida del PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:13:43 - El niño N0003 entra en CENTRO_COMERCIAL
+2026-04-26 17:13:43 - Termina el grupo de ida del PORTAL_BOSQUE
+2026-04-26 17:13:43 - El niño N0007 entra en BOSQUE
+2026-04-26 17:13:43 - El niño N0005 recoge sangre en BOSQUE
+2026-04-26 17:13:43 - El niño N0005 regresa desde BOSQUE
+2026-04-26 17:13:43 - N0005 entra en cola de vuelta del PORTAL_BOSQUE
+2026-04-26 17:13:43 - N0005 empieza a cruzar vuelta por PORTAL_BOSQUE hacia Hawkins
+2026-04-26 17:13:43 - El niño N0009 recoge sangre en CENTRO_COMERCIAL
+2026-04-26 17:13:43 - El niño N0009 regresa desde CENTRO_COMERCIAL
+2026-04-26 17:13:43 - N0009 entra en cola de vuelta del PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:13:43 - N0009 empieza a cruzar vuelta por PORTAL_CENTRO_COMERCIAL hacia Hawkins
+2026-04-26 17:13:44 - El niño N0010 recoge sangre en CENTRO_COMERCIAL
+2026-04-26 17:13:44 - El niño N0010 regresa desde CENTRO_COMERCIAL
+2026-04-26 17:13:44 - N0010 entra en cola de vuelta del PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:13:44 - N0005 termina de cruzar vuelta por PORTAL_BOSQUE hacia Hawkins
+2026-04-26 17:13:44 - El niño N0005 vuelve a Hawkins
+2026-04-26 17:13:44 - El niño N0005 deposita 1 unidad de sangre
+2026-04-26 17:13:44 - El niño N0005 entra en RADIO_WSQK
+2026-04-26 17:13:44 - N0009 termina de cruzar vuelta por PORTAL_CENTRO_COMERCIAL hacia Hawkins
+2026-04-26 17:13:44 - N0010 empieza a cruzar vuelta por PORTAL_CENTRO_COMERCIAL hacia Hawkins
+2026-04-26 17:13:44 - El niño N0009 vuelve a Hawkins
+2026-04-26 17:13:44 - El niño N0009 deposita 1 unidad de sangre
+2026-04-26 17:13:44 - El niño N0009 entra en RADIO_WSQK
+2026-04-26 17:13:44 - El niño N0006 recoge sangre en BOSQUE
+2026-04-26 17:13:44 - El niño N0006 regresa desde BOSQUE
+2026-04-26 17:13:44 - N0006 entra en cola de vuelta del PORTAL_BOSQUE
+2026-04-26 17:13:44 - N0006 empieza a cruzar vuelta por PORTAL_BOSQUE hacia Hawkins
+2026-04-26 17:13:44 - El demogorgon D0000 sale de ALCANTARILLADO
+2026-04-26 17:13:44 - El demogorgon D0000 entra en LABORATORIO
+2026-04-26 17:13:44 - El demogorgon D0000 no encuentra niños en LABORATORIO
+2026-04-26 17:13:45 - N0010 termina de cruzar vuelta por PORTAL_CENTRO_COMERCIAL hacia Hawkins
+2026-04-26 17:13:45 - El niño N0010 vuelve a Hawkins
+2026-04-26 17:13:45 - El niño N0010 deposita 1 unidad de sangre
+2026-04-26 17:13:45 - El niño N0010 entra en RADIO_WSQK
+2026-04-26 17:13:45 - N0006 termina de cruzar vuelta por PORTAL_BOSQUE hacia Hawkins
+2026-04-26 17:13:45 - El niño N0006 vuelve a Hawkins
+2026-04-26 17:13:45 - El niño N0006 deposita 1 unidad de sangre
+2026-04-26 17:13:45 - El niño N0006 entra en RADIO_WSQK
+2026-04-26 17:13:45 - El niño N0001 recoge sangre en CENTRO_COMERCIAL
+2026-04-26 17:13:45 - El niño N0001 regresa desde CENTRO_COMERCIAL
+2026-04-26 17:13:45 - N0001 entra en cola de vuelta del PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:13:45 - N0001 empieza a cruzar vuelta por PORTAL_CENTRO_COMERCIAL hacia Hawkins
+2026-04-26 17:13:45 - El niño N0008 recoge sangre en BOSQUE
+2026-04-26 17:13:45 - El niño N0008 regresa desde BOSQUE
+2026-04-26 17:13:45 - N0008 entra en cola de vuelta del PORTAL_BOSQUE
+2026-04-26 17:13:45 - N0008 empieza a cruzar vuelta por PORTAL_BOSQUE hacia Hawkins
+2026-04-26 17:13:46 - El niño N0007 recoge sangre en BOSQUE
+2026-04-26 17:13:46 - El niño N0007 regresa desde BOSQUE
+2026-04-26 17:13:46 - N0007 entra en cola de vuelta del PORTAL_BOSQUE
+2026-04-26 17:13:46 - N0001 termina de cruzar vuelta por PORTAL_CENTRO_COMERCIAL hacia Hawkins
+2026-04-26 17:13:46 - El niño N0001 vuelve a Hawkins
+2026-04-26 17:13:46 - El niño N0001 deposita 1 unidad de sangre
+2026-04-26 17:13:46 - El niño N0001 entra en RADIO_WSQK
+2026-04-26 17:13:46 - N0008 termina de cruzar vuelta por PORTAL_BOSQUE hacia Hawkins
+2026-04-26 17:13:46 - El niño N0008 vuelve a Hawkins
+2026-04-26 17:13:46 - N0007 empieza a cruzar vuelta por PORTAL_BOSQUE hacia Hawkins
+2026-04-26 17:13:46 - El niño N0008 deposita 1 unidad de sangre
+2026-04-26 17:13:46 - El niño N0008 entra en RADIO_WSQK
+2026-04-26 17:13:47 - El niño N0003 recoge sangre en CENTRO_COMERCIAL
+2026-04-26 17:13:47 - El niño N0003 regresa desde CENTRO_COMERCIAL
+2026-04-26 17:13:47 - N0003 entra en cola de vuelta del PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:13:47 - N0003 empieza a cruzar vuelta por PORTAL_CENTRO_COMERCIAL hacia Hawkins
+2026-04-26 17:13:47 - N0007 termina de cruzar vuelta por PORTAL_BOSQUE hacia Hawkins
+2026-04-26 17:13:47 - El niño N0007 vuelve a Hawkins
+2026-04-26 17:13:47 - El niño N0007 deposita 1 unidad de sangre
+2026-04-26 17:13:47 - El niño N0007 entra en RADIO_WSQK
+2026-04-26 17:13:48 - El niño N0005 deambula por CALLE_PRINCIPAL
+2026-04-26 17:13:48 - El niño N0009 deambula por CALLE_PRINCIPAL
+2026-04-26 17:13:48 - N0003 termina de cruzar vuelta por PORTAL_CENTRO_COMERCIAL hacia Hawkins
+2026-04-26 17:13:48 - El niño N0003 vuelve a Hawkins
+2026-04-26 17:13:48 - El niño N0003 deposita 1 unidad de sangre
+2026-04-26 17:13:48 - El niño N0003 entra en RADIO_WSQK
+2026-04-26 17:13:48 - El niño N0010 deambula por CALLE_PRINCIPAL
+2026-04-26 17:13:48 - El demogorgon D0000 sale de LABORATORIO
+2026-04-26 17:13:48 - El demogorgon D0000 entra en BOSQUE
+2026-04-26 17:13:48 - El demogorgon D0000 no encuentra niños en BOSQUE
+2026-04-26 17:13:49 - El niño N0001 deambula por CALLE_PRINCIPAL
+2026-04-26 17:13:49 - El niño N0006 deambula por CALLE_PRINCIPAL
+2026-04-26 17:13:50 - El niño N0008 deambula por CALLE_PRINCIPAL
+2026-04-26 17:13:51 - El niño N0003 deambula por CALLE_PRINCIPAL
+2026-04-26 17:13:51 - El niño N0007 deambula por CALLE_PRINCIPAL
+2026-04-26 17:13:51 - El niño N0005 entra en SOTANO_BYERS
+2026-04-26 17:13:52 - El niño N0010 entra en SOTANO_BYERS
+2026-04-26 17:13:52 - El niño N0001 entra en SOTANO_BYERS
+2026-04-26 17:13:53 - El niño N0005 elige PORTAL_ALCANTARILLADO
+2026-04-26 17:13:53 - N0005 entra en cola de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:13:53 - El niño N0009 entra en SOTANO_BYERS
+2026-04-26 17:13:53 - El niño N0008 entra en SOTANO_BYERS
+2026-04-26 17:13:53 - El niño N0006 entra en SOTANO_BYERS
+2026-04-26 17:13:53 - El niño N0010 elige PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:13:53 - N0010 entra en cola de ida del PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:13:53 - El demogorgon D0000 sale de BOSQUE
+2026-04-26 17:13:53 - El demogorgon D0000 entra en LABORATORIO
+2026-04-26 17:13:53 - El demogorgon D0000 no encuentra niños en LABORATORIO
+2026-04-26 17:13:53 - El niño N0001 elige PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:13:53 - N0001 entra en cola de ida del PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:13:54 - El niño N0009 elige PORTAL_BOSQUE
+2026-04-26 17:13:54 - N0009 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:13:54 - El niño N0003 entra en SOTANO_BYERS
+2026-04-26 17:13:54 - El niño N0006 elige PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:13:54 - N0006 entra en cola de ida del PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:13:55 - El niño N0008 elige PORTAL_ALCANTARILLADO
+2026-04-26 17:13:55 - N0008 entra en cola de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:13:55 - El niño N0007 entra en SOTANO_BYERS
+2026-04-26 17:13:55 - El niño N0003 elige PORTAL_LABORATORIO
+2026-04-26 17:13:55 - N0003 entra en cola de ida del PORTAL_LABORATORIO
+2026-04-26 17:13:56 - El niño N0007 elige PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:13:56 - N0007 entra en cola de ida del PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:13:58 - El demogorgon D0000 sale de LABORATORIO
+2026-04-26 17:13:58 - El demogorgon D0000 entra en BOSQUE
+2026-04-26 17:13:58 - El demogorgon D0000 no encuentra niños en BOSQUE
+2026-04-26 17:14:02 - El demogorgon D0000 sale de BOSQUE
+2026-04-26 17:14:02 - El demogorgon D0000 entra en LABORATORIO
+2026-04-26 17:14:02 - El demogorgon D0000 no encuentra niños en LABORATORIO
+2026-04-26 17:14:07 - El demogorgon D0000 sale de LABORATORIO
+2026-04-26 17:14:07 - El demogorgon D0000 entra en BOSQUE
+2026-04-26 17:14:07 - El demogorgon D0000 no encuentra niños en BOSQUE
+2026-04-26 17:14:11 - El demogorgon D0000 sale de BOSQUE
+2026-04-26 17:14:11 - El demogorgon D0000 entra en LABORATORIO
+2026-04-26 17:14:11 - El demogorgon D0000 no encuentra niños en LABORATORIO
+2026-04-26 17:14:15 - El demogorgon D0000 sale de LABORATORIO
+2026-04-26 17:14:15 - El demogorgon D0000 entra en CENTRO_COMERCIAL
+2026-04-26 17:14:15 - El demogorgon D0000 no encuentra niños en CENTRO_COMERCIAL
+2026-04-26 17:14:20 - El demogorgon D0000 sale de CENTRO_COMERCIAL
+2026-04-26 17:14:20 - El demogorgon D0000 entra en LABORATORIO
+2026-04-26 17:14:20 - El demogorgon D0000 no encuentra niños en LABORATORIO
+2026-04-26 17:14:25 - El demogorgon D0000 sale de LABORATORIO
+2026-04-26 17:14:25 - El demogorgon D0000 entra en CENTRO_COMERCIAL
+2026-04-26 17:14:25 - El demogorgon D0000 no encuentra niños en CENTRO_COMERCIAL
+2026-04-26 17:14:30 - El demogorgon D0000 sale de CENTRO_COMERCIAL
+2026-04-26 17:14:30 - El demogorgon D0000 entra en LABORATORIO
+2026-04-26 17:14:30 - El demogorgon D0000 no encuentra niños en LABORATORIO
+2026-04-26 17:14:34 - Comienza el evento global: TORMENTA DEL UPSIDE DOWN
+2026-04-26 17:14:34 - El demogorgon D0000 sale de LABORATORIO
+2026-04-26 17:14:34 - El demogorgon D0000 entra en CENTRO_COMERCIAL
+2026-04-26 17:14:34 - El demogorgon D0000 no encuentra niños en CENTRO_COMERCIAL
+2026-04-26 17:14:37 - El demogorgon D0000 sale de CENTRO_COMERCIAL
+2026-04-26 17:14:37 - El demogorgon D0000 entra en BOSQUE
+2026-04-26 17:14:37 - El demogorgon D0000 no encuentra niños en BOSQUE
+2026-04-26 17:14:39 - El demogorgon D0000 sale de BOSQUE
+2026-04-26 17:14:39 - El demogorgon D0000 entra en LABORATORIO
+2026-04-26 17:14:39 - El demogorgon D0000 no encuentra niños en LABORATORIO
+2026-04-26 17:14:41 - El demogorgon D0000 sale de LABORATORIO
+2026-04-26 17:14:41 - El demogorgon D0000 entra en BOSQUE
+2026-04-26 17:14:41 - El demogorgon D0000 no encuentra niños en BOSQUE
+2026-04-26 17:14:42 - Finaliza el evento global: TORMENTA DEL UPSIDE DOWN
+2026-04-26 17:14:43 - El demogorgon D0000 sale de BOSQUE
+2026-04-26 17:14:43 - El demogorgon D0000 entra en ALCANTARILLADO
+2026-04-26 17:14:43 - El demogorgon D0000 no encuentra niños en ALCANTARILLADO
+2026-04-26 17:14:47 - El demogorgon D0000 sale de ALCANTARILLADO
+2026-04-26 17:14:47 - El demogorgon D0000 entra en BOSQUE
+2026-04-26 17:14:47 - El demogorgon D0000 no encuentra niños en BOSQUE
+2026-04-26 17:14:52 - El demogorgon D0000 aparece en BOSQUE
+2026-04-26 17:14:52 - El demogorgon D0000 no encuentra niños en BOSQUE
+2026-04-26 17:14:52 - Se crea el niño N0001 en CALLE_PRINCIPAL
+2026-04-26 17:14:54 - Se crea el niño N0002 en CALLE_PRINCIPAL
+2026-04-26 17:14:54 - El niño N0001 entra en SOTANO_BYERS
+2026-04-26 17:14:55 - El niño N0002 entra en SOTANO_BYERS
+2026-04-26 17:14:55 - Se crea el niño N0003 en CALLE_PRINCIPAL
+2026-04-26 17:14:56 - El niño N0003 entra en SOTANO_BYERS
+2026-04-26 17:14:56 - Se crea el niño N0004 en CALLE_PRINCIPAL
+2026-04-26 17:14:56 - El niño N0001 elige PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:14:56 - N0001 entra en cola de ida del PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:14:56 - El niño N0002 elige PORTAL_LABORATORIO
+2026-04-26 17:14:56 - N0002 entra en cola de ida del PORTAL_LABORATORIO
+2026-04-26 17:14:56 - El demogorgon D0000 sale de BOSQUE
+2026-04-26 17:14:56 - El demogorgon D0000 entra en LABORATORIO
+2026-04-26 17:14:56 - El demogorgon D0000 no encuentra niños en LABORATORIO
+2026-04-26 17:14:57 - El niño N0003 elige PORTAL_BOSQUE
+2026-04-26 17:14:57 - N0003 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:14:57 - El niño N0004 entra en SOTANO_BYERS
+2026-04-26 17:14:57 - Se crea el niño N0005 en CALLE_PRINCIPAL
+2026-04-26 17:14:59 - El niño N0004 elige PORTAL_BOSQUE
+2026-04-26 17:14:59 - N0004 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:14:59 - El niño N0005 entra en SOTANO_BYERS
+2026-04-26 17:14:59 - Se crea el niño N0006 en CALLE_PRINCIPAL
+2026-04-26 17:15:00 - El niño N0006 entra en SOTANO_BYERS
+2026-04-26 17:15:00 - Se crea el niño N0007 en CALLE_PRINCIPAL
+2026-04-26 17:15:00 - El niño N0005 elige PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:15:00 - N0005 entra en cola de ida del PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:15:01 - El niño N0007 entra en SOTANO_BYERS
+2026-04-26 17:15:01 - Se crea el niño N0008 en CALLE_PRINCIPAL
+2026-04-26 17:15:01 - El demogorgon D0000 sale de LABORATORIO
+2026-04-26 17:15:01 - El demogorgon D0000 entra en BOSQUE
+2026-04-26 17:15:01 - El demogorgon D0000 no encuentra niños en BOSQUE
+2026-04-26 17:15:01 - El niño N0008 entra en SOTANO_BYERS
+2026-04-26 17:15:01 - Se crea el niño N0009 en CALLE_PRINCIPAL
+2026-04-26 17:15:02 - El niño N0006 elige PORTAL_BOSQUE
+2026-04-26 17:15:02 - N0006 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:15:02 - El niño N0007 elige PORTAL_LABORATORIO
+2026-04-26 17:15:02 - N0007 entra en cola de ida del PORTAL_LABORATORIO
+2026-04-26 17:15:03 - El niño N0009 entra en SOTANO_BYERS
+2026-04-26 17:15:03 - Se crea el niño N0010 en CALLE_PRINCIPAL
+2026-04-26 17:15:03 - El niño N0008 elige PORTAL_LABORATORIO
+2026-04-26 17:15:03 - N0008 entra en cola de ida del PORTAL_LABORATORIO
+2026-04-26 17:15:04 - El niño N0010 entra en SOTANO_BYERS
+2026-04-26 17:15:04 - El niño N0009 elige PORTAL_LABORATORIO
+2026-04-26 17:15:04 - N0009 entra en cola de ida del PORTAL_LABORATORIO
+2026-04-26 17:15:06 - El demogorgon D0000 sale de BOSQUE
+2026-04-26 17:15:06 - El demogorgon D0000 entra en ALCANTARILLADO
+2026-04-26 17:15:06 - El demogorgon D0000 no encuentra niños en ALCANTARILLADO
+2026-04-26 17:15:06 - El niño N0010 elige PORTAL_BOSQUE
+2026-04-26 17:15:06 - N0010 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:15:10 - El demogorgon D0000 sale de ALCANTARILLADO
+2026-04-26 17:15:10 - El demogorgon D0000 entra en BOSQUE
+2026-04-26 17:15:10 - El demogorgon D0000 no encuentra niños en BOSQUE
+2026-04-26 17:15:15 - El demogorgon D0000 sale de BOSQUE
+2026-04-26 17:15:15 - El demogorgon D0000 entra en ALCANTARILLADO
+2026-04-26 17:15:15 - El demogorgon D0000 no encuentra niños en ALCANTARILLADO
+2026-04-26 17:16:44 - El demogorgon D0000 aparece en BOSQUE
+2026-04-26 17:16:44 - Se crea el niño N0001 en CALLE_PRINCIPAL
+2026-04-26 17:16:44 - El demogorgon D0000 no encuentra niños en BOSQUE
+2026-04-26 17:16:45 - Se crea el niño N0002 en CALLE_PRINCIPAL
+2026-04-26 17:16:45 - El niño N0001 entra en SOTANO_BYERS
+2026-04-26 17:16:46 - Se crea el niño N0003 en CALLE_PRINCIPAL
+2026-04-26 17:16:46 - El niño N0002 entra en SOTANO_BYERS
+2026-04-26 17:16:46 - El niño N0001 elige PORTAL_LABORATORIO
+2026-04-26 17:16:46 - N0001 entra en cola de ida del PORTAL_LABORATORIO
+2026-04-26 17:16:47 - El niño N0003 entra en SOTANO_BYERS
+2026-04-26 17:16:47 - Se crea el niño N0004 en CALLE_PRINCIPAL
+2026-04-26 17:16:47 - El niño N0002 elige PORTAL_ALCANTARILLADO
+2026-04-26 17:16:47 - N0002 entra en cola de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:16:48 - El niño N0004 entra en SOTANO_BYERS
+2026-04-26 17:16:48 - Se crea el niño N0005 en CALLE_PRINCIPAL
+2026-04-26 17:16:49 - El demogorgon D0000 sale de BOSQUE
+2026-04-26 17:16:49 - El demogorgon D0000 entra en LABORATORIO
+2026-04-26 17:16:49 - El demogorgon D0000 no encuentra niños en LABORATORIO
+2026-04-26 17:16:49 - El niño N0003 elige PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:16:49 - N0003 entra en cola de ida del PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:16:49 - El niño N0005 entra en SOTANO_BYERS
+2026-04-26 17:16:49 - Se crea el niño N0006 en CALLE_PRINCIPAL
+2026-04-26 17:16:50 - El niño N0004 elige PORTAL_ALCANTARILLADO
+2026-04-26 17:16:50 - N0004 entra en cola de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:16:51 - El niño N0006 entra en SOTANO_BYERS
+2026-04-26 17:16:51 - Se crea el niño N0007 en CALLE_PRINCIPAL
+2026-04-26 17:16:51 - El niño N0005 elige PORTAL_ALCANTARILLADO
+2026-04-26 17:16:51 - N0005 entra en cola de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:16:52 - El niño N0007 entra en SOTANO_BYERS
+2026-04-26 17:16:52 - Se crea el niño N0008 en CALLE_PRINCIPAL
+2026-04-26 17:16:53 - El niño N0006 elige PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:16:53 - N0006 entra en cola de ida del PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:16:53 - El demogorgon D0000 sale de LABORATORIO
+2026-04-26 17:16:53 - El demogorgon D0000 entra en ALCANTARILLADO
+2026-04-26 17:16:53 - El demogorgon D0000 no encuentra niños en ALCANTARILLADO
+2026-04-26 17:16:53 - El niño N0008 entra en SOTANO_BYERS
+2026-04-26 17:16:53 - Se crea el niño N0009 en CALLE_PRINCIPAL
+2026-04-26 17:16:53 - El niño N0007 elige PORTAL_LABORATORIO
+2026-04-26 17:16:53 - N0007 entra en cola de ida del PORTAL_LABORATORIO
+2026-04-26 17:16:54 - El niño N0009 entra en SOTANO_BYERS
+2026-04-26 17:16:54 - Se crea el niño N0010 en CALLE_PRINCIPAL
+2026-04-26 17:16:55 - El niño N0008 elige PORTAL_ALCANTARILLADO
+2026-04-26 17:16:55 - N0008 entra en cola de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:16:55 - El niño N0009 elige PORTAL_ALCANTARILLADO
+2026-04-26 17:16:55 - N0009 entra en cola de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:16:56 - El niño N0010 entra en SOTANO_BYERS
+2026-04-26 17:16:57 - El niño N0010 elige PORTAL_ALCANTARILLADO
+2026-04-26 17:16:57 - N0010 entra en cola de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:16:58 - El demogorgon D0000 sale de ALCANTARILLADO
+2026-04-26 17:16:58 - El demogorgon D0000 entra en LABORATORIO
+2026-04-26 17:16:58 - El demogorgon D0000 no encuentra niños en LABORATORIO
+2026-04-26 17:17:00 - El demogorgon D0000 aparece en BOSQUE
+2026-04-26 17:17:00 - Se crea el niño N0001 en CALLE_PRINCIPAL
+2026-04-26 17:17:00 - El demogorgon D0000 no encuentra niños en BOSQUE
+2026-04-26 17:17:01 - Se crea el niño N0002 en CALLE_PRINCIPAL
+2026-04-26 17:17:01 - El niño N0001 entra en SOTANO_BYERS
+2026-04-26 17:17:03 - El niño N0001 elige PORTAL_ALCANTARILLADO
+2026-04-26 17:17:03 - N0001 entra en cola de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:17:03 - El niño N0002 entra en SOTANO_BYERS
+2026-04-26 17:17:03 - Se crea el niño N0003 en CALLE_PRINCIPAL
+2026-04-26 17:17:04 - El niño N0002 elige PORTAL_BOSQUE
+2026-04-26 17:17:04 - N0002 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:17:04 - El demogorgon D0000 sale de BOSQUE
+2026-04-26 17:17:04 - El demogorgon D0000 entra en CENTRO_COMERCIAL
+2026-04-26 17:17:04 - El demogorgon D0000 no encuentra niños en CENTRO_COMERCIAL
+2026-04-26 17:17:05 - El niño N0003 entra en SOTANO_BYERS
+2026-04-26 17:17:05 - Se crea el niño N0004 en CALLE_PRINCIPAL
+2026-04-26 17:17:06 - El niño N0003 elige PORTAL_LABORATORIO
+2026-04-26 17:17:06 - N0003 entra en cola de ida del PORTAL_LABORATORIO
+2026-04-26 17:17:06 - El niño N0004 entra en SOTANO_BYERS
+2026-04-26 17:17:06 - Se crea el niño N0005 en CALLE_PRINCIPAL
+2026-04-26 17:17:07 - El niño N0005 entra en SOTANO_BYERS
+2026-04-26 17:17:07 - Se crea el niño N0006 en CALLE_PRINCIPAL
+2026-04-26 17:17:07 - El niño N0004 elige PORTAL_BOSQUE
+2026-04-26 17:17:07 - N0004 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:17:08 - El niño N0006 entra en SOTANO_BYERS
+2026-04-26 17:17:08 - Se crea el niño N0007 en CALLE_PRINCIPAL
+2026-04-26 17:17:09 - El demogorgon D0000 sale de CENTRO_COMERCIAL
+2026-04-26 17:17:09 - El demogorgon D0000 entra en ALCANTARILLADO
+2026-04-26 17:17:09 - El demogorgon D0000 no encuentra niños en ALCANTARILLADO
+2026-04-26 17:17:09 - El niño N0005 elige PORTAL_BOSQUE
+2026-04-26 17:17:09 - N0005 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:17:09 - El niño N0007 entra en SOTANO_BYERS
+2026-04-26 17:17:09 - Se crea el niño N0008 en CALLE_PRINCIPAL
+2026-04-26 17:17:10 - El niño N0006 elige PORTAL_ALCANTARILLADO
+2026-04-26 17:17:10 - N0006 entra en cola de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:17:10 - El niño N0008 entra en SOTANO_BYERS
+2026-04-26 17:17:10 - Se crea el niño N0009 en CALLE_PRINCIPAL
+2026-04-26 17:17:10 - El niño N0007 elige PORTAL_LABORATORIO
+2026-04-26 17:17:10 - N0007 entra en cola de ida del PORTAL_LABORATORIO
+2026-04-26 17:17:11 - El niño N0009 entra en SOTANO_BYERS
+2026-04-26 17:17:11 - Se crea el niño N0010 en CALLE_PRINCIPAL
+2026-04-26 17:17:12 - El niño N0008 elige PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:17:12 - N0008 entra en cola de ida del PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:17:12 - El niño N0010 entra en SOTANO_BYERS
+2026-04-26 17:17:13 - El niño N0009 elige PORTAL_BOSQUE
+2026-04-26 17:17:13 - N0009 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:17:13 - El demogorgon D0000 sale de ALCANTARILLADO
+2026-04-26 17:17:13 - El demogorgon D0000 entra en LABORATORIO
+2026-04-26 17:17:13 - El demogorgon D0000 no encuentra niños en LABORATORIO
+2026-04-26 17:17:13 - El niño N0010 elige PORTAL_BOSQUE
+2026-04-26 17:17:13 - N0010 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:17:18 - El demogorgon D0000 sale de LABORATORIO
+2026-04-26 17:17:18 - El demogorgon D0000 entra en CENTRO_COMERCIAL
+2026-04-26 17:17:18 - El demogorgon D0000 no encuentra niños en CENTRO_COMERCIAL
+2026-04-26 17:17:22 - El demogorgon D0000 sale de CENTRO_COMERCIAL
+2026-04-26 17:17:22 - El demogorgon D0000 entra en LABORATORIO
+2026-04-26 17:17:22 - El demogorgon D0000 no encuentra niños en LABORATORIO
+2026-04-26 17:17:27 - El demogorgon D0000 sale de LABORATORIO
+2026-04-26 17:17:27 - El demogorgon D0000 entra en CENTRO_COMERCIAL
+2026-04-26 17:17:27 - El demogorgon D0000 no encuentra niños en CENTRO_COMERCIAL
+2026-04-26 17:17:31 - El demogorgon D0000 sale de CENTRO_COMERCIAL
+2026-04-26 17:17:31 - El demogorgon D0000 entra en ALCANTARILLADO
+2026-04-26 17:17:31 - El demogorgon D0000 no encuentra niños en ALCANTARILLADO
+2026-04-26 17:17:36 - El demogorgon D0000 sale de ALCANTARILLADO
+2026-04-26 17:17:36 - El demogorgon D0000 entra en LABORATORIO
+2026-04-26 17:17:36 - El demogorgon D0000 no encuentra niños en LABORATORIO
+2026-04-26 17:17:41 - El demogorgon D0000 sale de LABORATORIO
+2026-04-26 17:17:41 - El demogorgon D0000 entra en ALCANTARILLADO
+2026-04-26 17:17:41 - El demogorgon D0000 no encuentra niños en ALCANTARILLADO
+2026-04-26 17:17:45 - El demogorgon D0000 sale de ALCANTARILLADO
+2026-04-26 17:17:45 - El demogorgon D0000 entra en CENTRO_COMERCIAL
+2026-04-26 17:17:45 - El demogorgon D0000 no encuentra niños en CENTRO_COMERCIAL
+2026-04-26 17:17:47 - Comienza el evento global: TORMENTA DEL UPSIDE DOWN
+2026-04-26 17:17:50 - El demogorgon D0000 sale de CENTRO_COMERCIAL
+2026-04-26 17:17:50 - El demogorgon D0000 entra en ALCANTARILLADO
+2026-04-26 17:17:50 - El demogorgon D0000 no encuentra niños en ALCANTARILLADO
+2026-04-26 17:17:52 - El demogorgon D0000 sale de ALCANTARILLADO
+2026-04-26 17:17:52 - El demogorgon D0000 entra en BOSQUE
+2026-04-26 17:17:52 - El demogorgon D0000 no encuentra niños en BOSQUE
+2026-04-26 17:17:54 - Finaliza el evento global: TORMENTA DEL UPSIDE DOWN
+2026-04-26 17:17:55 - El demogorgon D0000 sale de BOSQUE
+2026-04-26 17:17:55 - El demogorgon D0000 entra en ALCANTARILLADO
+2026-04-26 17:17:55 - El demogorgon D0000 no encuentra niños en ALCANTARILLADO
+2026-04-26 17:17:59 - El demogorgon D0000 sale de ALCANTARILLADO
+2026-04-26 17:17:59 - El demogorgon D0000 entra en BOSQUE
+2026-04-26 17:17:59 - El demogorgon D0000 no encuentra niños en BOSQUE
 2026-04-26 17:13:58 - El demogorgon D0000 aparece en BOSQUE
 2026-04-26 17:13:58 - El demogorgon D0000 no encuentra niños en BOSQUE
 2026-04-26 17:13:58 - Se crea el niño N0001 en CALLE_PRINCIPAL
@@ -3447,3 +3906,180 @@
 2026-04-26 17:14:19 - El niño N0010 deposita 1 unidad de sangre
 2026-04-26 17:14:19 - El niño N0010 entra en RADIO_WSQK
 2026-04-26 17:14:20 - El niño N0008 deambula por CALLE_PRINCIPAL
+2026-04-26 17:18:23 - El demogorgon D0000 aparece en BOSQUE
+2026-04-26 17:18:23 - El demogorgon D0000 no encuentra niños en BOSQUE
+2026-04-26 17:18:23 - Se crea el niño N0001 en CALLE_PRINCIPAL
+2026-04-26 17:18:24 - Se crea el niño N0002 en CALLE_PRINCIPAL
+2026-04-26 17:18:24 - El niño N0001 entra en SOTANO_BYERS
+2026-04-26 17:18:26 - El niño N0002 entra en SOTANO_BYERS
+2026-04-26 17:18:26 - Se crea el niño N0003 en CALLE_PRINCIPAL
+2026-04-26 17:18:26 - El niño N0001 elige PORTAL_ALCANTARILLADO
+2026-04-26 17:18:26 - N0001 entra en cola de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:18:27 - El niño N0003 entra en SOTANO_BYERS
+2026-04-26 17:18:27 - Se crea el niño N0004 en CALLE_PRINCIPAL
+2026-04-26 17:18:27 - Se crea el niño N0005 en CALLE_PRINCIPAL
+2026-04-26 17:18:27 - El niño N0004 entra en SOTANO_BYERS
+2026-04-26 17:18:27 - El demogorgon D0000 sale de BOSQUE
+2026-04-26 17:18:27 - El demogorgon D0000 entra en LABORATORIO
+2026-04-26 17:18:27 - El demogorgon D0000 no encuentra niños en LABORATORIO
+2026-04-26 17:18:28 - El niño N0002 elige PORTAL_ALCANTARILLADO
+2026-04-26 17:18:28 - N0002 entra en cola de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:18:28 - El niño N0003 elige PORTAL_LABORATORIO
+2026-04-26 17:18:28 - N0003 entra en cola de ida del PORTAL_LABORATORIO
+2026-04-26 17:18:28 - El niño N0005 entra en SOTANO_BYERS
+2026-04-26 17:18:28 - Se crea el niño N0006 en CALLE_PRINCIPAL
+2026-04-26 17:18:29 - El niño N0006 entra en SOTANO_BYERS
+2026-04-26 17:18:29 - Se crea el niño N0007 en CALLE_PRINCIPAL
+2026-04-26 17:18:29 - El niño N0004 elige PORTAL_ALCANTARILLADO
+2026-04-26 17:18:29 - N0004 entra en cola de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:18:30 - El niño N0007 entra en SOTANO_BYERS
+2026-04-26 17:18:30 - Se crea el niño N0008 en CALLE_PRINCIPAL
+2026-04-26 17:18:30 - El niño N0005 elige PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:18:30 - N0005 entra en cola de ida del PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:18:31 - El niño N0006 elige PORTAL_LABORATORIO
+2026-04-26 17:18:31 - N0006 entra en cola de ida del PORTAL_LABORATORIO
+2026-04-26 17:18:31 - El demogorgon D0000 sale de LABORATORIO
+2026-04-26 17:18:31 - El demogorgon D0000 entra en ALCANTARILLADO
+2026-04-26 17:18:31 - El demogorgon D0000 no encuentra niños en ALCANTARILLADO
+2026-04-26 17:18:31 - El niño N0008 entra en SOTANO_BYERS
+2026-04-26 17:18:31 - Se crea el niño N0009 en CALLE_PRINCIPAL
+2026-04-26 17:18:31 - El niño N0007 elige PORTAL_BOSQUE
+2026-04-26 17:18:31 - N0007 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:18:33 - El niño N0009 entra en SOTANO_BYERS
+2026-04-26 17:18:33 - Se crea el niño N0010 en CALLE_PRINCIPAL
+2026-04-26 17:18:33 - El niño N0008 elige PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:18:33 - N0008 entra en cola de ida del PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:18:34 - El niño N0010 entra en SOTANO_BYERS
+2026-04-26 17:18:35 - El niño N0009 elige PORTAL_ALCANTARILLADO
+2026-04-26 17:18:35 - N0009 entra en cola de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:18:35 - El demogorgon D0000 sale de ALCANTARILLADO
+2026-04-26 17:18:35 - El demogorgon D0000 entra en CENTRO_COMERCIAL
+2026-04-26 17:18:35 - El demogorgon D0000 no encuentra niños en CENTRO_COMERCIAL
+2026-04-26 17:18:35 - El niño N0010 elige PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:18:35 - N0010 entra en cola de ida del PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:18:41 - El demogorgon D0000 aparece en BOSQUE
+2026-04-26 17:18:41 - El demogorgon D0000 no encuentra niños en BOSQUE
+2026-04-26 17:18:41 - Se crea el niño N0001 en CALLE_PRINCIPAL
+2026-04-26 17:18:42 - Se crea el niño N0002 en CALLE_PRINCIPAL
+2026-04-26 17:18:42 - El niño N0001 entra en SOTANO_BYERS
+2026-04-26 17:18:43 - El niño N0002 entra en SOTANO_BYERS
+2026-04-26 17:18:43 - Se crea el niño N0003 en CALLE_PRINCIPAL
+2026-04-26 17:18:44 - El niño N0001 elige PORTAL_LABORATORIO
+2026-04-26 17:18:44 - N0001 entra en cola de ida del PORTAL_LABORATORIO
+2026-04-26 17:18:45 - El niño N0002 elige PORTAL_ALCANTARILLADO
+2026-04-26 17:18:45 - N0002 entra en cola de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:18:45 - El demogorgon D0000 sale de BOSQUE
+2026-04-26 17:18:45 - El demogorgon D0000 entra en ALCANTARILLADO
+2026-04-26 17:18:45 - El demogorgon D0000 no encuentra niños en ALCANTARILLADO
+2026-04-26 17:18:45 - El niño N0003 entra en SOTANO_BYERS
+2026-04-26 17:18:45 - Se crea el niño N0004 en CALLE_PRINCIPAL
+2026-04-26 17:18:46 - El niño N0004 entra en SOTANO_BYERS
+2026-04-26 17:18:46 - Se crea el niño N0005 en CALLE_PRINCIPAL
+2026-04-26 17:18:47 - El niño N0003 elige PORTAL_ALCANTARILLADO
+2026-04-26 17:18:47 - N0003 entra en cola de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:18:47 - El niño N0004 elige PORTAL_LABORATORIO
+2026-04-26 17:18:47 - N0004 entra en cola de ida del PORTAL_LABORATORIO
+2026-04-26 17:18:48 - El niño N0005 entra en SOTANO_BYERS
+2026-04-26 17:18:48 - Se crea el niño N0006 en CALLE_PRINCIPAL
+2026-04-26 17:18:49 - El niño N0005 elige PORTAL_LABORATORIO
+2026-04-26 17:18:49 - N0005 entra en cola de ida del PORTAL_LABORATORIO
+2026-04-26 17:18:50 - El niño N0006 entra en SOTANO_BYERS
+2026-04-26 17:18:50 - Se crea el niño N0007 en CALLE_PRINCIPAL
+2026-04-26 17:18:50 - El demogorgon D0000 sale de ALCANTARILLADO
+2026-04-26 17:18:50 - El demogorgon D0000 entra en CENTRO_COMERCIAL
+2026-04-26 17:18:50 - El demogorgon D0000 no encuentra niños en CENTRO_COMERCIAL
+2026-04-26 17:18:50 - El niño N0007 entra en SOTANO_BYERS
+2026-04-26 17:18:50 - Se crea el niño N0008 en CALLE_PRINCIPAL
+2026-04-26 17:18:51 - El niño N0006 elige PORTAL_LABORATORIO
+2026-04-26 17:18:51 - N0006 entra en cola de ida del PORTAL_LABORATORIO
+2026-04-26 17:18:52 - El niño N0008 entra en SOTANO_BYERS
+2026-04-26 17:18:52 - Se crea el niño N0009 en CALLE_PRINCIPAL
+2026-04-26 17:18:52 - El niño N0007 elige PORTAL_ALCANTARILLADO
+2026-04-26 17:18:52 - N0007 entra en cola de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:18:52 - El niño N0009 entra en SOTANO_BYERS
+2026-04-26 17:18:52 - Se crea el niño N0010 en CALLE_PRINCIPAL
+2026-04-26 17:18:53 - El niño N0008 elige PORTAL_ALCANTARILLADO
+2026-04-26 17:18:53 - N0008 entra en cola de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:18:53 - El niño N0010 entra en SOTANO_BYERS
+2026-04-26 17:18:54 - El niño N0009 elige PORTAL_ALCANTARILLADO
+2026-04-26 17:18:54 - N0009 entra en cola de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:18:54 - El demogorgon D0000 sale de CENTRO_COMERCIAL
+2026-04-26 17:18:54 - El demogorgon D0000 entra en LABORATORIO
+2026-04-26 17:18:54 - El demogorgon D0000 no encuentra niños en LABORATORIO
+2026-04-26 17:18:55 - El niño N0010 elige PORTAL_ALCANTARILLADO
+2026-04-26 17:18:55 - N0010 entra en cola de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:18:59 - El demogorgon D0000 sale de LABORATORIO
+2026-04-26 17:18:59 - El demogorgon D0000 entra en ALCANTARILLADO
+2026-04-26 17:18:59 - El demogorgon D0000 no encuentra niños en ALCANTARILLADO
+2026-04-26 17:19:04 - El demogorgon D0000 sale de ALCANTARILLADO
+2026-04-26 17:19:04 - El demogorgon D0000 entra en BOSQUE
+2026-04-26 17:19:04 - El demogorgon D0000 no encuentra niños en BOSQUE
+2026-04-26 17:19:08 - El demogorgon D0000 sale de BOSQUE
+2026-04-26 17:19:08 - El demogorgon D0000 entra en ALCANTARILLADO
+2026-04-26 17:19:08 - El demogorgon D0000 no encuentra niños en ALCANTARILLADO
+2026-04-26 17:19:13 - El demogorgon D0000 sale de ALCANTARILLADO
+2026-04-26 17:19:13 - El demogorgon D0000 entra en LABORATORIO
+2026-04-26 17:19:13 - El demogorgon D0000 no encuentra niños en LABORATORIO
+2026-04-26 17:19:17 - El demogorgon D0000 sale de LABORATORIO
+2026-04-26 17:19:17 - El demogorgon D0000 entra en ALCANTARILLADO
+2026-04-26 17:19:17 - El demogorgon D0000 no encuentra niños en ALCANTARILLADO
+2026-04-26 17:19:21 - El demogorgon D0000 sale de ALCANTARILLADO
+2026-04-26 17:19:21 - El demogorgon D0000 entra en CENTRO_COMERCIAL
+2026-04-26 17:19:21 - El demogorgon D0000 no encuentra niños en CENTRO_COMERCIAL
+2026-04-26 17:19:26 - El demogorgon D0000 aparece en BOSQUE
+2026-04-26 17:19:26 - Se crea el niño N0001 en CALLE_PRINCIPAL
+2026-04-26 17:19:26 - El demogorgon D0000 no encuentra niños en BOSQUE
+2026-04-26 17:19:28 - Se crea el niño N0002 en CALLE_PRINCIPAL
+2026-04-26 17:19:28 - El niño N0001 entra en SOTANO_BYERS
+2026-04-26 17:19:29 - El niño N0002 entra en SOTANO_BYERS
+2026-04-26 17:19:29 - Se crea el niño N0003 en CALLE_PRINCIPAL
+2026-04-26 17:19:30 - El niño N0001 elige PORTAL_BOSQUE
+2026-04-26 17:19:30 - N0001 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:19:30 - El demogorgon D0000 sale de BOSQUE
+2026-04-26 17:19:30 - El demogorgon D0000 entra en ALCANTARILLADO
+2026-04-26 17:19:30 - El demogorgon D0000 no encuentra niños en ALCANTARILLADO
+2026-04-26 17:19:30 - El niño N0003 entra en SOTANO_BYERS
+2026-04-26 17:19:30 - Se crea el niño N0004 en CALLE_PRINCIPAL
+2026-04-26 17:19:31 - El niño N0002 elige PORTAL_BOSQUE
+2026-04-26 17:19:31 - N0002 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:19:32 - El niño N0003 elige PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:19:32 - N0003 entra en cola de ida del PORTAL_CENTRO_COMERCIAL
+2026-04-26 17:19:32 - El niño N0004 entra en SOTANO_BYERS
+2026-04-26 17:19:32 - Se crea el niño N0005 en CALLE_PRINCIPAL
+2026-04-26 17:19:33 - Se crea el niño N0006 en CALLE_PRINCIPAL
+2026-04-26 17:19:33 - El niño N0005 entra en SOTANO_BYERS
+2026-04-26 17:19:34 - El niño N0004 elige PORTAL_BOSQUE
+2026-04-26 17:19:34 - N0004 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:19:34 - El niño N0006 entra en SOTANO_BYERS
+2026-04-26 17:19:34 - Se crea el niño N0007 en CALLE_PRINCIPAL
+2026-04-26 17:19:35 - El niño N0005 elige PORTAL_BOSQUE
+2026-04-26 17:19:35 - N0005 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:19:35 - El niño N0007 entra en SOTANO_BYERS
+2026-04-26 17:19:35 - Se crea el niño N0008 en CALLE_PRINCIPAL
+2026-04-26 17:19:35 - El demogorgon D0000 sale de ALCANTARILLADO
+2026-04-26 17:19:35 - El demogorgon D0000 entra en CENTRO_COMERCIAL
+2026-04-26 17:19:35 - El demogorgon D0000 no encuentra niños en CENTRO_COMERCIAL
+2026-04-26 17:19:35 - El niño N0006 elige PORTAL_BOSQUE
+2026-04-26 17:19:35 - N0006 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:19:36 - El niño N0008 entra en SOTANO_BYERS
+2026-04-26 17:19:36 - Se crea el niño N0009 en CALLE_PRINCIPAL
+2026-04-26 17:19:36 - El niño N0007 elige PORTAL_BOSQUE
+2026-04-26 17:19:36 - N0007 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:19:37 - El niño N0009 entra en SOTANO_BYERS
+2026-04-26 17:19:37 - Se crea el niño N0010 en CALLE_PRINCIPAL
+2026-04-26 17:19:37 - El niño N0008 elige PORTAL_BOSQUE
+2026-04-26 17:19:37 - N0008 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:19:38 - El niño N0010 entra en SOTANO_BYERS
+2026-04-26 17:19:38 - El niño N0009 elige PORTAL_ALCANTARILLADO
+2026-04-26 17:19:38 - N0009 entra en cola de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:19:39 - El demogorgon D0000 sale de CENTRO_COMERCIAL
+2026-04-26 17:19:39 - El demogorgon D0000 entra en LABORATORIO
+2026-04-26 17:19:39 - El demogorgon D0000 no encuentra niños en LABORATORIO
+2026-04-26 17:19:40 - El niño N0010 elige PORTAL_BOSQUE
+2026-04-26 17:19:40 - N0010 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:19:44 - El demogorgon D0000 sale de LABORATORIO
+2026-04-26 17:19:44 - El demogorgon D0000 entra en CENTRO_COMERCIAL
+2026-04-26 17:19:44 - El demogorgon D0000 no encuentra niños en CENTRO_COMERCIAL
+2026-04-26 17:19:49 - El demogorgon D0000 sale de CENTRO_COMERCIAL
+2026-04-26 17:19:49 - El demogorgon D0000 entra en ALCANTARILLADO
+2026-04-26 17:19:49 - El demogorgon D0000 no encuentra niños en ALCANTARILLADO

@@ -39,9 +39,20 @@ public class Demogorgon extends Thread {
             try {
                 cicloDeVida();
             } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                Logger.log("El demogorgon " + idDemogorgon + " ha sido interrumpido");
-                break;
+                if (estado.isIntervencionElevenActiva()) {
+                    Logger.log("El demogorgon " + idDemogorgon + " queda paralizado por Eleven");
+                    try {
+                        estado.esperarFinIntervencionEleven();
+                    } catch (InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                        Logger.log("El demogorgon " + idDemogorgon + " ha sido interrumpido");
+                        break;
+                    }
+                } else {
+                    Thread.currentThread().interrupt();
+                    Logger.log("El demogorgon " + idDemogorgon + " ha sido interrumpido");
+                    break;
+                }
             }
         }
     }
@@ -75,7 +86,18 @@ public class Demogorgon extends Thread {
         Logger.log("El demogorgon " + idDemogorgon +
                 " ataca al niño " + ninoObjetivo.getIdNino());
 
-        Thread.sleep(500 + (int)(Math.random() * 1000));
+        try {
+            Thread.sleep(500 + (int)(Math.random() * 1000));
+        } catch (InterruptedException e) {
+            ninoObjetivo.resolverAtaque(false);
+
+            if (estado.isIntervencionElevenActiva()) {
+                Logger.log("El ataque del demogorgon " + idDemogorgon +
+                        " al niño " + ninoObjetivo.getIdNino() + " se interrumpe por Eleven");
+            }
+
+            throw e;
+        }
 
         boolean capturado = decidirCaptura();
 
@@ -100,15 +122,14 @@ public class Demogorgon extends Thread {
         }
 
         zona.salirNino(ninoObjetivo);
-
         Logger.log("El niño " + ninoObjetivo.getIdNino() + " ha sido capturado");
 
         estado.getZona("COLMENA").entrarNino(ninoObjetivo);
 
-        Thread.sleep(500 + (int)(Math.random() * 500));
-
         incrementarCapturas();
         estado.incrementarCapturadosColmena();
+
+        Thread.sleep(500 + (int)(Math.random() * 500));
 
         Logger.log("El demogorgon " + idDemogorgon +
                 " deposita al niño " + ninoObjetivo.getIdNino() +
@@ -134,7 +155,20 @@ public class Demogorgon extends Thread {
             return;
         }
 
-        String nuevaZona = elegirZonaPeligrosaAleatoriaDistinta();
+        String nuevaZona;
+
+        if (estado.isRedMentalActiva()) {
+            nuevaZona = estado.getZonaPeligrosaConMasNinos();
+
+            if (nuevaZona.equals(zonaActual)) {
+                Logger.log("El demogorgon " + idDemogorgon + " ya está en la zona con más niños: " + zonaActual);
+                return;
+            }
+
+            Logger.log("La Red Mental guía al demogorgon " + idDemogorgon + " hacia " + nuevaZona);
+        } else {
+            nuevaZona = elegirZonaPeligrosaAleatoriaDistinta();
+        }
 
         estado.getZona(zonaActual).salirDemogorgon(this);
         Logger.log("El demogorgon " + idDemogorgon + " sale de " + zonaActual);

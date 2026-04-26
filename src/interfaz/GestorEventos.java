@@ -15,12 +15,16 @@ public class GestorEventos extends Thread {
                 int espera = 30000 + (int)(Math.random() * 30000);
                 Thread.sleep(espera);
 
-                int tipoEvento = (int)(Math.random() * 2);
+                int tipoEvento = (int)(Math.random() * 4);
 
                 if (tipoEvento == 0) {
                     ejecutarApagon();
-                } else {
+                } else if (tipoEvento == 1) {
                     ejecutarTormenta();
+                } else if (tipoEvento == 2) {
+                    ejecutarIntervencionEleven();
+                } else {
+                    ejecutarRedMental();
                 }
 
             } catch (InterruptedException e) {
@@ -63,5 +67,31 @@ public class GestorEventos extends Thread {
 
         estado.desactivarTormenta();
         Logger.log("Finaliza el evento global: TORMENTA DEL UPSIDE DOWN");
+    }
+
+    private void ejecutarIntervencionEleven() throws InterruptedException {
+        int duracion = 5000 + (int)(Math.random() * 5000);
+
+        Logger.log("Comienza el evento global: INTERVENCION DE ELEVEN");
+        estado.activarIntervencionEleven();
+
+        Thread.sleep(duracion);
+
+        estado.liberarNinosColmenaSegunSangreDuranteEleven();
+        estado.desactivarIntervencionEleven();
+
+        Logger.log("Finaliza el evento global: INTERVENCION DE ELEVEN");
+    }
+
+    private void ejecutarRedMental() throws InterruptedException {
+        int duracion = 5000 + (int)(Math.random() * 5000);
+
+        Logger.log("Comienza el evento global: LA RED MENTAL");
+        estado.activarRedMental();
+
+        Thread.sleep(duracion);
+
+        estado.desactivarRedMental();
+        Logger.log("Finaliza el evento global: LA RED MENTAL");
     }
 }

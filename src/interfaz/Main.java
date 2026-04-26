@@ -27,7 +27,7 @@ public class Main {
             return;
         }
 
-        GeneradorNinos generadorNinos = new GeneradorNinos(estado, 10);
+        GeneradorNinos generadorNinos = new GeneradorNinos(estado, 30);
         generadorNinos.start();
 
         Demogorgon demogorgonInicial = new Demogorgon("D0000", estado, "BOSQUE");
