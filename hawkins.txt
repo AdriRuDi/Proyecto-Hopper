@@ -3283,3 +3283,167 @@
 2026-04-25 16:49:35 - El niño N0002 deambula por CALLE_PRINCIPAL
 2026-04-25 16:49:35 - El niño N0003 deambula por CALLE_PRINCIPAL
 2026-04-25 16:49:36 - El niño N0001 deambula por CALLE_PRINCIPAL
+2026-04-26 17:13:58 - El demogorgon D0000 aparece en BOSQUE
+2026-04-26 17:13:58 - El demogorgon D0000 no encuentra niños en BOSQUE
+2026-04-26 17:13:58 - Se crea el niño N0001 en CALLE_PRINCIPAL
+2026-04-26 17:13:59 - Se crea el niño N0002 en CALLE_PRINCIPAL
+2026-04-26 17:13:59 - El niño N0001 entra en SOTANO_BYERS
+2026-04-26 17:14:00 - El niño N0002 entra en SOTANO_BYERS
+2026-04-26 17:14:00 - Se crea el niño N0003 en CALLE_PRINCIPAL
+2026-04-26 17:14:01 - El niño N0001 elige PORTAL_BOSQUE
+2026-04-26 17:14:01 - N0001 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:14:01 - Se crea el niño N0004 en CALLE_PRINCIPAL
+2026-04-26 17:14:01 - El niño N0003 entra en SOTANO_BYERS
+2026-04-26 17:14:02 - El niño N0002 elige PORTAL_LABORATORIO
+2026-04-26 17:14:02 - N0002 entra en cola de ida del PORTAL_LABORATORIO
+2026-04-26 17:14:02 - El niño N0004 entra en SOTANO_BYERS
+2026-04-26 17:14:02 - Se crea el niño N0005 en CALLE_PRINCIPAL
+2026-04-26 17:14:02 - El niño N0003 elige PORTAL_BOSQUE
+2026-04-26 17:14:02 - N0003 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:14:02 - Se forma grupo de ida en PORTAL_BOSQUE hacia BOSQUE: [N0003, N0001]
+2026-04-26 17:14:02 - N0001 empieza a cruzar ida por PORTAL_BOSQUE hacia BOSQUE
+2026-04-26 17:14:03 - El demogorgon D0000 sale de BOSQUE
+2026-04-26 17:14:03 - El demogorgon D0000 entra en LABORATORIO
+2026-04-26 17:14:03 - El demogorgon D0000 no encuentra niños en LABORATORIO
+2026-04-26 17:14:03 - El niño N0004 elige PORTAL_BOSQUE
+2026-04-26 17:14:03 - N0004 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:14:03 - N0001 termina de cruzar ida por PORTAL_BOSQUE hacia BOSQUE
+2026-04-26 17:14:03 - N0003 empieza a cruzar ida por PORTAL_BOSQUE hacia BOSQUE
+2026-04-26 17:14:03 - El niño N0001 entra en BOSQUE
+2026-04-26 17:14:04 - Se crea el niño N0006 en CALLE_PRINCIPAL
+2026-04-26 17:14:04 - El niño N0005 entra en SOTANO_BYERS
+2026-04-26 17:14:04 - N0003 termina de cruzar ida por PORTAL_BOSQUE hacia BOSQUE
+2026-04-26 17:14:04 - Termina el grupo de ida del PORTAL_BOSQUE
+2026-04-26 17:14:04 - El niño N0003 entra en BOSQUE
+2026-04-26 17:14:05 - El niño N0006 entra en SOTANO_BYERS
+2026-04-26 17:14:05 - Se crea el niño N0007 en CALLE_PRINCIPAL
+2026-04-26 17:14:05 - El niño N0005 elige PORTAL_ALCANTARILLADO
+2026-04-26 17:14:05 - N0005 entra en cola de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:14:06 - El niño N0007 entra en SOTANO_BYERS
+2026-04-26 17:14:06 - Se crea el niño N0008 en CALLE_PRINCIPAL
+2026-04-26 17:14:06 - El niño N0006 elige PORTAL_LABORATORIO
+2026-04-26 17:14:06 - N0006 entra en cola de ida del PORTAL_LABORATORIO
+2026-04-26 17:14:07 - El niño N0001 recoge sangre en BOSQUE
+2026-04-26 17:14:07 - El niño N0001 regresa desde BOSQUE
+2026-04-26 17:14:07 - N0001 entra en cola de vuelta del PORTAL_BOSQUE
+2026-04-26 17:14:07 - N0001 empieza a cruzar vuelta por PORTAL_BOSQUE hacia Hawkins
+2026-04-26 17:14:07 - El niño N0008 entra en SOTANO_BYERS
+2026-04-26 17:14:07 - Se crea el niño N0009 en CALLE_PRINCIPAL
+2026-04-26 17:14:07 - El niño N0007 elige PORTAL_BOSQUE
+2026-04-26 17:14:07 - N0007 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:14:07 - Se forma grupo de ida en PORTAL_BOSQUE hacia BOSQUE: [N0007, N0004]
+2026-04-26 17:14:07 - El demogorgon D0000 sale de LABORATORIO
+2026-04-26 17:14:07 - El demogorgon D0000 entra en ALCANTARILLADO
+2026-04-26 17:14:07 - El demogorgon D0000 no encuentra niños en ALCANTARILLADO
+2026-04-26 17:14:08 - N0001 termina de cruzar vuelta por PORTAL_BOSQUE hacia Hawkins
+2026-04-26 17:14:08 - N0004 empieza a cruzar ida por PORTAL_BOSQUE hacia BOSQUE
+2026-04-26 17:14:08 - El niño N0001 vuelve a Hawkins
+2026-04-26 17:14:08 - El niño N0001 deposita 1 unidad de sangre
+2026-04-26 17:14:08 - El niño N0001 entra en RADIO_WSQK
+2026-04-26 17:14:09 - El niño N0003 recoge sangre en BOSQUE
+2026-04-26 17:14:09 - El niño N0003 regresa desde BOSQUE
+2026-04-26 17:14:09 - N0003 entra en cola de vuelta del PORTAL_BOSQUE
+2026-04-26 17:14:09 - El niño N0009 entra en SOTANO_BYERS
+2026-04-26 17:14:09 - Se crea el niño N0010 en CALLE_PRINCIPAL
+2026-04-26 17:14:09 - N0004 termina de cruzar ida por PORTAL_BOSQUE hacia BOSQUE
+2026-04-26 17:14:09 - El niño N0004 entra en BOSQUE
+2026-04-26 17:14:09 - N0007 empieza a cruzar ida por PORTAL_BOSQUE hacia BOSQUE
+2026-04-26 17:14:09 - El niño N0008 elige PORTAL_ALCANTARILLADO
+2026-04-26 17:14:09 - N0008 entra en cola de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:14:09 - Se forma grupo de ida en PORTAL_ALCANTARILLADO hacia ALCANTARILLADO: [N0008, N0005]
+2026-04-26 17:14:09 - N0005 empieza a cruzar ida por PORTAL_ALCANTARILLADO hacia ALCANTARILLADO
+2026-04-26 17:14:10 - El niño N0010 entra en SOTANO_BYERS
+2026-04-26 17:14:10 - N0007 termina de cruzar ida por PORTAL_BOSQUE hacia BOSQUE
+2026-04-26 17:14:10 - Termina el grupo de ida del PORTAL_BOSQUE
+2026-04-26 17:14:10 - El niño N0007 entra en BOSQUE
+2026-04-26 17:14:10 - N0003 empieza a cruzar vuelta por PORTAL_BOSQUE hacia Hawkins
+2026-04-26 17:14:10 - El niño N0009 elige PORTAL_ALCANTARILLADO
+2026-04-26 17:14:10 - N0009 entra en cola de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:14:10 - N0005 termina de cruzar ida por PORTAL_ALCANTARILLADO hacia ALCANTARILLADO
+2026-04-26 17:14:10 - El niño N0005 entra en ALCANTARILLADO
+2026-04-26 17:14:10 - N0008 empieza a cruzar ida por PORTAL_ALCANTARILLADO hacia ALCANTARILLADO
+2026-04-26 17:14:11 - N0003 termina de cruzar vuelta por PORTAL_BOSQUE hacia Hawkins
+2026-04-26 17:14:11 - El niño N0003 vuelve a Hawkins
+2026-04-26 17:14:11 - El niño N0003 deposita 1 unidad de sangre
+2026-04-26 17:14:11 - El niño N0003 entra en RADIO_WSQK
+2026-04-26 17:14:11 - El niño N0001 deambula por CALLE_PRINCIPAL
+2026-04-26 17:14:11 - N0008 termina de cruzar ida por PORTAL_ALCANTARILLADO hacia ALCANTARILLADO
+2026-04-26 17:14:11 - Termina el grupo de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:14:11 - El niño N0008 entra en ALCANTARILLADO
+2026-04-26 17:14:11 - El demogorgon D0000 sale de ALCANTARILLADO
+2026-04-26 17:14:11 - El demogorgon D0000 entra en BOSQUE
+2026-04-26 17:14:11 - El demogorgon D0000 ataca al niño N0007
+2026-04-26 17:14:11 - El niño N0010 elige PORTAL_ALCANTARILLADO
+2026-04-26 17:14:11 - N0010 entra en cola de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:14:11 - Se forma grupo de ida en PORTAL_ALCANTARILLADO hacia ALCANTARILLADO: [N0010, N0009]
+2026-04-26 17:14:11 - N0009 empieza a cruzar ida por PORTAL_ALCANTARILLADO hacia ALCANTARILLADO
+2026-04-26 17:14:12 - N0009 termina de cruzar ida por PORTAL_ALCANTARILLADO hacia ALCANTARILLADO
+2026-04-26 17:14:12 - El niño N0009 entra en ALCANTARILLADO
+2026-04-26 17:14:12 - N0010 empieza a cruzar ida por PORTAL_ALCANTARILLADO hacia ALCANTARILLADO
+2026-04-26 17:14:13 - El niño N0007 resiste el ataque del demogorgon D0000
+2026-04-26 17:14:13 - El demogorgon D0000 sale de BOSQUE
+2026-04-26 17:14:13 - El demogorgon D0000 entra en LABORATORIO
+2026-04-26 17:14:13 - El demogorgon D0000 no encuentra niños en LABORATORIO
+2026-04-26 17:14:13 - El niño N0004 recoge sangre en BOSQUE
+2026-04-26 17:14:13 - El niño N0004 regresa desde BOSQUE
+2026-04-26 17:14:13 - N0004 entra en cola de vuelta del PORTAL_BOSQUE
+2026-04-26 17:14:13 - N0004 empieza a cruzar vuelta por PORTAL_BOSQUE hacia Hawkins
+2026-04-26 17:14:13 - N0010 termina de cruzar ida por PORTAL_ALCANTARILLADO hacia ALCANTARILLADO
+2026-04-26 17:14:13 - Termina el grupo de ida del PORTAL_ALCANTARILLADO
+2026-04-26 17:14:13 - El niño N0010 entra en ALCANTARILLADO
+2026-04-26 17:14:14 - El niño N0001 entra en SOTANO_BYERS
+2026-04-26 17:14:14 - El niño N0005 recoge sangre en ALCANTARILLADO
+2026-04-26 17:14:14 - El niño N0005 regresa desde ALCANTARILLADO
+2026-04-26 17:14:14 - N0005 entra en cola de vuelta del PORTAL_ALCANTARILLADO
+2026-04-26 17:14:14 - N0005 empieza a cruzar vuelta por PORTAL_ALCANTARILLADO hacia Hawkins
+2026-04-26 17:14:14 - N0004 termina de cruzar vuelta por PORTAL_BOSQUE hacia Hawkins
+2026-04-26 17:14:14 - El niño N0004 vuelve a Hawkins
+2026-04-26 17:14:14 - El niño N0004 deposita 1 unidad de sangre
+2026-04-26 17:14:14 - El niño N0004 entra en RADIO_WSQK
+2026-04-26 17:14:14 - El niño N0008 recoge sangre en ALCANTARILLADO
+2026-04-26 17:14:14 - El niño N0008 regresa desde ALCANTARILLADO
+2026-04-26 17:14:14 - N0008 entra en cola de vuelta del PORTAL_ALCANTARILLADO
+2026-04-26 17:14:15 - El niño N0007 recoge sangre en BOSQUE
+2026-04-26 17:14:15 - El niño N0007 regresa desde BOSQUE
+2026-04-26 17:14:15 - N0007 entra en cola de vuelta del PORTAL_BOSQUE
+2026-04-26 17:14:15 - N0007 empieza a cruzar vuelta por PORTAL_BOSQUE hacia Hawkins
+2026-04-26 17:14:15 - El niño N0003 deambula por CALLE_PRINCIPAL
+2026-04-26 17:14:15 - N0005 termina de cruzar vuelta por PORTAL_ALCANTARILLADO hacia Hawkins
+2026-04-26 17:14:15 - El niño N0005 vuelve a Hawkins
+2026-04-26 17:14:15 - El niño N0005 deposita 1 unidad de sangre
+2026-04-26 17:14:15 - El niño N0005 entra en RADIO_WSQK
+2026-04-26 17:14:15 - N0008 empieza a cruzar vuelta por PORTAL_ALCANTARILLADO hacia Hawkins
+2026-04-26 17:14:15 - El niño N0001 elige PORTAL_BOSQUE
+2026-04-26 17:14:15 - N0001 entra en cola de ida del PORTAL_BOSQUE
+2026-04-26 17:14:16 - N0007 termina de cruzar vuelta por PORTAL_BOSQUE hacia Hawkins
+2026-04-26 17:14:16 - El niño N0007 vuelve a Hawkins
+2026-04-26 17:14:16 - El niño N0007 deposita 1 unidad de sangre
+2026-04-26 17:14:16 - El niño N0007 entra en RADIO_WSQK
+2026-04-26 17:14:16 - N0008 termina de cruzar vuelta por PORTAL_ALCANTARILLADO hacia Hawkins
+2026-04-26 17:14:16 - El niño N0008 vuelve a Hawkins
+2026-04-26 17:14:16 - El niño N0008 deposita 1 unidad de sangre
+2026-04-26 17:14:16 - El niño N0008 entra en RADIO_WSQK
+2026-04-26 17:14:17 - El niño N0009 recoge sangre en ALCANTARILLADO
+2026-04-26 17:14:17 - El niño N0009 regresa desde ALCANTARILLADO
+2026-04-26 17:14:17 - N0009 entra en cola de vuelta del PORTAL_ALCANTARILLADO
+2026-04-26 17:14:17 - N0009 empieza a cruzar vuelta por PORTAL_ALCANTARILLADO hacia Hawkins
+2026-04-26 17:14:17 - El niño N0010 recoge sangre en ALCANTARILLADO
+2026-04-26 17:14:17 - El niño N0010 regresa desde ALCANTARILLADO
+2026-04-26 17:14:17 - N0010 entra en cola de vuelta del PORTAL_ALCANTARILLADO
+2026-04-26 17:14:17 - El niño N0005 deambula por CALLE_PRINCIPAL
+2026-04-26 17:14:17 - El niño N0004 deambula por CALLE_PRINCIPAL
+2026-04-26 17:14:18 - El demogorgon D0000 sale de LABORATORIO
+2026-04-26 17:14:18 - El demogorgon D0000 entra en CENTRO_COMERCIAL
+2026-04-26 17:14:18 - El demogorgon D0000 no encuentra niños en CENTRO_COMERCIAL
+2026-04-26 17:14:18 - El niño N0007 deambula por CALLE_PRINCIPAL
+2026-04-26 17:14:18 - N0009 termina de cruzar vuelta por PORTAL_ALCANTARILLADO hacia Hawkins
+2026-04-26 17:14:18 - El niño N0009 vuelve a Hawkins
+2026-04-26 17:14:18 - El niño N0009 deposita 1 unidad de sangre
+2026-04-26 17:14:18 - El niño N0009 entra en RADIO_WSQK
+2026-04-26 17:14:18 - N0010 empieza a cruzar vuelta por PORTAL_ALCANTARILLADO hacia Hawkins
+2026-04-26 17:14:19 - El niño N0003 entra en SOTANO_BYERS
+2026-04-26 17:14:19 - N0010 termina de cruzar vuelta por PORTAL_ALCANTARILLADO hacia Hawkins
+2026-04-26 17:14:19 - El niño N0010 vuelve a Hawkins
+2026-04-26 17:14:19 - El niño N0010 deposita 1 unidad de sangre
+2026-04-26 17:14:19 - El niño N0010 entra en RADIO_WSQK
+2026-04-26 17:14:20 - El niño N0008 deambula por CALLE_PRINCIPAL
