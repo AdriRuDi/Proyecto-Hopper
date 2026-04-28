@@ -39,6 +39,7 @@ public class Main {
         Thread refrescador = new Thread(new Runnable() {
             @Override
             public void run() {
+
                 while (true) {
                     try {
                         SwingUtilities.invokeLater(new Runnable() {
