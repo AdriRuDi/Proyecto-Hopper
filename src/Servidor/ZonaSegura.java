@@ -1,4 +1,4 @@
-package interfaz;
+package Servidor;
 
 public class ZonaSegura extends Zona
 {

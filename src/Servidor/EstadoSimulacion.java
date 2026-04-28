@@ -1,4 +1,4 @@
-package interfaz;
+package Servidor;
 
 import java.util.HashMap;
 import java.util.List;

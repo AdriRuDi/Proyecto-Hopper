@@ -1,4 +1,4 @@
-package interfaz;
+package Servidor;
 
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.locks.Lock;

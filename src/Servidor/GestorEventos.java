@@ -1,4 +1,4 @@
-package interfaz;
+package Servidor;
 
 public class GestorEventos extends Thread {
 
@@ -69,29 +69,49 @@ public class GestorEventos extends Thread {
         Logger.log("Finaliza el evento global: TORMENTA DEL UPSIDE DOWN");
     }
 
-    private void ejecutarIntervencionEleven() throws InterruptedException {
-        int duracion = 5000 + (int)(Math.random() * 5000);
+    private void ejecutarIntervencionEleven() {
+        try {
+            int duracion = 5000 + (int)(Math.random() * 5000);
 
-        Logger.log("Comienza el evento global: INTERVENCION DE ELEVEN");
-        estado.activarIntervencionEleven();
+            Logger.log("Comienza el evento global: INTERVENCION DE ELEVEN");
+            estado.activarIntervencionEleven();
 
-        Thread.sleep(duracion);
+            Thread.sleep(duracion);
 
-        estado.liberarNinosColmenaSegunSangreDuranteEleven();
-        estado.desactivarIntervencionEleven();
+            estado.liberarNinosColmenaSegunSangreDuranteEleven();
+            estado.desactivarIntervencionEleven();
 
-        Logger.log("Finaliza el evento global: INTERVENCION DE ELEVEN");
+            Logger.log("Finaliza el evento global: INTERVENCION DE ELEVEN");
+
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            Logger.log("ERROR: evento INTERVENCION ELEVEN interrumpido: " + e.getMessage());
+
+        } catch (Exception e) {
+            Logger.log("ERROR en INTERVENCION ELEVEN: " + e.getClass().getName() + " - " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
-    private void ejecutarRedMental() throws InterruptedException {
-        int duracion = 5000 + (int)(Math.random() * 5000);
+    private void ejecutarRedMental() {
+        try {
+            int duracion = 5000 + (int)(Math.random() * 5000);
 
-        Logger.log("Comienza el evento global: LA RED MENTAL");
-        estado.activarRedMental();
+            Logger.log("Comienza el evento global: LA RED MENTAL");
+            estado.activarRedMental();
 
-        Thread.sleep(duracion);
+            Thread.sleep(duracion);
 
-        estado.desactivarRedMental();
-        Logger.log("Finaliza el evento global: LA RED MENTAL");
+            estado.desactivarRedMental();
+            Logger.log("Finaliza el evento global: LA RED MENTAL");
+
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            Logger.log("ERROR: evento RED MENTAL interrumpido: " + e.getMessage());
+
+        } catch (Exception e) {
+            Logger.log("ERROR en RED MENTAL: " + e.getClass().getName() + " - " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

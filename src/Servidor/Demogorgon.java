@@ -1,4 +1,4 @@
-package interfaz;
+package Servidor;
 
 public class Demogorgon extends Thread {
 

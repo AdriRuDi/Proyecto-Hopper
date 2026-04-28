@@ -1,4 +1,4 @@
-package interfaz;
+package Servidor;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;

@@ -1,4 +1,4 @@
-package interfaz;
+package Servidor;
 
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;

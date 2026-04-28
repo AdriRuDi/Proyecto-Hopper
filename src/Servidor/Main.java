@@ -1,4 +1,6 @@
-package interfaz;
+package Servidor;
+
+import Cliente.InterfazRemota;
 
 import javax.swing.SwingUtilities;
 import java.util.concurrent.CountDownLatch;
@@ -60,5 +62,11 @@ public class Main {
 
         refrescador.setDaemon(true);
         refrescador.start();
+
+        InterfazRemota remota = new InterfazRemota();
+        remota.setVisible(true);
+        remota.updateSnapshot(estado.crearSnapshot());
     }
+
+
 }
