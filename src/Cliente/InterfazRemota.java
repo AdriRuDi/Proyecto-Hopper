@@ -15,6 +15,7 @@ public class InterfazRemota extends JFrame {
     private static final Color LINE = new Color(55, 180, 100);
     private static final Color TEXT = new Color(180, 255, 190);
     private static final Color ALERT_BG = new Color(70, 20, 20);
+    private final JTextArea miTextArea = new JTextArea();
 
     private final JLabel lblTotalHawkins = labelValor("");
     private final JLabel lblPortales = labelTexto("");
@@ -22,6 +23,7 @@ public class InterfazRemota extends JFrame {
     private final JLabel lblDemogorgonsUpsideDown = labelTexto("");
     private final JLabel lblRanking = labelTexto("");
     private final JLabel lblEvento = labelTexto("");
+
 
     private final JButton btnDetener = new JButton("DETENER PROGRAMA PRINCIPAL");
 
@@ -270,5 +272,10 @@ public class InterfazRemota extends JFrame {
             g2.drawRoundRect(x + 3, y + 3, width - 7, height - 7, 8, 8);
             g2.dispose();
         }
+    }
+    public void actualizar(String datos) {
+        SwingUtilities.invokeLater(() -> {
+            lblPortales.setText(html(datos.replace("\n", "<br>")));
+        });
     }
 }

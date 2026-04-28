@@ -315,4 +315,15 @@ public class EstadoSimulacion {
         int posicion = (int)(Math.random() * candidatas.size());
         return candidatas.get(posicion);
     }
+
+
+    public synchronized String crearTextoRemoto() {
+        InterfazServidor.SimulationSnapshot snapshot = crearSnapshot();
+
+        return "TOTAL NIÑOS: " + snapshot.totalNinosActivos() + "\n" +
+                "TOTAL DEMOGORGONS: " + snapshot.totalDemogorgonsActivos() + "\n" +
+                "SANGRE: " + snapshot.sangreVecna() + "\n" +
+                "EVENTO: " + snapshot.eventoActivo() + "\n" +
+                "TIEMPO EVENTO: " + snapshot.tiempoRestanteEvento();
+    }
 }

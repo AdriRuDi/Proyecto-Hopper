@@ -1,72 +1,41 @@
 package Servidor;
 
-import Cliente.InterfazRemota;
-
-import javax.swing.SwingUtilities;
-import java.util.concurrent.CountDownLatch;
-
 public class Main {
 
     public static void main(String[] args) {
-        EstadoSimulacion estado = new EstadoSimulacion();
-
-        final InterfazServidor[] guiRef = new InterfazServidor[1];
-        final CountDownLatch latchInterfaz = new CountDownLatch(1);
-
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                guiRef[0] = new InterfazServidor();
-                guiRef[0].setVisible(true);
-                latchInterfaz.countDown();
-            }
-        });
-
         try {
-            latchInterfaz.await();
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            return;
-        }
+            EstadoSimulacion estado = new EstadoSimulacion();
 
-        GeneradorNinos generadorNinos = new GeneradorNinos(estado, 30);
-        generadorNinos.start();
+            InterfazServidor gui = new InterfazServidor();
+            gui.setVisible(true);
 
-        Demogorgon demogorgonInicial = new Demogorgon("D0000", estado, "BOSQUE");
-        demogorgonInicial.start();
-
-        GestorEventos gestorEventos = new GestorEventos(estado);
-        gestorEventos.start();
-
-        Thread refrescador = new Thread(new Runnable() {
-            @Override
-            public void run() {
-
+            Thread refrescador = new Thread(() -> {
                 while (true) {
                     try {
-                        SwingUtilities.invokeLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                guiRef[0].updateSnapshot(estado.crearSnapshot());
-                            }
-                        });
-
+                        gui.updateSnapshot(estado.crearSnapshot());
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                         break;
                     }
                 }
-            }
-        });
+            });
 
-        refrescador.setDaemon(true);
-        refrescador.start();
+            refrescador.setDaemon(true);
+            refrescador.start();
 
-        InterfazRemota remota = new InterfazRemota();
-        remota.setVisible(true);
-        remota.updateSnapshot(estado.crearSnapshot());
+            ServicioHawkins servicio = new ServicioHawkins(estado);
+
+            java.rmi.registry.LocateRegistry.createRegistry(1099);
+            java.rmi.Naming.rebind("//127.0.0.1/ServicioHawkins", servicio);
+
+            Logger.log("ServicioHawkins registrado correctamente");
+
+            // aquí ya puedes arrancar niños, demogorgons, eventos, etc.
+
+        } catch (Exception e) {
+            Logger.log("Error en servidor: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
-
-
 }
