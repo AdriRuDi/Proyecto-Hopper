@@ -7,6 +7,7 @@ public class Nino extends Thread{
     private int sangreRecogida = 0;
     private boolean siendoAtacado = false;
     private boolean ataqueResuelto = false;
+    private boolean vulnerableAtaque = false;
 
     public Nino(String idNino, EstadoSimulacion estado) {
         this.idNino = idNino;
@@ -32,9 +33,19 @@ public class Nino extends Thread{
                 esperarSiCapturado();
                 cicloDeVida();
             } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                Logger.log("El niño " + idNino + " ha sido interrumpido");
-                break;
+                synchronized (this) {
+                    if (siendoAtacado) {
+                        try {
+                            esperarFinAtaque();
+                        } catch (InterruptedException ex) {
+                            Thread.currentThread().interrupt();
+                            Logger.log("El niño " + idNino + " ha sido interrumpido");
+                            break;
+                        }
+                    } else {
+                        Logger.log("El niño " + idNino + " recibe una interrupción fuera de ataque y continúa");
+                    }
+                }
             }
         }
     }
@@ -98,20 +109,32 @@ public class Nino extends Thread{
             tiempo = tiempo * 2;
         }
 
-        dormirReanudableZonaPeligrosa(tiempo);
+        synchronized (this) {
+            vulnerableAtaque = true;
+        }
+
+        try {
+            dormirReanudableZonaPeligrosa(tiempo);
+        } finally {
+            synchronized (this) {
+                vulnerableAtaque = false;
+            }
+        }
 
         if (capturado) {
             return;
         }
 
         sangreRecogida = 1;
-        Logger.log("El niño " + idNino + " recoge sangre en " + portal.getZonaDestino());
+        Logger.log("El niño " + idNino + " recoge sangre en " + portal.getZonaDestino()
+                + " (lleva " + sangreRecogida + " unidad)");
     }
 
     public synchronized boolean iniciarAtaque() {
-        if (capturado || siendoAtacado) {
+        if (capturado || siendoAtacado || !vulnerableAtaque) {
             return false;
         }
+
         siendoAtacado = true;
         ataqueResuelto = false;
         interrupt();
@@ -121,7 +144,9 @@ public class Nino extends Thread{
     public synchronized void resolverAtaque(boolean capturado) {
         if (capturado) {
             this.capturado = true;
+            this.vulnerableAtaque = false;
         }
+
         siendoAtacado = false;
         ataqueResuelto = true;
         notifyAll();
@@ -135,9 +160,14 @@ public class Nino extends Thread{
     }
 
     private void volverAHawkins(Portal portal) throws InterruptedException {
+        synchronized (this) {
+            vulnerableAtaque = false;
+        }
+
         if (capturado) {
             return;
         }
+
         estado.getZona(portal.getZonaDestino()).salirNino(this);
         Logger.log("El niño " + idNino + " regresa desde " + portal.getZonaDestino());
 
@@ -150,8 +180,11 @@ public class Nino extends Thread{
 
     private void depositarSangre(){
         if(sangreRecogida > 0){
-            estado.sumarSangre(sangreRecogida);
-            Logger.log("El niño " + idNino + " deposita " + sangreRecogida + " unidad de sangre");
+            int totalSangre = estado.sumarSangre(sangreRecogida);
+
+            Logger.log("El niño " + idNino + " deposita " + sangreRecogida +
+                    " unidad de sangre (sangre total: " + totalSangre + ")");
+
             sangreRecogida = 0;
         }
     }

@@ -27,7 +27,9 @@ public abstract class Zona
     {
         lockZona.lock();
         try {
-            ninos.add(nino);
+            if (!ninos.contains(nino)) {
+                ninos.add(nino);
+            }
         } finally {
             lockZona.unlock();
         }
@@ -45,7 +47,9 @@ public abstract class Zona
     {
         lockZona.lock();
         try{
-            demogorgons.add(demogorgon);
+            if (!demogorgons.contains(demogorgon)) {
+                demogorgons.add(demogorgon);
+            }
         } finally {
             lockZona.unlock();
         }

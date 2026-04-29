@@ -5,13 +5,11 @@ public class Demogorgon extends Thread {
     private String idDemogorgon;
     private EstadoSimulacion estado;
     private String zonaActual;
-    private int capturas;
 
     public Demogorgon(String idDemogorgon, EstadoSimulacion estado, String zonaActual) {
         this.idDemogorgon = idDemogorgon;
         this.estado = estado;
         this.zonaActual = zonaActual;
-        this.capturas = 0;
     }
 
     public String getIdDemogorgon() {
@@ -20,14 +18,6 @@ public class Demogorgon extends Thread {
 
     public String getZonaActual() {
         return zonaActual;
-    }
-
-    public int getCapturas() {
-        return capturas;
-    }
-
-    public void incrementarCapturas() {
-        capturas++;
     }
 
     @Override
@@ -41,6 +31,7 @@ public class Demogorgon extends Thread {
             } catch (InterruptedException e) {
                 if (estado.isIntervencionElevenActiva()) {
                     Logger.log("El demogorgon " + idDemogorgon + " queda paralizado por Eleven");
+
                     try {
                         estado.esperarFinIntervencionEleven();
                     } catch (InterruptedException ex) {
@@ -48,6 +39,10 @@ public class Demogorgon extends Thread {
                         Logger.log("El demogorgon " + idDemogorgon + " ha sido interrumpido");
                         break;
                     }
+
+                } else if (estado.isRedMentalActiva()) {
+                    Logger.log("El demogorgon " + idDemogorgon + " siente la Red Mental y cambia de objetivo");
+
                 } else {
                     Thread.currentThread().interrupt();
                     Logger.log("El demogorgon " + idDemogorgon + " ha sido interrumpido");
@@ -58,12 +53,17 @@ public class Demogorgon extends Thread {
     }
 
     private void cicloDeVida() throws InterruptedException {
+        estado.esperarFinIntervencionEleven();
+
         if (hayNinosEnZona()) {
+            estado.esperarFinIntervencionEleven();
             atacar();
         } else {
+            estado.esperarFinIntervencionEleven();
             esperarEnZona();
         }
 
+        estado.esperarFinIntervencionEleven();
         cambiarDeZona();
     }
 
@@ -72,12 +72,16 @@ public class Demogorgon extends Thread {
     }
 
     private void atacar() throws InterruptedException {
+        estado.esperarFinIntervencionEleven();
+
         Zona zona = estado.getZona(zonaActual);
         Nino ninoObjetivo = zona.getNinoAleatorio();
 
         if (ninoObjetivo == null) {
             return;
         }
+
+        estado.esperarFinIntervencionEleven();
 
         if (!ninoObjetivo.iniciarAtaque()) {
             return;
@@ -98,6 +102,8 @@ public class Demogorgon extends Thread {
 
             throw e;
         }
+
+        estado.esperarFinIntervencionEleven();
 
         boolean capturado = decidirCaptura();
 
@@ -124,16 +130,16 @@ public class Demogorgon extends Thread {
         zona.salirNino(ninoObjetivo);
         Logger.log("El niño " + ninoObjetivo.getIdNino() + " ha sido capturado");
 
+        estado.eliminarNinoDePortales(ninoObjetivo.getIdNino());
         estado.getZona("COLMENA").entrarNino(ninoObjetivo);
 
-        incrementarCapturas();
-        estado.incrementarCapturadosColmena();
+        int totalColmena = estado.incrementarCapturadosColmena();
 
         Thread.sleep(500 + (int)(Math.random() * 500));
 
         Logger.log("El demogorgon " + idDemogorgon +
                 " deposita al niño " + ninoObjetivo.getIdNino() +
-                " en la COLMENA (capturas: " + capturas + ")");
+                " en la COLMENA (niños en colmena: " + totalColmena + ")");
     }
 
     private void esperarEnZona() throws InterruptedException {
@@ -149,7 +155,9 @@ public class Demogorgon extends Thread {
         Thread.sleep(tiempo);
     }
 
-    private void cambiarDeZona() {
+    private void cambiarDeZona() throws InterruptedException {
+        estado.esperarFinIntervencionEleven();
+
         if (estado.isApagonActivo()) {
             Logger.log("El demogorgon " + idDemogorgon + " permanece en " + zonaActual + " por el apagón");
             return;
@@ -158,10 +166,13 @@ public class Demogorgon extends Thread {
         String nuevaZona;
 
         if (estado.isRedMentalActiva()) {
-            nuevaZona = estado.getZonaPeligrosaConMasNinos();
+            nuevaZona = estado.getZonaPeligrosaConMasNinos(zonaActual);
 
             if (nuevaZona.equals(zonaActual)) {
-                Logger.log("El demogorgon " + idDemogorgon + " ya está en la zona con más niños: " + zonaActual);
+                Logger.log("El demogorgon " + idDemogorgon +
+                        " ya está en la zona con más niños: " + zonaActual);
+
+                Thread.sleep(1000);
                 return;
             }
 
@@ -177,6 +188,9 @@ public class Demogorgon extends Thread {
 
         estado.getZona(zonaActual).entrarDemogorgon(this);
         Logger.log("El demogorgon " + idDemogorgon + " entra en " + zonaActual);
+        if (estado.isRedMentalActiva()) {
+            Thread.sleep(1000);
+        }
     }
 
     private String elegirZonaPeligrosaAleatoriaDistinta() {

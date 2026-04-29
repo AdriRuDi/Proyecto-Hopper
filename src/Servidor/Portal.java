@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
@@ -19,7 +17,6 @@ public class Portal {
     private Condition condIda = lock.newCondition();
     private Condition condVuelta = lock.newCondition();
     private Condition condCruce = lock.newCondition();
-    private CyclicBarrier barreraIda;
     private Semaphore pasoPortal = new Semaphore(1, true);
 
     private LinkedList<String> colaIda = new LinkedList<>();    //para niños esperando grupo en sótano byers
@@ -37,52 +34,23 @@ public class Portal {
         this.nombre = nombre;
         this.zonaDestino = zonaDestino;
         this.tamGrupoIda = tamGrupoIda;
-        this.barreraIda = new CyclicBarrier(tamGrupoIda);
     }
 
     public void solicitarIda(String idNino) throws InterruptedException {
-        boolean ultimoEnLlegar = false;
-
         lock.lock();
         try {
             if (!colaIda.contains(idNino)) {
                 colaIda.addLast(idNino);
                 Logger.log(idNino + " entra en cola de ida del " + nombre);
-                condIda.signalAll();
             }
 
-            while (apagonActivo || !colaVuelta.isEmpty() || grupoIdaActivo ||
-                    colaIda.size() < tamGrupoIda ||
-                    !colaIda.subList(0, tamGrupoIda).contains(idNino)) {
+            intentarFormarGrupoIda();
+
+            while (!grupoActualIda.contains(idNino)) {
                 condIda.await();
+                intentarFormarGrupoIda();
             }
 
-            grupoActualIda.add(idNino);
-
-        } finally {
-            lock.unlock();
-        }
-
-        try {
-            int indice = barreraIda.await();
-            if (indice == 0) {
-                ultimoEnLlegar = true;
-            }
-        } catch (BrokenBarrierException e) {
-            throw new InterruptedException("Barrera de ida rota en " + nombre);
-        }
-
-        lock.lock();
-        try {
-            if (ultimoEnLlegar) {
-                grupoIdaActivo = true;
-                pendientesGrupoIda = tamGrupoIda;
-
-                Logger.log("Se forma grupo de ida en " + nombre + " hacia " + zonaDestino +
-                        ": " + grupoActualIda);
-
-                condCruce.signalAll();
-            }
         } finally {
             lock.unlock();
         }
@@ -101,9 +69,8 @@ public class Portal {
         try {
             lock.lock();
             try {
-                if (apagonActivo || !grupoIdaActivo || !grupoActualIda.contains(idNino)) {
-                    condCruce.signalAll();
-                    return;
+                while (apagonActivo || !grupoIdaActivo || !grupoActualIda.contains(idNino)) {
+                    condCruce.await();
                 }
 
                 colaIda.remove(idNino);
@@ -129,6 +96,8 @@ public class Portal {
                     grupoActualIda.clear();
                     pendientesGrupoIda = 0;
                     Logger.log("Termina el grupo de ida del " + nombre);
+
+                    intentarFormarGrupoIda();
                 }
 
                 condCruce.signalAll();
@@ -174,9 +143,8 @@ public class Portal {
         try {
             lock.lock();
             try {
-                if (apagonActivo || colaVuelta.isEmpty() || !idNino.equals(colaVuelta.getFirst())) {
-                    condVuelta.signalAll();
-                    return;
+                while (apagonActivo || colaVuelta.isEmpty() || !idNino.equals(colaVuelta.getFirst())) {
+                    condVuelta.await();
                 }
 
                 colaVuelta.removeFirst();
@@ -211,8 +179,10 @@ public class Portal {
         try {
             apagonActivo = true;
             Logger.log("Se activa apagón en " + nombre);
-            condIda.signalAll();
+            intentarFormarGrupoIda();
+
             condVuelta.signalAll();
+            condIda.signalAll();
             condCruce.signalAll();
         } finally {
             lock.unlock();
@@ -224,6 +194,9 @@ public class Portal {
         try {
             apagonActivo = false;
             Logger.log("Se desactiva apagón en " + nombre);
+
+            intentarFormarGrupoIda();
+
             condIda.signalAll();
             condVuelta.signalAll();
             condCruce.signalAll();
@@ -280,6 +253,51 @@ public class Portal {
         lock.lock();
         try {
             return pendientesGrupoIda;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    private void intentarFormarGrupoIda() {
+        if (!apagonActivo &&
+                colaVuelta.isEmpty() &&
+                !grupoIdaActivo &&
+                colaIda.size() >= tamGrupoIda) {
+
+            grupoActualIda.clear();
+
+            for (int i = 0; i < tamGrupoIda; i++) {
+                grupoActualIda.add(colaIda.get(i));
+            }
+
+            grupoIdaActivo = true;
+            pendientesGrupoIda = tamGrupoIda;
+
+            Logger.log("Se forma grupo de ida en " + nombre + " hacia " + zonaDestino +
+                    ": " + grupoActualIda);
+
+            condIda.signalAll();
+            condCruce.signalAll();
+        }
+    }
+
+    public void eliminarNino(String idNino) {
+        lock.lock();
+        try {
+            colaIda.remove(idNino);
+            colaVuelta.remove(idNino);
+            grupoActualIda.remove(idNino);
+
+            if (grupoIdaActivo && pendientesGrupoIda > 0 && grupoActualIda.isEmpty()) {
+                grupoIdaActivo = false;
+                pendientesGrupoIda = 0;
+            }
+
+            intentarFormarGrupoIda();
+
+            condIda.signalAll();
+            condVuelta.signalAll();
+            condCruce.signalAll();
         } finally {
             lock.unlock();
         }

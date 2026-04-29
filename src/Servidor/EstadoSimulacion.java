@@ -11,7 +11,8 @@ public class EstadoSimulacion {
     private Map<String, Portal> portales;
 
     private AtomicInteger sangreVecna;
-    private AtomicInteger capturadosColmena;
+    private AtomicInteger ninosEnColmena;
+    private AtomicInteger capturasTotalesHistoricas;
     private AtomicInteger siguienteIdDemogorgon;
 
     private String eventoActivo;
@@ -20,7 +21,6 @@ public class EstadoSimulacion {
     private boolean apagonActivo;
     private boolean tormentaActiva;
     private boolean intervencionElevenActiva;
-    private int sangreRecolectadaDuranteEleven;
     private boolean redMentalActiva;
 
     public EstadoSimulacion() {
@@ -48,7 +48,8 @@ public class EstadoSimulacion {
         portales.put("ALCANTARILLADO", new Portal("PORTAL_ALCANTARILLADO", "ALCANTARILLADO", 2));
 
         sangreVecna = new AtomicInteger(0);
-        capturadosColmena = new AtomicInteger(0);
+        ninosEnColmena = new AtomicInteger(0);
+        capturasTotalesHistoricas = new AtomicInteger(0);
         siguienteIdDemogorgon = new AtomicInteger(1);
 
         eventoActivo = "SIN EVENTO ACTIVO";
@@ -57,7 +58,6 @@ public class EstadoSimulacion {
         apagonActivo = false;
         tormentaActiva = false;
         intervencionElevenActiva = false;
-        sangreRecolectadaDuranteEleven = 0;
         redMentalActiva = false;
     }
 
@@ -75,24 +75,23 @@ public class EstadoSimulacion {
         return portales.get(nombreZonaDestino);
     }
 
-    public synchronized void sumarSangre(int cantidad) {
-        sangreVecna.addAndGet(cantidad);
-
-        if (intervencionElevenActiva) {
-            sangreRecolectadaDuranteEleven += cantidad;
-        }
+    public int sumarSangre(int cantidad) {
+        return sangreVecna.addAndGet(cantidad);
     }
 
     public int getSangreVecna() {
         return sangreVecna.get();
     }
 
-    public synchronized void incrementarCapturadosColmena() {
-        int total = capturadosColmena.incrementAndGet();
+    public synchronized int incrementarCapturadosColmena() {
+        int actualEnColmena = ninosEnColmena.incrementAndGet();
+        int totalHistorico = capturasTotalesHistoricas.incrementAndGet();
 
-        if (total % 8 == 0) {
+        if (totalHistorico % 8 == 0) {
             crearNuevoDemogorgon();
         }
+
+        return actualEnColmena;
     }
 
     private void crearNuevoDemogorgon() {
@@ -121,7 +120,7 @@ public class EstadoSimulacion {
     }
 
     public int getCapturadosColmena() {
-        return capturadosColmena.get();
+        return ninosEnColmena.get();
     }
 
     public synchronized void setEventoActivo(String eventoActivo) {
@@ -239,7 +238,6 @@ public class EstadoSimulacion {
 
     public synchronized void activarIntervencionEleven() {
         intervencionElevenActiva = true;
-        sangreRecolectadaDuranteEleven = 0;
         eventoActivo = "INTERVENCION DE ELEVEN";
         paralizarDemogorgons();
     }
@@ -255,10 +253,14 @@ public class EstadoSimulacion {
             wait();
         }
     }
-    public synchronized void liberarNinosColmenaSegunSangreDuranteEleven() {
+    public synchronized void liberarNinosColmenaSegunSangreDisponible() {
         Zona colmena = getZona("COLMENA");
+        Zona callePrincipal = getZona("CALLE_PRINCIPAL");
 
-        for (int i = 0; i < sangreRecolectadaDuranteEleven; i++) {
+        int sangreDisponible = sangreVecna.get();
+        int liberados = 0;
+
+        for (int i = 0; i < sangreDisponible; i++) {
             Nino nino = colmena.getNinoAleatorio();
 
             if (nino == null) {
@@ -266,12 +268,30 @@ public class EstadoSimulacion {
             }
 
             colmena.salirNino(nino);
-            getZona("CALLE_PRINCIPAL").entrarNino(nino);
+            callePrincipal.entrarNino(nino);
             nino.liberarDeColmena();
 
-            Logger.log("Eleven libera al niño " + nino.getIdNino() + " y regresa a CALLE_PRINCIPAL");
+            liberados++;
+
+            Logger.log("Eleven libera al niño " + nino.getIdNino()
+                    + " y regresa a CALLE_PRINCIPAL");
+        }
+
+        if (liberados > 0) {
+            int sangreRestante = sangreVecna.addAndGet(-liberados);
+            int colmenaRestante = ninosEnColmena.addAndGet(-liberados);
+
+            Logger.log("Eleven ha liberado " + liberados
+                    + " niños de la COLMENA usando " + liberados
+                    + " unidades de sangre");
+
+            Logger.log("Sangre restante: " + sangreRestante
+                    + " | Niños restantes en COLMENA: " + colmenaRestante);
+        } else {
+            Logger.log("Eleven no libera ningún niño de la COLMENA");
         }
     }
+
     private void paralizarDemogorgons() {
         String[] zonasPeligrosas = {"BOSQUE", "LABORATORIO", "CENTRO_COMERCIAL", "ALCANTARILLADO"};
 
@@ -288,14 +308,20 @@ public class EstadoSimulacion {
     public synchronized void activarRedMental() {
         redMentalActiva = true;
         eventoActivo = "LA RED MENTAL";
+        despertarDemogorgons();
     }
 
     public synchronized void desactivarRedMental() {
         redMentalActiva = false;
         eventoActivo = "SIN EVENTO ACTIVO";
     }
-    public String getZonaPeligrosaConMasNinos() {
-        String[] zonasPeligrosas = {"BOSQUE", "LABORATORIO", "CENTRO_COMERCIAL", "ALCANTARILLADO"};
+    public String getZonaPeligrosaConMasNinos(String zonaActual) {
+        String[] zonasPeligrosas = {
+                "BOSQUE",
+                "LABORATORIO",
+                "CENTRO_COMERCIAL",
+                "ALCANTARILLADO"
+        };
 
         int maximo = -1;
         java.util.List<String> candidatas = new java.util.ArrayList<>();
@@ -312,6 +338,12 @@ public class EstadoSimulacion {
             }
         }
 
+        // Si la zona actual está empatada como una de las mejores, se queda ahí
+        if (candidatas.contains(zonaActual)) {
+            return zonaActual;
+        }
+
+        // Si no está en una de las mejores, va a una de las candidatas
         int posicion = (int)(Math.random() * candidatas.size());
         return candidatas.get(posicion);
     }
@@ -325,5 +357,26 @@ public class EstadoSimulacion {
                 "SANGRE: " + snapshot.sangreVecna() + "\n" +
                 "EVENTO: " + snapshot.eventoActivo() + "\n" +
                 "TIEMPO EVENTO: " + snapshot.tiempoRestanteEvento();
+    }
+
+    private void despertarDemogorgons() {
+        String[] zonasPeligrosas = {
+                "BOSQUE",
+                "LABORATORIO",
+                "CENTRO_COMERCIAL",
+                "ALCANTARILLADO"
+        };
+
+        for (String nombreZona : zonasPeligrosas) {
+            for (Demogorgon demogorgon : zonas.get(nombreZona).getDemogorgons()) {
+                demogorgon.interrupt();
+            }
+        }
+    }
+
+    public void eliminarNinoDePortales(String idNino) {
+        for (Portal portal : portales.values()) {
+            portal.eliminarNino(idNino);
+        }
     }
 }

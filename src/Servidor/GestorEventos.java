@@ -78,7 +78,7 @@ public class GestorEventos extends Thread {
 
             Thread.sleep(duracion);
 
-            estado.liberarNinosColmenaSegunSangreDuranteEleven();
+            estado.liberarNinosColmenaSegunSangreDisponible();
             estado.desactivarIntervencionEleven();
 
             Logger.log("Finaliza el evento global: INTERVENCION DE ELEVEN");
