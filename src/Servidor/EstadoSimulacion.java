@@ -352,11 +352,33 @@ public class EstadoSimulacion {
     public synchronized String crearTextoRemoto() {
         InterfazServidor.SimulationSnapshot snapshot = crearSnapshot();
 
-        return "TOTAL NIÑOS: " + snapshot.totalNinosActivos() + "\n" +
-                "TOTAL DEMOGORGONS: " + snapshot.totalDemogorgonsActivos() + "\n" +
-                "SANGRE: " + snapshot.sangreVecna() + "\n" +
-                "EVENTO: " + snapshot.eventoActivo() + "\n" +
-                "TIEMPO EVENTO: " + snapshot.tiempoRestanteEvento();
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("TOTAL_NINOS=").append(snapshot.totalNinosActivos()).append("\n");
+        sb.append("TOTAL_DEMOGORGONS=").append(snapshot.totalDemogorgonsActivos()).append("\n");
+        sb.append("SANGRE=").append(snapshot.sangreVecna()).append("\n");
+        sb.append("EVENTO=").append(snapshot.eventoActivo()).append("\n");
+        sb.append("TIEMPO_EVENTO=").append(snapshot.tiempoRestanteEvento()).append("\n");
+
+        sb.append("PORTAL_BOSQUE=").append(snapshot.portales().get("BOSQUE").idsIda().size()).append("\n");
+        sb.append("PORTAL_LABORATORIO=").append(snapshot.portales().get("LABORATORIO").idsIda().size()).append("\n");
+        sb.append("PORTAL_CENTRO=").append(snapshot.portales().get("CENTRO_COMERCIAL").idsIda().size()).append("\n");
+        sb.append("PORTAL_ALCANTARILLADO=").append(snapshot.portales().get("ALCANTARILLADO").idsIda().size()).append("\n");
+
+        sb.append("NINOS_BOSQUE=").append(snapshot.zonas().get("BOSQUE").ninos()).append("\n");
+        sb.append("NINOS_LABORATORIO=").append(snapshot.zonas().get("LABORATORIO").ninos()).append("\n");
+        sb.append("NINOS_CENTRO=").append(snapshot.zonas().get("CENTRO_COMERCIAL").ninos()).append("\n");
+        sb.append("NINOS_ALCANTARILLADO=").append(snapshot.zonas().get("ALCANTARILLADO").ninos()).append("\n");
+        sb.append("NINOS_COLMENA=").append(snapshot.zonas().get("COLMENA").ninos()).append("\n");
+
+        sb.append("DEMOS_BOSQUE=").append(snapshot.zonas().get("BOSQUE").demogorgons()).append("\n");
+        sb.append("DEMOS_LABORATORIO=").append(snapshot.zonas().get("LABORATORIO").demogorgons()).append("\n");
+        sb.append("DEMOS_CENTRO=").append(snapshot.zonas().get("CENTRO_COMERCIAL").demogorgons()).append("\n");
+        sb.append("DEMOS_ALCANTARILLADO=").append(snapshot.zonas().get("ALCANTARILLADO").demogorgons()).append("\n");
+
+        sb.append("RANKING=").append(String.join(";", snapshot.topDemogorgons())).append("\n");
+
+        return sb.toString();
     }
 
     private void despertarDemogorgons() {

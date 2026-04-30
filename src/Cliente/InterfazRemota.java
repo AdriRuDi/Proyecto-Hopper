@@ -275,7 +275,58 @@ public class InterfazRemota extends JFrame {
     }
     public void actualizar(String datos) {
         SwingUtilities.invokeLater(() -> {
-            lblPortales.setText(html(datos.replace("\n", "<br>")));
+            Map<String, String> mapa = parsearDatos(datos);
+
+            lblTotalHawkins.setText(mapa.getOrDefault("TOTAL_NINOS", "0"));
+
+            lblPortales.setText(html(
+                    "PORTAL 1 [" + mapa.getOrDefault("PORTAL_BOSQUE", "0") + "] niños<br><br>" +
+                            "PORTAL 2 [" + mapa.getOrDefault("PORTAL_LABORATORIO", "0") + "] niños<br><br>" +
+                            "PORTAL 3 [" + mapa.getOrDefault("PORTAL_CENTRO", "0") + "] niños<br><br>" +
+                            "PORTAL 4 [" + mapa.getOrDefault("PORTAL_ALCANTARILLADO", "0") + "] niños"
+            ));
+
+            lblNinosUpsideDown.setText(html(
+                    "BOSQUE (" + mapa.getOrDefault("NINOS_BOSQUE", "0") + ")<br><br>" +
+                            "LABORATORIO (" + mapa.getOrDefault("NINOS_LABORATORIO", "0") + ")<br><br>" +
+                            "CENTRO COMERCIAL<br>(" + mapa.getOrDefault("NINOS_CENTRO", "0") + ")<br><br>" +
+                            "ALCANTARILLADO (" + mapa.getOrDefault("NINOS_ALCANTARILLADO", "0") + ")<br><br>" +
+                            "[!] COLMENA<br>(CAPTURADOS) [" + mapa.getOrDefault("NINOS_COLMENA", "0") + "]"
+            ));
+
+            lblDemogorgonsUpsideDown.setText(html(
+                    "BOSQUE (" + mapa.getOrDefault("DEMOS_BOSQUE", "0") + ")<br><br>" +
+                            "LABORATORIO (" + mapa.getOrDefault("DEMOS_LABORATORIO", "0") + ")<br><br>" +
+                            "CENTRO COMERCIAL<br>(" + mapa.getOrDefault("DEMOS_CENTRO", "0") + ")<br><br>" +
+                            "ALCANTARILLADO (" + mapa.getOrDefault("DEMOS_ALCANTARILLADO", "0") + ")"
+            ));
+
+            String ranking = mapa.getOrDefault("RANKING", "");
+            lblRanking.setText(ranking.isEmpty()
+                    ? html("Sin datos todavía")
+                    : html(ranking.replace(";", "<br>")));
+
+            lblEvento.setText(html(
+                    "TIPO: " + mapa.getOrDefault("EVENTO", "SIN EVENTO ACTIVO") + "<br><br>" +
+                            "TIEMPO RESTANTE:<br>" +
+                            mapa.getOrDefault("TIEMPO_EVENTO", "00:00")
+            ));
         });
+    }
+
+    private Map<String, String> parsearDatos(String datos) {
+        Map<String, String> mapa = new HashMap<>();
+
+        String[] lineas = datos.split("\n");
+
+        for (String linea : lineas) {
+            String[] partes = linea.split("=", 2);
+
+            if (partes.length == 2) {
+                mapa.put(partes[0], partes[1]);
+            }
+        }
+
+        return mapa;
     }
 }

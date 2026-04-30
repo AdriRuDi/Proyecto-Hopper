@@ -12,6 +12,14 @@ public class ClienteRemoto {
             InterfazRemota gui = new InterfazRemota();
             gui.setVisible(true);
 
+            gui.getBtnDetener().addActionListener(e -> {
+                try {
+                    servicio.detenerPrograma();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            });
+
             while (true){
                 String datos = servicio.obtenerDatosRemotos();
                 gui.actualizar(datos);

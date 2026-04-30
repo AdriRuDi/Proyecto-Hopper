@@ -31,7 +31,14 @@ public class Main {
 
             Logger.log("ServicioHawkins registrado correctamente");
 
-            // aquí ya puedes arrancar niños, demogorgons, eventos, etc.
+            Demogorgon alpha = new Demogorgon("D0000", estado, "BOSQUE");
+            alpha.start();
+
+            GeneradorNinos generadorNinos = new GeneradorNinos(estado,50);
+            generadorNinos.start();
+
+            GestorEventos gestorEventos = new GestorEventos(estado);
+            gestorEventos.start();
 
         } catch (Exception e) {
             Logger.log("Error en servidor: " + e.getMessage());
