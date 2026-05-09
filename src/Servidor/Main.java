@@ -31,10 +31,13 @@ public class Main {
 
             Logger.log("ServicioHawkins registrado correctamente");
 
-            Demogorgon alpha = new Demogorgon("D0000", estado, "BOSQUE");
+            String zonaInicialAlpha = estado.elegirZonaPeligrosaAleatoria();
+
+            Demogorgon alpha = new Demogorgon("D0000", estado, zonaInicialAlpha);   //Se crea único demogorgon inicial
+            estado.registrarDemogorgon(alpha);  //Se registra para que pueda aparecer en el ranking
             alpha.start();
 
-            GeneradorNinos generadorNinos = new GeneradorNinos(estado,50);
+            GeneradorNinos generadorNinos = new GeneradorNinos(estado,20);
             generadorNinos.start();
 
             GestorEventos gestorEventos = new GestorEventos(estado);

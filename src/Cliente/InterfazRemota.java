@@ -1,6 +1,5 @@
 package Cliente;
 
-import Servidor.InterfazServidor;
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;
 import java.awt.*;
@@ -127,41 +126,6 @@ public class InterfazRemota extends JFrame {
         panel.add(contenido, BorderLayout.CENTER);
 
         return panel;
-    }
-
-    public void updateSnapshot(InterfazServidor.SimulationSnapshot snapshot) {
-        lblTotalHawkins.setText(String.valueOf(snapshot.totalNinosActivos()));
-
-        lblPortales.setText(html(
-                "PORTAL BOSQUE [" + snapshot.portales().get("BOSQUE").idsIda().size() + "] niños<br>" +
-                        "PORTAL LABORATORIO [" + snapshot.portales().get("LABORATORIO").idsIda().size() + "] niños<br>" +
-                        "PORTAL CENTRO [" + snapshot.portales().get("CENTRO_COMERCIAL").idsIda().size() + "] niños<br>" +
-                        "PORTAL ALCANTARILLADO [" + snapshot.portales().get("ALCANTARILLADO").idsIda().size() + "] niños"
-        ));
-
-        lblNinosUpsideDown.setText(html(
-                "BOSQUE (" + snapshot.zonas().get("BOSQUE").ninos() + ")<br>" +
-                        "LABORATORIO (" + snapshot.zonas().get("LABORATORIO").ninos() + ")<br>" +
-                        "CENTRO COMERCIAL (" + snapshot.zonas().get("CENTRO_COMERCIAL").ninos() + ")<br>" +
-                        "ALCANTARILLADO (" + snapshot.zonas().get("ALCANTARILLADO").ninos() + ")<br><br>" +
-                        "[!] COLMENA (" + snapshot.zonas().get("COLMENA").ninos() + ")"
-        ));
-
-        lblDemogorgonsUpsideDown.setText(html(
-                "BOSQUE (" + snapshot.zonas().get("BOSQUE").demogorgons() + ")<br>" +
-                        "LABORATORIO (" + snapshot.zonas().get("LABORATORIO").demogorgons() + ")<br>" +
-                        "CENTRO COMERCIAL (" + snapshot.zonas().get("CENTRO_COMERCIAL").demogorgons() + ")<br>" +
-                        "ALCANTARILLADO (" + snapshot.zonas().get("ALCANTARILLADO").demogorgons() + ")"
-        ));
-
-        lblRanking.setText(snapshot.topDemogorgons().isEmpty()
-                ? html("Sin datos todavía")
-                : html(String.join("<br>", snapshot.topDemogorgons())));
-
-        lblEvento.setText(html(
-                "TIPO: " + snapshot.eventoActivo() + "<br><br>" +
-                        "TIEMPO RESTANTE:<br>" + snapshot.tiempoRestanteEvento()
-        ));
     }
 
     public JButton getBtnDetener() {

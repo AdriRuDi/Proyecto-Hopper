@@ -1,7 +1,6 @@
 package Servidor;
 
 import Cliente.InterfaceHawkins;
-
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 

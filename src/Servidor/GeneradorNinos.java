@@ -12,11 +12,11 @@ public class GeneradorNinos extends Thread {
 
     @Override
     public void run() {
-        for (int i = 1; i <= totalNinos; i++) {
-            String idNino = String.format("N%04d", i);
+        for (int i = 1; i <= totalNinos; i++) {     //Se crean los niños de forma progresiva
+            String idNino = String.format("N%04d", i);  //ID formato NXXXX
             Nino nino = new Nino(idNino, estado);
 
-            estado.getZona("CALLE_PRINCIPAL").entrarNino(nino);
+            estado.getZona("CALLE_PRINCIPAL").entrarNino(nino); //Niños comienzan en CALLE PRINCIPAL
             Logger.log("Se crea el niño " + idNino + " en CALLE_PRINCIPAL");
 
             try {

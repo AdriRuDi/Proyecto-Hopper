@@ -1,7 +1,5 @@
 package Cliente;
 
-import Servidor.Logger;
-
 import java.rmi.Naming;
 
 public class ClienteRemoto {

@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public abstract class Zona
 {
     private String nombre;
-    private List <Nino> ninos;
-    private List <Demogorgon> demogorgons;
+    private List <Nino> ninos;  // Recurso compartido, lista de niños que se encuentran en esta zona
+    private List <Demogorgon> demogorgons;  // Recurso compartido, lista de demogorgons que se encuentran en esta zona
     private Lock lockZona;
 
     public Zona(String nombre)
@@ -17,7 +17,7 @@ public abstract class Zona
         this.nombre = nombre;
         this.ninos = new ArrayList<>();
         this.demogorgons = new ArrayList<>();
-        this.lockZona = new ReentrantLock(true);
+        this.lockZona = new ReentrantLock(true);    //Niños esperan de forma ordenada
     }
     public String getNombre()
     {
@@ -27,7 +27,7 @@ public abstract class Zona
     {
         lockZona.lock();
         try {
-            if (!ninos.contains(nino)) {
+            if (!ninos.contains(nino)) {    //Evita insertar dos veces al mismo niño en la misma zona
                 ninos.add(nino);
             }
         } finally {
@@ -47,7 +47,7 @@ public abstract class Zona
     {
         lockZona.lock();
         try{
-            if (!demogorgons.contains(demogorgon)) {
+            if (!demogorgons.contains(demogorgon)) {    //Evita insertar dos veces al mismo demogorgon en la misma zona
                 demogorgons.add(demogorgon);
             }
         } finally {
@@ -111,7 +111,7 @@ public abstract class Zona
     public List<Nino> getNinos(){
         lockZona.lock();
         try{
-            return new ArrayList<>(ninos);
+            return new ArrayList<>(ninos);  //Devuelve una copia de la lista de niños
         } finally{
             lockZona.unlock();
         }
@@ -120,7 +120,7 @@ public abstract class Zona
     public List<Demogorgon> getDemogorgons(){
         lockZona.lock();
         try{
-            return new ArrayList<>(demogorgons);
+            return new ArrayList<>(demogorgons);    //Devuelve una copia de la lista de demogorgons
         } finally {
             lockZona.unlock();
         }

@@ -7,3 +7,5 @@ public class ZonaPeligrosa extends Zona
         super(nombre);
     }
 }
+// Representa las zonas del Upside Down donde pueden coincidir niños y demogorgons,
+// También se usa para COLMENA, ya que almacena niños capturados.

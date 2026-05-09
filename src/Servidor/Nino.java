@@ -30,11 +30,11 @@ public class Nino extends Thread{
     public void run() {
         while (true) {
             try {
-                esperarSiCapturado();
+                esperarSiCapturado();   //Si el niño está capturado espera a ser liberado
                 cicloDeVida();
             } catch (InterruptedException e) {
                 synchronized (this) {
-                    if (siendoAtacado) {
+                    if (siendoAtacado) {    //Si la interrupcion viene de un ataque el niño espera a que el ataque se resuelva
                         try {
                             esperarFinAtaque();
                         } catch (InterruptedException ex) {
@@ -42,7 +42,7 @@ public class Nino extends Thread{
                             Logger.log("El niño " + idNino + " ha sido interrumpido");
                             break;
                         }
-                    } else {
+                    } else {    //Para que no se interrumpa el niño si recibe otras interrupciones
                         Logger.log("El niño " + idNino + " recibe una interrupción fuera de ataque y continúa");
                     }
                 }
@@ -52,16 +52,14 @@ public class Nino extends Thread{
     private void cicloDeVida() throws InterruptedException{
         irASotanoByers();
 
-        if (capturado) return;
+        Portal portal = elegirPortal();   //Elige un portala aleatorio
+        explorarUpsideDown(portal);  // Espera grupo, cruza el portal y explora el Upside Down
 
-        Portal portal = elegirPortal();
-        explorarUpsideDown(portal);
-
-        if (capturado) return;
+        if (capturado) {
+            return;
+        }
 
         volverAHawkins(portal);
-
-        if (capturado) return;
 
         depositarSangre();
         descansarEnRadio();
@@ -82,110 +80,114 @@ public class Nino extends Thread{
 
         switch (opcion){
             case 0:
-                return estado.getPortal("BOSQUE");
+                return estado.getPortal("BOSQUE");  // Portal hacia BOSQUE, grupo de 2 niños
             case 1:
-                return estado.getPortal("LABORATORIO");
+                return estado.getPortal("LABORATORIO"); // Portal hacia LABORATORIO, grupo de 3 niños
             case 2:
-                return estado.getPortal("CENTRO_COMERCIAL");
+                return estado.getPortal("CENTRO_COMERCIAL");    // Portal hacia CENTRO_COMERCIAL, grupo de 4 niños
             default:
-                return estado.getPortal("ALCANTARILLADO");
+                return estado.getPortal("ALCANTARILLADO");  // Portal hacia ALCANTARILLADO, grupo de 2 niños
         }
     }
 
     private void explorarUpsideDown(Portal portal) throws InterruptedException {
         Logger.log("El niño " + idNino + " elige " + portal.getNombre());
 
-        portal.solicitarIda(idNino);
+        portal.solicitarIda(idNino);    //Entra en cola ida y espera a formar grupo
         estado.getZona("SOTANO_BYERS").salirNino(this);
 
-        portal.cruzarIda(idNino);
+        portal.cruzarIda(idNino);   //Cruza el portal de ida (de 1 en 1)
 
-        estado.getZona(portal.getZonaDestino()).entrarNino(this);
+        estado.getZona(portal.getZonaDestino()).entrarNino(this);   //Entra en la zona insegura
         Logger.log("El niño " + idNino + " entra en " + portal.getZonaDestino());
 
         int tiempo = 3000 + (int)(Math.random() * 2000);
 
-        if (estado.isTormentaActiva()) {
+        if (estado.isTormentaActiva()) {    //Si hay tormenta activa se duplica el tiempo de exploración
             tiempo = tiempo * 2;
         }
 
-        synchronized (this) {
+        synchronized (this) {   //Puede ser atacado mientras está en el UpsideDown
             vulnerableAtaque = true;
         }
 
         try {
-            dormirReanudableZonaPeligrosa(tiempo);
+            dormirReanudableZonaPeligrosa(tiempo);  //Está dormido durnate la expliración pero puede ser interrumpido si le atacan
         } finally {
-            synchronized (this) {
+            synchronized (this) {   //Deja de ser vulnerable a ataques cuando le capturan/ interrumpen
                 vulnerableAtaque = false;
             }
         }
 
-        if (capturado) {
+        if (capturado) {    //Si ha sido capturado no recoge sangre
             return;
         }
 
-        sangreRecogida = 1;
+        sangreRecogida = 1; //Sino si recoge sangre
         Logger.log("El niño " + idNino + " recoge sangre en " + portal.getZonaDestino()
                 + " (lleva " + sangreRecogida + " unidad)");
     }
 
     public synchronized boolean iniciarAtaque() {
+        // El ataque solo puede empezar si:
+        // 1. El niño no está ya capturado.
+        // 2. El niño no está siendo atacado por otro demogorgon.
+        // 3. El niño está en una zona peligrosa y vulnerable.
         if (capturado || siendoAtacado || !vulnerableAtaque) {
             return false;
         }
 
         siendoAtacado = true;
         ataqueResuelto = false;
-        interrupt();
+        interrupt();    //Se le interrumpe hasta saber el resultado del ataque
         return true;
     }
 
     public synchronized void resolverAtaque(boolean capturado) {
         if (capturado) {
-            this.capturado = true;
-            this.vulnerableAtaque = false;
+            this.capturado = true;  //Si el demogorgon gana el ataque pasa a estar capturado
+            this.vulnerableAtaque = false;  //Capturado no puede ser atacado por otros
         }
 
         siendoAtacado = false;
         ataqueResuelto = true;
-        notifyAll();
+        notifyAll();    //Se despierta al niño que estaba esperando el final del ataque
     }
 
     public synchronized void esperarFinAtaque() throws InterruptedException {
         while (siendoAtacado && !ataqueResuelto) {
-            wait();
+            wait(); //Niño bloqueado hasta que se resuelva el ataque
         }
         ataqueResuelto = false;
     }
 
     private void volverAHawkins(Portal portal) throws InterruptedException {
-        synchronized (this) {
+        synchronized (this) {   //al iniciar la vuelta ya no le pueden atacar
             vulnerableAtaque = false;
         }
 
-        if (capturado) {
+        if (capturado) {    //Si fue capturado no pueden volver a Hawkins
             return;
         }
 
-        estado.getZona(portal.getZonaDestino()).salirNino(this);
+        estado.getZona(portal.getZonaDestino()).salirNino(this);    //Sale de la zona insegura
         Logger.log("El niño " + idNino + " regresa desde " + portal.getZonaDestino());
 
-        portal.solicitarVuelta(idNino);
-        portal.cruzarVuelta(idNino);
+        portal.solicitarVuelta(idNino); //Solicita volver por el portal que corresponde solo
+        portal.cruzarVuelta(idNino);    //Cruza
 
-        estado.getZona("CALLE_PRINCIPAL").entrarNino(this);
+        estado.getZona("CALLE_PRINCIPAL").entrarNino(this); //Vuelve a Hawkins
         Logger.log("El niño " + idNino + " vuelve a Hawkins");
     }
 
     private void depositarSangre(){
         if(sangreRecogida > 0){
-            int totalSangre = estado.sumarSangre(sangreRecogida);
+            int totalSangre = estado.sumarSangre(sangreRecogida);   //Se deposita sumando atómicamente
 
             Logger.log("El niño " + idNino + " deposita " + sangreRecogida +
                     " unidad de sangre (sangre total: " + totalSangre + ")");
 
-            sangreRecogida = 0;
+            sangreRecogida = 0; //Ya no lleva sangre encima al depositarla
         }
     }
 
@@ -196,10 +198,6 @@ public class Nino extends Thread{
         Logger.log("El niño " + idNino + " entra en RADIO_WSQK");
 
         Thread.sleep(2000 + (int) (Math.random()*2000));
-
-        if (capturado) {
-            return;
-        }
 
         estado.getZona("RADIO_WSQK").salirNino(this);
         estado.getZona("CALLE_PRINCIPAL").entrarNino(this);
@@ -216,10 +214,10 @@ public class Nino extends Thread{
 
         while (restante > 0) {
             try {
-                Thread.sleep(restante);
-                return;
+                Thread.sleep(restante); //Si no resulta atacado, reanuda su marcha (exploración) el tiempo que le falte
+                return; //Termina la exploración
             } catch (InterruptedException e) {
-                long ahora = System.currentTimeMillis();
+                long ahora = System.currentTimeMillis();    //Calculo tiempo que llevaba explorando
                 long transcurrido = ahora - inicio;
                 restante = tiempoTotal - transcurrido;
 
@@ -228,24 +226,24 @@ public class Nino extends Thread{
                 }
 
                 synchronized (this) {
-                    if (!siendoAtacado) {
+                    if (!siendoAtacado) {   //Si se le interrumpe fuera del ataque no gestiono la interrupcion aqui
                         throw e;
                     }
                 }
 
-                esperarFinAtaque();
+                esperarFinAtaque(); //Si viene de un ataque espera resultado
 
                 if (capturado) {
                     return;
                 }
 
-                inicio = System.currentTimeMillis() - (tiempoTotal - restante);
+                inicio = System.currentTimeMillis() - (tiempoTotal - restante); //Si resiste continua el tiempo de exploración que le quedaba
             }
         }
     }
     public synchronized void liberarDeColmena() {
         capturado = false;
-        notifyAll();
+        notifyAll();    //Despierta al hilo del niño si estaba esperando en esperarSiCapturado()
     }
 
     public synchronized void esperarSiCapturado() throws InterruptedException {

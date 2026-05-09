@@ -6,14 +6,5 @@ public class ZonaSegura extends Zona
     {
         super(nombre);
     }
-    /*/
-    @Override
-    public void entrarDemogorgon(interfaz.Demogorgon d) {
-        throw new UnsupportedOperationException("No pueden entrar demogorgons en zona segura");
-    }
-    @Override
-    public void salirDemogorgon(interfaz.Demogorgon d) {
-        throw new UnsupportedOperationException("No hay demogorgons en zona segura");
-    }
-    /*/
 }
+//Representa una zona de Hawkins para diferenciar el mundo normal del Upside Down
