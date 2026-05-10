@@ -222,9 +222,6 @@ public class Portal {
     public String getZonaDestino(){
         return zonaDestino;
     }
-    public int getTamGrupoIda(){
-        return tamGrupoIda;
-    }
     public List<String> getColaIda(){
         lock.lock();
         try{
@@ -251,22 +248,6 @@ public class Portal {
     }
     public boolean isOcupado() {
         return pasoPortal.availablePermits() == 0;
-    }
-    public boolean isApagonActivo(){
-        lock.lock();
-        try{
-            return apagonActivo;
-        } finally{
-            lock.unlock();
-        }
-    }
-    public int getPendientesGrupoIda() {
-        lock.lock();
-        try {
-            return pendientesGrupoIda;
-        } finally {
-            lock.unlock();
-        }
     }
 
     private void intentarFormarGrupoIda() {
@@ -313,4 +294,19 @@ public class Portal {
             lock.unlock();
         }
     }
+
+    public InterfazServidor.PortalData crearPortalData() {
+        lock.lock();
+        try {
+            return new InterfazServidor.PortalData(
+                    new ArrayList<>(colaIda),
+                    new ArrayList<>(colaVuelta),
+                    pasoPortal.availablePermits() == 0,
+                    cruzandoAhora
+            );
+        } finally {
+            lock.unlock();
+        }
+    }
+
 }

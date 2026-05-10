@@ -19,10 +19,6 @@ public abstract class Zona
         this.demogorgons = new ArrayList<>();
         this.lockZona = new ReentrantLock(true);    //Niños esperan de forma ordenada
     }
-    public String getNombre()
-    {
-        return nombre;
-    }
     public void entrarNino(Nino nino)
     {
         lockZona.lock();
@@ -108,15 +104,6 @@ public abstract class Zona
         }
     }
 
-    public List<Nino> getNinos(){
-        lockZona.lock();
-        try{
-            return new ArrayList<>(ninos);  //Devuelve una copia de la lista de niños
-        } finally{
-            lockZona.unlock();
-        }
-    }
-
     public List<Demogorgon> getDemogorgons(){
         lockZona.lock();
         try{
@@ -135,24 +122,6 @@ public abstract class Zona
             int posicion = (int)(Math.random() * ninos.size());
             return ninos.get(posicion);
         } finally {
-            lockZona.unlock();
-        }
-    }
-
-    public boolean isVaciaDeNinos(){
-        lockZona.lock();
-        try{
-            return ninos.isEmpty();
-        } finally {
-            lockZona.unlock();
-        }
-    }
-
-    public boolean isVaciaDeDemogorgons() {
-        lockZona.lock();
-        try{
-            return demogorgons.isEmpty();
-        } finally{
             lockZona.unlock();
         }
     }

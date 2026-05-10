@@ -12,11 +12,9 @@ public class ClienteRemoto {
 
             gui.getBtnDetener().addActionListener(e -> {
                 try {
-                    servicio.detenerPrograma();
+                    boolean pausado = servicio.cambiarPausa();
 
-                    String textoActual = gui.getBtnDetener().getText();
-
-                    if (textoActual.contains("DETENER") || textoActual.contains("PAUSAR")) {
+                    if (pausado) {
                         gui.getBtnDetener().setText("REANUDAR PROGRAMA PRINCIPAL");
                     } else {
                         gui.getBtnDetener().setText("PAUSAR PROGRAMA PRINCIPAL");

@@ -264,16 +264,6 @@ public class InterfazServidor extends JFrame {
         alcantarilladoPanel.update(snapshot.zonas().getOrDefault("ALCANTARILLADO", ZoneData.empty()));
     }
 
-    /*public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            InterfazServidor gui = new InterfazServidor();
-            gui.setVisible(true);
-            gui.updateSnapshot(SimulationSnapshot.demo());
-        });
-    }
-
-    */
-
     private static JLabel createTitleLabel(String text) {
         JLabel label = new JLabel(text);
         label.setForeground(TEXT);

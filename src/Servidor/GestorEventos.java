@@ -15,7 +15,7 @@ public class GestorEventos extends Thread {
                 estado.esperarSiPausado();
 
                 int espera = 30000 + (int)(Math.random() * 30000);
-                Thread.sleep(espera);
+                estado.dormirConPausa(espera);
 
                 estado.esperarSiPausado();
 
@@ -39,53 +39,78 @@ public class GestorEventos extends Thread {
         }
     }
 
-    private void ejecutarApagon() throws InterruptedException {
-        int duracion = 5000 + (int)(Math.random() * 5000);
+    private void ejecutarApagon() {
+        try {
+            int duracion = 5000 + (int)(Math.random() * 5000);
 
-        Logger.log("Comienza el evento global: APAGON DEL LABORATORIO");
-        estado.activarApagon();
+            estado.esperarSiPausado();
 
-        estado.getPortal("BOSQUE").activarApagon();
-        estado.getPortal("LABORATORIO").activarApagon();
-        estado.getPortal("CENTRO_COMERCIAL").activarApagon();
-        estado.getPortal("ALCANTARILLADO").activarApagon();
+            Logger.log("Comienza el evento global: APAGON DEL LABORATORIO");
+            estado.activarApagon();
 
-        dormirEventoConCuentaAtras(duracion);
+            estado.getPortal("BOSQUE").activarApagon();
+            estado.getPortal("LABORATORIO").activarApagon();
+            estado.getPortal("CENTRO_COMERCIAL").activarApagon();
+            estado.getPortal("ALCANTARILLADO").activarApagon();
 
-        estado.getPortal("BOSQUE").desactivarApagon();
-        estado.getPortal("LABORATORIO").desactivarApagon();
-        estado.getPortal("CENTRO_COMERCIAL").desactivarApagon();
-        estado.getPortal("ALCANTARILLADO").desactivarApagon();
+            estado.dormirEventoConCuentaAtras(duracion);
 
-        estado.desactivarApagon();
-        Logger.log("Finaliza el evento global: APAGON DEL LABORATORIO");
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            Logger.log("ERROR: evento APAGON interrumpido: " + e.getMessage());
+
+        } catch (Exception e) {
+            Logger.log("ERROR en APAGON: " + e.getClass().getName() + " - " + e.getMessage());
+            e.printStackTrace();
+
+        } finally {
+            estado.getPortal("BOSQUE").desactivarApagon();
+            estado.getPortal("LABORATORIO").desactivarApagon();
+            estado.getPortal("CENTRO_COMERCIAL").desactivarApagon();
+            estado.getPortal("ALCANTARILLADO").desactivarApagon();
+
+            estado.desactivarApagon();
+            Logger.log("Finaliza el evento global: APAGON DEL LABORATORIO");
+        }
     }
 
-    private void ejecutarTormenta() throws InterruptedException {
-        int duracion = 5000 + (int)(Math.random() * 5000);
+    private void ejecutarTormenta() {
+        try {
+            int duracion = 5000 + (int)(Math.random() * 5000);
 
-        Logger.log("Comienza el evento global: TORMENTA DEL UPSIDE DOWN");
-        estado.activarTormenta();
+            estado.esperarSiPausado();
 
-        dormirEventoConCuentaAtras(duracion);
+            Logger.log("Comienza el evento global: TORMENTA DEL UPSIDE DOWN");
+            estado.activarTormenta();
 
-        estado.desactivarTormenta();
-        Logger.log("Finaliza el evento global: TORMENTA DEL UPSIDE DOWN");
+            estado.dormirEventoConCuentaAtras(duracion);
+
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            Logger.log("ERROR: evento TORMENTA interrumpido: " + e.getMessage());
+
+        } catch (Exception e) {
+            Logger.log("ERROR en TORMENTA: " + e.getClass().getName() + " - " + e.getMessage());
+            e.printStackTrace();
+
+        } finally {
+            estado.desactivarTormenta();
+            Logger.log("Finaliza el evento global: TORMENTA DEL UPSIDE DOWN");
+        }
     }
 
     private void ejecutarIntervencionEleven() {
         try {
             int duracion = 5000 + (int)(Math.random() * 5000);
 
+            estado.esperarSiPausado();
+
             Logger.log("Comienza el evento global: INTERVENCION DE ELEVEN");
             estado.activarIntervencionEleven();
 
-            dormirEventoConCuentaAtras(duracion);
+            estado.dormirEventoConCuentaAtras(duracion);
 
             estado.liberarNinosColmenaSegunSangreDisponible();
-            estado.desactivarIntervencionEleven();
-
-            Logger.log("Finaliza el evento global: INTERVENCION DE ELEVEN");
 
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
@@ -94,6 +119,10 @@ public class GestorEventos extends Thread {
         } catch (Exception e) {
             Logger.log("ERROR en INTERVENCION ELEVEN: " + e.getClass().getName() + " - " + e.getMessage());
             e.printStackTrace();
+
+        } finally {
+            estado.desactivarIntervencionEleven();
+            Logger.log("Finaliza el evento global: INTERVENCION DE ELEVEN");
         }
     }
 
@@ -101,13 +130,12 @@ public class GestorEventos extends Thread {
         try {
             int duracion = 5000 + (int)(Math.random() * 5000);
 
+            estado.esperarSiPausado();
+
             Logger.log("Comienza el evento global: LA RED MENTAL");
             estado.activarRedMental();
 
-            dormirEventoConCuentaAtras(duracion);
-
-            estado.desactivarRedMental();
-            Logger.log("Finaliza el evento global: LA RED MENTAL");
+            estado.dormirEventoConCuentaAtras(duracion);
 
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
@@ -116,17 +144,10 @@ public class GestorEventos extends Thread {
         } catch (Exception e) {
             Logger.log("ERROR en RED MENTAL: " + e.getClass().getName() + " - " + e.getMessage());
             e.printStackTrace();
-        }
-    }
-    private void dormirEventoConCuentaAtras(int duracion) throws InterruptedException {
-        int segundosRestantes = (int) Math.ceil(duracion / 1000.0);
 
-        while (segundosRestantes > 0) {
-            estado.setTiempoRestanteEvento(String.format("00:%02d", segundosRestantes));
-            Thread.sleep(1000);
-            segundosRestantes--;
+        } finally {
+            estado.desactivarRedMental();
+            Logger.log("Finaliza el evento global: LA RED MENTAL");
         }
-
-        estado.setTiempoRestanteEvento("00:00");
     }
 }

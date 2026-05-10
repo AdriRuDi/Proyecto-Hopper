@@ -23,7 +23,7 @@ public class GeneradorNinos extends Thread {
                 Logger.log("Se crea el niño " + idNino + " en CALLE_PRINCIPAL");
 
                 nino.start();
-                Thread.sleep(500 + (int) (Math.random() * 1500));
+                estado.dormirConPausa(500 + (int)(Math.random() * 1500));
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 Logger.log("El generador de niños ha sido interrumpido");

@@ -1,6 +1,8 @@
 package Servidor;
 
-public class Main {
+import javax.swing.*;
+
+public class MainServidor {
 
     public static void main(String[] args) {
         try {
@@ -10,10 +12,15 @@ public class Main {
             gui.setVisible(true);
 
             Thread refrescador = new Thread(() -> {
-                while (true) { //La interfaz se actualiza continuamente miesntras dura la simulacion
+                while (true) {
                     try {
-                        gui.updateSnapshot(estado.crearSnapshot());
-                        Thread.sleep(500); //Se refresca cada 0.5 segundos
+                        InterfazServidor.SimulationSnapshot snapshot = estado.crearSnapshot();
+
+                        SwingUtilities.invokeLater(() -> {
+                            gui.updateSnapshot(snapshot);
+                        });
+
+                        Thread.sleep(500);
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                         break;
@@ -37,7 +44,7 @@ public class Main {
             estado.registrarDemogorgon(alpha);  //Se registra para que pueda aparecer en el ranking
             alpha.start();
 
-            GeneradorNinos generadorNinos = new GeneradorNinos(estado,100);
+            GeneradorNinos generadorNinos = new GeneradorNinos(estado,1500);
             generadorNinos.start();
 
             GestorEventos gestorEventos = new GestorEventos(estado);

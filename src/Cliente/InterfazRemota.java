@@ -110,7 +110,7 @@ public class InterfazRemota extends JFrame {
                     }
                 }
 
-                case "X" -> dispose();
+                case "X" -> System.exit(0);
             }
         });
 

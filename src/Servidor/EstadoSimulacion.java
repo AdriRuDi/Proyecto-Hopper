@@ -22,7 +22,7 @@ public class EstadoSimulacion {
     private boolean tormentaActiva;
     private boolean intervencionElevenActiva;
     private boolean redMentalActiva;
-    private boolean programaPausado;
+    private boolean pausado = false;
 
     public EstadoSimulacion() {
         zonas = new HashMap<>();
@@ -62,7 +62,6 @@ public class EstadoSimulacion {
         tormentaActiva = false;
         intervencionElevenActiva = false;
         redMentalActiva = false;
-        programaPausado = false;
     }
 
     public Zona getZona(String nombre) {    // Permite obtener una zona a partir de su nombre
@@ -94,10 +93,6 @@ public class EstadoSimulacion {
         }
 
         return totalSangre;
-    }
-
-    public int getSangreVecna() {
-        return sangreVecna.get();
     }
 
     public synchronized int incrementarCapturadosColmena() {
@@ -137,32 +132,8 @@ public class EstadoSimulacion {
         }
     }
 
-    public int getCapturadosColmena() {
-        return ninosEnColmena.get();
-    }
-
-    public synchronized void setEventoActivo(String eventoActivo) {
-        this.eventoActivo = eventoActivo;
-    }
-
-    public synchronized String getEventoActivo() {
-        return eventoActivo;
-    }
-
     public synchronized void setTiempoRestanteEvento(String tiempoRestanteEvento) {
         this.tiempoRestanteEvento = tiempoRestanteEvento;
-    }
-
-    public synchronized String getTiempoRestanteEvento() {
-        return tiempoRestanteEvento;
-    }
-
-    public Map<String, Zona> getZonas() {
-        return new HashMap<>(zonas);
-    }
-
-    public Map<String, Portal> getPortales() {
-        return new HashMap<>(portales);
     }
 
     public synchronized void registrarDemogorgon(Demogorgon demogorgon) {
@@ -217,7 +188,9 @@ public class EstadoSimulacion {
 
             mapaZonas.put(nombre, dataZona);
             //Los niños de la colmena no se cuentan como niños en Hawkins
-            if (!nombre.equals("COLMENA")) {
+            if (nombre.equals("CALLE_PRINCIPAL")
+                    || nombre.equals("SOTANO_BYERS")
+                    || nombre.equals("RADIO_WSQK")) {
                 totalNinosActivos += numeroNinos;
             }
 
@@ -228,12 +201,7 @@ public class EstadoSimulacion {
             String nombreZona = entry.getKey();
             Portal portal = entry.getValue();
 
-            InterfazServidor.PortalData dataPortal = new InterfazServidor.PortalData(
-                    portal.getColaIda(),
-                    portal.getColaVuelta(),
-                    portal.isOcupado(),
-                    portal.getCruzandoAhora()
-            );
+            InterfazServidor.PortalData dataPortal = portal.crearPortalData();
 
             mapaPortales.put(nombreZona, dataPortal);
         }
@@ -428,10 +396,10 @@ public class EstadoSimulacion {
         sb.append("EVENTO=").append(snapshot.eventoActivo()).append("\n");
         sb.append("TIEMPO_EVENTO=").append(snapshot.tiempoRestanteEvento()).append("\n");
 
-        sb.append("PORTAL_BOSQUE=").append(snapshot.portales().get("BOSQUE").idsIda().size()).append("\n");
-        sb.append("PORTAL_LABORATORIO=").append(snapshot.portales().get("LABORATORIO").idsIda().size()).append("\n");
-        sb.append("PORTAL_CENTRO=").append(snapshot.portales().get("CENTRO_COMERCIAL").idsIda().size()).append("\n");
-        sb.append("PORTAL_ALCANTARILLADO=").append(snapshot.portales().get("ALCANTARILLADO").idsIda().size()).append("\n");
+        sb.append("PORTAL_BOSQUE=").append(contarNinosEnPortal(snapshot.portales().get("BOSQUE"))).append("\n");
+        sb.append("PORTAL_LABORATORIO=").append(contarNinosEnPortal(snapshot.portales().get("LABORATORIO"))).append("\n");
+        sb.append("PORTAL_CENTRO=").append(contarNinosEnPortal(snapshot.portales().get("CENTRO_COMERCIAL"))).append("\n");
+        sb.append("PORTAL_ALCANTARILLADO=").append(contarNinosEnPortal(snapshot.portales().get("ALCANTARILLADO"))).append("\n");
 
         sb.append("NINOS_BOSQUE=").append(snapshot.zonas().get("BOSQUE").ninos()).append("\n");
         sb.append("NINOS_LABORATORIO=").append(snapshot.zonas().get("LABORATORIO").ninos()).append("\n");
@@ -447,6 +415,19 @@ public class EstadoSimulacion {
         sb.append("RANKING=").append(String.join(";", snapshot.topDemogorgons())).append("\n");
 
         return sb.toString();
+    }
+
+    private int contarNinosEnPortal(InterfazServidor.PortalData portal) {
+        int total = 0;
+
+        total += portal.idsIda().size();
+        total += portal.idsVuelta().size();
+
+        if (portal.ocupado() && portal.cruzando() != null && !portal.cruzando().isEmpty()) {
+            total++;
+        }
+
+        return total;
     }
 
     private void despertarDemogorgons() {
@@ -469,24 +450,52 @@ public class EstadoSimulacion {
             portal.eliminarNino(idNino);
         }
     }
-    public synchronized void alternarPausa() {
-        programaPausado = !programaPausado;
-
-        if (programaPausado) {
-            Logger.log("Programa pausado desde el módulo remoto");
-        } else {
-            Logger.log("Programa reanudado desde el módulo remoto");
-            notifyAll();
-        }
-    }
-
-    public synchronized boolean isProgramaPausado() {
-        return programaPausado;
-    }
 
     public synchronized void esperarSiPausado() throws InterruptedException {
-        while (programaPausado) {
+        while (pausado) {
             wait();
         }
+    }
+
+    public synchronized boolean cambiarPausa() {
+        pausado = !pausado;
+
+        if (pausado) {
+            Logger.log("PROGRAMA PAUSADO desde el modulo remoto");
+        } else {
+            Logger.log("PROGRAMA REANUDADO desde el modulo remoto");
+            notifyAll();
+        }
+
+        return pausado;
+    }
+
+    public void dormirConPausa(int milisegundos) throws InterruptedException {
+        int restante = milisegundos;
+
+        while (restante > 0) {
+            esperarSiPausado();
+
+            int tramo = Math.min(100, restante);
+            Thread.sleep(tramo);
+            restante = restante - tramo;
+        }
+    }
+
+    public void dormirEventoConCuentaAtras(int duracion) throws InterruptedException {
+        int restante = duracion;
+
+        while (restante > 0) {
+            esperarSiPausado();
+
+            int segundos = restante / 1000;
+            setTiempoRestanteEvento(segundos + " s");
+
+            int tramo = Math.min(1000, restante);
+            Thread.sleep(tramo);
+            restante = restante - tramo;
+        }
+
+        setTiempoRestanteEvento("00:00");
     }
 }

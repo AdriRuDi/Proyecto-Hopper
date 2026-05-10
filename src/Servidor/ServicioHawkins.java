@@ -1,6 +1,7 @@
 package Servidor;
 
 import Cliente.InterfaceHawkins;
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -18,7 +19,7 @@ public class ServicioHawkins extends UnicastRemoteObject implements InterfaceHaw
     }
 
     @Override
-    public void detenerPrograma() throws RemoteException {
-        estado.alternarPausa();
+    public boolean cambiarPausa() throws RemoteException {
+        return estado.cambiarPausa();
     }
 }

@@ -20,12 +20,6 @@ public class Nino extends Thread{
     public boolean isCapturado(){
         return capturado;
     }
-    public void setCapturado(boolean capturado){
-        this.capturado = capturado;
-    }
-    public int getSangreRecogida(){
-        return sangreRecogida;
-    }
     @Override
     public void run() {
         try {
@@ -35,7 +29,7 @@ public class Nino extends Thread{
             // Hacemos una pequeña espera inicial para que se vea en la interfaz antes de empezar su ciclo normal.
             Logger.log("El niño " + idNino + " inicia su vida en CALLE_PRINCIPAL");
 
-            Thread.sleep(1000 + (int)(Math.random() * 1000));
+            estado.dormirConPausa(1000 + (int)(Math.random() * 1000));
 
             estado.esperarSiPausado();
 
@@ -74,8 +68,6 @@ public class Nino extends Thread{
         estado.esperarSiPausado();
         irASotanoByers();
 
-        if (capturado) return;
-
         estado.esperarSiPausado();
         Portal portal = elegirPortal();
 
@@ -89,10 +81,7 @@ public class Nino extends Thread{
 
         if (capturado) return;
 
-        estado.esperarSiPausado();
         depositarSangre();
-
-        estado.esperarSiPausado();
         descansarEnRadio();
 
         estado.esperarSiPausado();
@@ -105,7 +94,7 @@ public class Nino extends Thread{
 
         Logger.log("El niño " + idNino + " entra en SOTANO_BYERS");
 
-        Thread.sleep(1000 + (int)(Math.random() * 1000));
+        estado.dormirConPausa(1000 + (int)(Math.random() * 1000));
     }
 
     private Portal elegirPortal() {
@@ -132,11 +121,12 @@ public class Nino extends Thread{
         estado.getZona("SOTANO_BYERS").salirNino(this);
         estado.esperarSiPausado();
 
-        portal.cruzarIda(idNino);   //Cruza el portal de ida (de 1 en 1)
-        estado.esperarSiPausado();
+        portal.cruzarIda(idNino);   // Cruza el portal de ida, pero si ya estaba cruzando al pausar, termina el cruce
 
-        estado.getZona(portal.getZonaDestino()).entrarNino(this);   //Entra en la zona insegura
+        estado.getZona(portal.getZonaDestino()).entrarNino(this);   //Después de cruzar, primero aparece en la zona destino para que no se quede invisible
         Logger.log("El niño " + idNino + " entra en " + portal.getZonaDestino());
+
+        estado.esperarSiPausado();  // Una vez ya está colocado en su zona, entonces sí respeta la pausa
 
         int tiempo = 3000 + (int)(Math.random() * 2000);
 
@@ -217,10 +207,9 @@ public class Nino extends Thread{
 
         portal.solicitarVuelta(idNino); //Solicita volver por el portal que corresponde solo
         estado.esperarSiPausado();
-        portal.cruzarVuelta(idNino);    //Cruza
-        estado.esperarSiPausado();
+        portal.cruzarVuelta(idNino);    // Cruza de vuelta, pero si ya estaba cruzando al pausar, termina el cruce
 
-        estado.getZona("CALLE_PRINCIPAL").entrarNino(this); //Vuelve a Hawkins
+        estado.getZona("CALLE_PRINCIPAL").entrarNino(this); //Después de cruzar, primero vuelve a aparecer en Hawkins
         Logger.log("El niño " + idNino + " vuelve a Hawkins");
     }
 
@@ -236,42 +225,48 @@ public class Nino extends Thread{
     }
 
     private void descansarEnRadio() throws InterruptedException {
-        estado.esperarSiPausado();
 
         estado.getZona("CALLE_PRINCIPAL").salirNino(this);
         estado.getZona("RADIO_WSQK").entrarNino(this);
 
         Logger.log("El niño " + idNino + " entra en RADIO_WSQK");
 
-        Thread.sleep(2000 + (int) (Math.random() * 2000));
+        estado.esperarSiPausado();
 
-        estado.esperarSiPausado(); // CLAVE: si se ha pausado mientras descansaba, se queda aquí
+        estado.dormirConPausa(2000 + (int)(Math.random() * 2000));  //si se ha pausado mientras descansaba, se queda aquí
 
         estado.getZona("RADIO_WSQK").salirNino(this);
         estado.getZona("CALLE_PRINCIPAL").entrarNino(this);
 
         Logger.log("El niño " + idNino + " sale de RADIO_WSQK y vuelve a CALLE_PRINCIPAL");
+
+        estado.esperarSiPausado();
     }
 
     private void deambularEnCallePrincipal() throws InterruptedException {
         estado.esperarSiPausado();
         Logger.log("El niño " + idNino + " deambula por CALLE_PRINCIPAL");
-        Thread.sleep(3000 + (int)(Math.random() * 2000));
+        estado.dormirConPausa(3000 + (int)(Math.random() * 2000));
         estado.esperarSiPausado();
     }
 
     private void dormirReanudableZonaPeligrosa(int tiempoTotal) throws InterruptedException {
-        long inicio = System.currentTimeMillis();
         long restante = tiempoTotal;
 
         while (restante > 0) {
+            estado.esperarSiPausado();
+
+            long tramo = Math.min(100, restante);
+            long inicio = System.currentTimeMillis();
+
             try {
-                Thread.sleep(restante); //Si no resulta atacado, reanuda su marcha (exploración) el tiempo que le falte
-                return; //Termina la exploración
+                Thread.sleep(tramo);    //Si no resulta atacado, reanuda su marcha (exploración) el tiempo que le falte
+                restante = restante - tramo;
+
             } catch (InterruptedException e) {
                 long ahora = System.currentTimeMillis();    //Calculo tiempo que llevaba explorando
                 long transcurrido = ahora - inicio;
-                restante = tiempoTotal - transcurrido;
+                restante = restante - transcurrido;
 
                 if (restante < 0) {
                     restante = 0;
@@ -288,8 +283,6 @@ public class Nino extends Thread{
                 if (capturado) {
                     return;
                 }
-
-                inicio = System.currentTimeMillis() - (tiempoTotal - restante); //Si resiste continua el tiempo de exploración que le quedaba
             }
         }
     }
