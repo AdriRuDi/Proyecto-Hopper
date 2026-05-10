@@ -10,6 +10,9 @@ import java.util.Map;
 
 public class InterfazServidor extends JFrame {
 
+    private int mouseX;
+    private int mouseY;
+
     private static final Color BG = new Color(6, 18, 12);
     private static final Color PANEL = new Color(8, 35, 20);
     private static final Color PANEL_DARK = new Color(4, 20, 12);
@@ -74,6 +77,25 @@ public class InterfazServidor extends JFrame {
 
         header.add(left, BorderLayout.WEST);
         header.add(right, BorderLayout.EAST);
+
+        header.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mousePressed(java.awt.event.MouseEvent e) {
+                mouseX = e.getX();
+                mouseY = e.getY();
+            }
+        });
+
+        header.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(java.awt.event.MouseEvent e) {
+                setLocation(
+                        e.getXOnScreen() - mouseX,
+                        e.getYOnScreen() - mouseY
+                );
+            }
+        });
+
         return header;
     }
 

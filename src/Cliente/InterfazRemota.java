@@ -9,6 +9,9 @@ import java.util.Map;
 
 public class InterfazRemota extends JFrame {
 
+    private int mouseX;
+    private int mouseY;
+
     private static final Color BG = new Color(6, 18, 12);
     private static final Color PANEL = new Color(8, 35, 20);
     private static final Color LINE = new Color(55, 180, 100);
@@ -28,6 +31,9 @@ public class InterfazRemota extends JFrame {
 
     public InterfazRemota() {
         super("Modulo Remoto - Hawkins");
+
+        setUndecorated(true);
+
         setSize(1150, 650);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,10 +45,76 @@ public class InterfazRemota extends JFrame {
         root.setLayout(new BorderLayout(10, 10));
         root.setBorder(BorderFactory.createEmptyBorder(18, 18, 18, 18));
 
-        root.add(labelTitulo("STRANGER THINGS - MODULO REMOTO"), BorderLayout.NORTH);
+        root.add(buildHeader(), BorderLayout.NORTH);
         root.add(buildMain(), BorderLayout.CENTER);
 
         return root;
+    }
+
+    private JComponent buildHeader() {
+        JPanel header = panelTransparente(new BorderLayout());
+
+        JLabel titulo = labelTitulo("STRANGER THINGS - MODULO REMOTO");
+        header.add(titulo, BorderLayout.WEST);
+
+        JPanel right = panelTransparente(new FlowLayout(FlowLayout.RIGHT, 8, 0));
+        right.add(createWindowButton("−"));
+        right.add(createWindowButton("▢"));
+        right.add(createWindowButton("X"));
+
+        header.add(right, BorderLayout.EAST);
+
+        // Al no tener barra superior del sistema, hacemos que la ventana se pueda mover arrastrando esta cabecera.
+        header.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mousePressed(java.awt.event.MouseEvent e) {
+                mouseX = e.getX();
+                mouseY = e.getY();
+            }
+        });
+
+        header.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(java.awt.event.MouseEvent e) {
+                setLocation(
+                        e.getXOnScreen() - mouseX,
+                        e.getYOnScreen() - mouseY
+                );
+            }
+        });
+
+        return header;
+    }
+
+    private JButton createWindowButton(String text) {
+        JButton button = new JButton(text);
+        button.setFocusPainted(false);
+        button.setBackground(PANEL);
+        button.setForeground(TEXT);
+        button.setFont(fuente(Font.BOLD, 16f));
+        button.setBorder(new NeonBorder());
+        button.setPreferredSize(new Dimension(42, 32));
+
+        button.addActionListener(e -> {
+            switch (text) {
+                case "−" -> setState(Frame.ICONIFIED);
+
+                case "▢" -> {
+                    int state = getExtendedState();
+
+                    if ((state & Frame.MAXIMIZED_BOTH) == Frame.MAXIMIZED_BOTH) {
+                        setExtendedState(Frame.NORMAL);
+                        setLocationRelativeTo(null);
+                    } else {
+                        setExtendedState(Frame.MAXIMIZED_BOTH);
+                    }
+                }
+
+                case "X" -> dispose();
+            }
+        });
+
+        return button;
     }
 
     private JPanel buildMain() {
