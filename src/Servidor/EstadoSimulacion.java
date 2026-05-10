@@ -22,6 +22,7 @@ public class EstadoSimulacion {
     private boolean tormentaActiva;
     private boolean intervencionElevenActiva;
     private boolean redMentalActiva;
+    private boolean programaPausado;
 
     public EstadoSimulacion() {
         zonas = new HashMap<>();
@@ -43,10 +44,10 @@ public class EstadoSimulacion {
         zonas.put("COLMENA", new ZonaPeligrosa("COLMENA"));
 
         // Portales
-        portales.put("BOSQUE", new Portal("PORTAL_BOSQUE", "BOSQUE", 2));
-        portales.put("LABORATORIO", new Portal("PORTAL_LABORATORIO", "LABORATORIO", 3));
-        portales.put("CENTRO_COMERCIAL", new Portal("PORTAL_CENTRO_COMERCIAL", "CENTRO_COMERCIAL", 4));
-        portales.put("ALCANTARILLADO", new Portal("PORTAL_ALCANTARILLADO", "ALCANTARILLADO", 2));
+        portales.put("BOSQUE", new Portal("PORTAL_BOSQUE", "BOSQUE", 2, this));
+        portales.put("LABORATORIO", new Portal("PORTAL_LABORATORIO", "LABORATORIO", 3, this));
+        portales.put("CENTRO_COMERCIAL", new Portal("PORTAL_CENTRO_COMERCIAL", "CENTRO_COMERCIAL", 4, this));
+        portales.put("ALCANTARILLADO", new Portal("PORTAL_ALCANTARILLADO", "ALCANTARILLADO", 2, this));
 
         sangreVecna = new AtomicInteger(0);
         sangreRecolectadaDuranteEleven = new AtomicInteger(0);
@@ -61,6 +62,7 @@ public class EstadoSimulacion {
         tormentaActiva = false;
         intervencionElevenActiva = false;
         redMentalActiva = false;
+        programaPausado = false;
     }
 
     public Zona getZona(String nombre) {    // Permite obtener una zona a partir de su nombre
@@ -192,20 +194,20 @@ public class EstadoSimulacion {
         return ranking;
     }
 
-    public synchronized InterfazServidor.SimulationSnapshot crearSnapshot() {
+    public synchronized InterfazServidor.SimulationSnapshot crearSnapshot() { //
         Map<String, InterfazServidor.ZoneData> mapaZonas = new HashMap<>();
         Map<String, InterfazServidor.PortalData> mapaPortales = new HashMap<>();
 
         int totalNinosActivos = 0;
         int totalDemogorgonsActivos = 0;
-
+        //Recorremos todas las zonas para obtener el número de niños y demogorgons de cada una
         for (Map.Entry<String, Zona> entry : zonas.entrySet()) {
             String nombre = entry.getKey();
             Zona zona = entry.getValue();
 
             int numeroNinos = zona.getNumeroNinos();
             int numeroDemogorgons = zona.getNumeroDemogorgons();
-
+            //Guardamos la informacion de cada zona
             InterfazServidor.ZoneData dataZona = new InterfazServidor.ZoneData(
                     numeroNinos,
                     numeroDemogorgons,
@@ -214,14 +216,14 @@ public class EstadoSimulacion {
             );
 
             mapaZonas.put(nombre, dataZona);
-
+            //Los niños de la colmena no se cuentan como niños en Hawkins
             if (!nombre.equals("COLMENA")) {
                 totalNinosActivos += numeroNinos;
             }
 
             totalDemogorgonsActivos += numeroDemogorgons;
         }
-
+        //Recogemos el estado de los portales
         for (Map.Entry<String, Portal> entry : portales.entrySet()) {
             String nombreZona = entry.getKey();
             Portal portal = entry.getValue();
@@ -235,7 +237,7 @@ public class EstadoSimulacion {
 
             mapaPortales.put(nombreZona, dataPortal);
         }
-
+        //Devolvemos la snapshoy de toda la informacion
         return new InterfazServidor.SimulationSnapshot(
                 eventoActivo,
                 tiempoRestanteEvento,
@@ -465,6 +467,26 @@ public class EstadoSimulacion {
     public void eliminarNinoDePortales(String idNino) {
         for (Portal portal : portales.values()) {
             portal.eliminarNino(idNino);
+        }
+    }
+    public synchronized void alternarPausa() {
+        programaPausado = !programaPausado;
+
+        if (programaPausado) {
+            Logger.log("Programa pausado desde el módulo remoto");
+        } else {
+            Logger.log("Programa reanudado desde el módulo remoto");
+            notifyAll();
+        }
+    }
+
+    public synchronized boolean isProgramaPausado() {
+        return programaPausado;
+    }
+
+    public synchronized void esperarSiPausado() throws InterruptedException {
+        while (programaPausado) {
+            wait();
         }
     }
 }

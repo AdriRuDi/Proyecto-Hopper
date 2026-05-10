@@ -12,11 +12,14 @@ public class GestorEventos extends Thread {
     public void run() {
         while (true) {
             try {
-                // Entre un evento y el siguiente pasan entre 30 y 60 segundos
+                estado.esperarSiPausado();
+
                 int espera = 30000 + (int)(Math.random() * 30000);
                 Thread.sleep(espera);
 
-                int tipoEvento = (int)(Math.random() * 4);  //Se elige evento aleatorio
+                estado.esperarSiPausado();
+
+                int tipoEvento = (int)(Math.random() * 4);
 
                 if (tipoEvento == 0) {
                     ejecutarApagon();
@@ -37,24 +40,24 @@ public class GestorEventos extends Thread {
     }
 
     private void ejecutarApagon() throws InterruptedException {
-        int duracion = 5000 + (int)(Math.random() * 5000);  // Cada evento dura entre 5 y 10 segundos
+        int duracion = 5000 + (int)(Math.random() * 5000);
 
         Logger.log("Comienza el evento global: APAGON DEL LABORATORIO");
-        estado.activarApagon(); //Se activa el apagón para que los demogorgons no puedan cambiar de zona
+        estado.activarApagon();
 
-        estado.getPortal("BOSQUE").activarApagon(); //Se activa en todos los portales
+        estado.getPortal("BOSQUE").activarApagon();
         estado.getPortal("LABORATORIO").activarApagon();
         estado.getPortal("CENTRO_COMERCIAL").activarApagon();
         estado.getPortal("ALCANTARILLADO").activarApagon();
 
-        Thread.sleep(duracion); //Permanece activo
+        dormirEventoConCuentaAtras(duracion);
 
-        estado.getPortal("BOSQUE").desactivarApagon();  //Se desactiva en todos los portales
+        estado.getPortal("BOSQUE").desactivarApagon();
         estado.getPortal("LABORATORIO").desactivarApagon();
         estado.getPortal("CENTRO_COMERCIAL").desactivarApagon();
         estado.getPortal("ALCANTARILLADO").desactivarApagon();
 
-        estado.desactivarApagon();  //Se desactiva el apagón
+        estado.desactivarApagon();
         Logger.log("Finaliza el evento global: APAGON DEL LABORATORIO");
     }
 
@@ -62,11 +65,11 @@ public class GestorEventos extends Thread {
         int duracion = 5000 + (int)(Math.random() * 5000);
 
         Logger.log("Comienza el evento global: TORMENTA DEL UPSIDE DOWN");
-        estado.activarTormenta();   //Se activa en estado global
+        estado.activarTormenta();
 
-        Thread.sleep(duracion); //Activo
+        dormirEventoConCuentaAtras(duracion);
 
-        estado.desactivarTormenta();    //Se desactiva
+        estado.desactivarTormenta();
         Logger.log("Finaliza el evento global: TORMENTA DEL UPSIDE DOWN");
     }
 
@@ -75,12 +78,12 @@ public class GestorEventos extends Thread {
             int duracion = 5000 + (int)(Math.random() * 5000);
 
             Logger.log("Comienza el evento global: INTERVENCION DE ELEVEN");
-            estado.activarIntervencionEleven(); //Activa en estado global para paralizar a los demogorgons mediante interrupciones
+            estado.activarIntervencionEleven();
 
-            Thread.sleep(duracion); //Quedan parados los demogorgons durante este tiempo
+            dormirEventoConCuentaAtras(duracion);
 
             estado.liberarNinosColmenaSegunSangreDisponible();
-            estado.desactivarIntervencionEleven();  //Desactiva el evento despertando a los demogorgons
+            estado.desactivarIntervencionEleven();
 
             Logger.log("Finaliza el evento global: INTERVENCION DE ELEVEN");
 
@@ -99,11 +102,11 @@ public class GestorEventos extends Thread {
             int duracion = 5000 + (int)(Math.random() * 5000);
 
             Logger.log("Comienza el evento global: LA RED MENTAL");
-            estado.activarRedMental();  //Activa Red Mental
+            estado.activarRedMental();
 
-            Thread.sleep(duracion); //Activo
+            dormirEventoConCuentaAtras(duracion);
 
-            estado.desactivarRedMental();   //Demogorgons vuelven a moverse con normalidad
+            estado.desactivarRedMental();
             Logger.log("Finaliza el evento global: LA RED MENTAL");
 
         } catch (InterruptedException e) {
@@ -114,5 +117,16 @@ public class GestorEventos extends Thread {
             Logger.log("ERROR en RED MENTAL: " + e.getClass().getName() + " - " + e.getMessage());
             e.printStackTrace();
         }
+    }
+    private void dormirEventoConCuentaAtras(int duracion) throws InterruptedException {
+        int segundosRestantes = (int) Math.ceil(duracion / 1000.0);
+
+        while (segundosRestantes > 0) {
+            estado.setTiempoRestanteEvento(String.format("00:%02d", segundosRestantes));
+            Thread.sleep(1000);
+            segundosRestantes--;
+        }
+
+        estado.setTiempoRestanteEvento("00:00");
     }
 }

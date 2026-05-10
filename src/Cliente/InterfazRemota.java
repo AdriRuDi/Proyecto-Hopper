@@ -24,7 +24,7 @@ public class InterfazRemota extends JFrame {
     private final JLabel lblEvento = labelTexto("");
 
 
-    private final JButton btnDetener = new JButton("DETENER PROGRAMA PRINCIPAL");
+    private final JButton btnDetener = new JButton("PAUSAR PROGRAMA PRINCIPAL");
 
     public InterfazRemota() {
         super("Modulo Remoto - Hawkins");

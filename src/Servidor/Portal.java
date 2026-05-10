@@ -30,10 +30,13 @@ public class Portal {
     private String cruzandoAhora = "";              //para que se vea que nadie está cruzando
     private boolean apagonActivo = false;           // Indica si el portal está bloqueado por el evento de apagón
 
-    public Portal(String nombre, String zonaDestino, int tamGrupoIda){
+    private EstadoSimulacion estado;
+
+    public Portal(String nombre, String zonaDestino, int tamGrupoIda, EstadoSimulacion estado){
         this.nombre = nombre;
         this.zonaDestino = zonaDestino;
         this.tamGrupoIda = tamGrupoIda;
+        this.estado = estado;
     }
 
     public void solicitarIda(String idNino) throws InterruptedException {
@@ -56,9 +59,10 @@ public class Portal {
         }
     }
     public void cruzarIda(String idNino) throws InterruptedException {
+        estado.esperarSiPausado();
+
         lock.lock();
         try {
-            // El niño espera hasta que: no haya apagón, exista un grupo activo y él pertenezca a ese grupo.
             while (apagonActivo || !grupoIdaActivo || !grupoActualIda.contains(idNino)) {
                 condCruce.await();
             }
@@ -66,8 +70,13 @@ public class Portal {
             lock.unlock();
         }
 
-        pasoPortal.acquire();   // Semáforo de un permiso para cruzar de 1 en 1
+        estado.esperarSiPausado();
+
+        pasoPortal.acquire();
+
         try {
+            estado.esperarSiPausado();
+
             lock.lock();
             try {
                 while (apagonActivo || !grupoIdaActivo || !grupoActualIda.contains(idNino)) {
@@ -75,7 +84,7 @@ public class Portal {
                 }
 
                 colaIda.remove(idNino);
-                cruzandoAhora = idNino; //Para mostrar cual está cruzando ahora
+                cruzandoAhora = idNino;
                 Logger.log(idNino + " empieza a cruzar ida por " + nombre +
                         " hacia " + zonaDestino);
             } finally {
@@ -86,22 +95,21 @@ public class Portal {
 
             lock.lock();
             try {
-                grupoActualIda.remove(idNino);  //Se le elimina del grupo al cruzar
-                pendientesGrupoIda--;   //Queda uno menos por cruzar
+                grupoActualIda.remove(idNino);
+                pendientesGrupoIda--;
                 Logger.log(idNino + " termina de cruzar ida por " + nombre +
                         " hacia " + zonaDestino);
                 cruzandoAhora = "";
 
-                if (pendientesGrupoIda == 0) {  //Si todos gruzan ya no hay grupo
+                if (pendientesGrupoIda == 0) {
                     grupoIdaActivo = false;
                     grupoActualIda.clear();
                     pendientesGrupoIda = 0;
                     Logger.log("Termina el grupo de ida del " + nombre);
 
-                    intentarFormarGrupoIda();   //Se intenta volver a formar nuevo grupo
+                    intentarFormarGrupoIda();
                 }
 
-                //Despiertan niños esperando a cruzar
                 condCruce.signalAll();
                 condIda.signalAll();
                 condVuelta.signalAll();
@@ -110,11 +118,12 @@ public class Portal {
                 lock.unlock();
             }
         } finally {
-            pasoPortal.release();   //Libera el portal para que puedan cruzar otros niños
+            pasoPortal.release();
         }
     }
-
     public void solicitarVuelta(String idNino) throws InterruptedException {
+        estado.esperarSiPausado();
+
         lock.lock();
         try {
             if (!colaVuelta.contains(idNino)) {

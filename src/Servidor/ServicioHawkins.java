@@ -19,7 +19,6 @@ public class ServicioHawkins extends UnicastRemoteObject implements InterfaceHaw
 
     @Override
     public void detenerPrograma() throws RemoteException {
-        Logger.log("Programa principal detenido desde el módulo remoto");
-        System.exit(0);
+        estado.alternarPausa();
     }
 }

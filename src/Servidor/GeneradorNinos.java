@@ -13,21 +13,22 @@ public class GeneradorNinos extends Thread {
     @Override
     public void run() {
         for (int i = 1; i <= totalNinos; i++) {     //Se crean los niños de forma progresiva
-            String idNino = String.format("N%04d", i);  //ID formato NXXXX
-            Nino nino = new Nino(idNino, estado);
-
-            estado.getZona("CALLE_PRINCIPAL").entrarNino(nino); //Niños comienzan en CALLE PRINCIPAL
-            Logger.log("Se crea el niño " + idNino + " en CALLE_PRINCIPAL");
-
             try {
-                Thread.sleep(500 + (int)(Math.random() * 1500));
+                estado.esperarSiPausado();
+
+                String idNino = String.format("N%04d", i);  //ID formato NXXXX
+                Nino nino = new Nino(idNino, estado);
+
+                estado.getZona("CALLE_PRINCIPAL").entrarNino(nino); //Niños comienzan en CALLE PRINCIPAL
+                Logger.log("Se crea el niño " + idNino + " en CALLE_PRINCIPAL");
+
+                nino.start();
+                Thread.sleep(500 + (int) (Math.random() * 1500));
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 Logger.log("El generador de niños ha sido interrumpido");
                 return;
             }
-
-            nino.start();
         }
     }
 }

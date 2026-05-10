@@ -37,7 +37,7 @@ public class Demogorgon extends Thread {
 
         while (true) {
             try {
-                cicloDeVida();
+                cicloDeVida(); // Busca niños, ataca o espera, y después cambia de zona.
             } catch (InterruptedException e) {
                 if (estado.isIntervencionElevenActiva()) {
                     Logger.log("El demogorgon " + idDemogorgon + " queda paralizado por Eleven");
@@ -63,16 +63,20 @@ public class Demogorgon extends Thread {
     }
 
     private void cicloDeVida() throws InterruptedException {
+        estado.esperarSiPausado();
         estado.esperarFinIntervencionEleven();  //Si está activa la intervención de Eleven el demogorgon queda bloqueado
 
         if (hayNinosEnZona()) {     //Solo si hay niños en la zona cuando llega intenta atacar
+            estado.esperarSiPausado();
             estado.esperarFinIntervencionEleven();
             atacar();
         } else {
+            estado.esperarSiPausado();
             estado.esperarFinIntervencionEleven();
             esperarEnZona();    //Sino espera sin posibilidad de atacar hasta cambiar de zona
         }
 
+        estado.esperarSiPausado();
         estado.esperarFinIntervencionEleven();
         cambiarDeZona();
     }
@@ -82,6 +86,7 @@ public class Demogorgon extends Thread {
     }
 
     private void atacar() throws InterruptedException {
+        estado.esperarSiPausado();
         estado.esperarFinIntervencionEleven();  //Si interviene Eleven el demogorgon queda parado
 
         Zona zona = estado.getZona(zonaActual);
@@ -177,6 +182,7 @@ public class Demogorgon extends Thread {
     }
 
     private void cambiarDeZona() throws InterruptedException {
+        estado.esperarSiPausado();
         estado.esperarFinIntervencionEleven();
 
         if (estado.isApagonActivo()) {      //Durante el apagón los demogorgons no pueden cambiar de zona

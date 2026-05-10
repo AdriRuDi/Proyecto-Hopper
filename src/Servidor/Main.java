@@ -10,10 +10,10 @@ public class Main {
             gui.setVisible(true);
 
             Thread refrescador = new Thread(() -> {
-                while (true) {
+                while (true) { //La interfaz se actualiza continuamente miesntras dura la simulacion
                     try {
                         gui.updateSnapshot(estado.crearSnapshot());
-                        Thread.sleep(500);
+                        Thread.sleep(500); //Se refresca cada 0.5 segundos
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                         break;
@@ -37,7 +37,7 @@ public class Main {
             estado.registrarDemogorgon(alpha);  //Se registra para que pueda aparecer en el ranking
             alpha.start();
 
-            GeneradorNinos generadorNinos = new GeneradorNinos(estado,20);
+            GeneradorNinos generadorNinos = new GeneradorNinos(estado,100);
             generadorNinos.start();
 
             GestorEventos gestorEventos = new GestorEventos(estado);
