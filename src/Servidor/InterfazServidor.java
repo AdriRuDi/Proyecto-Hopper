@@ -214,7 +214,7 @@ public class InterfazServidor extends JFrame {
                         setExtendedState(Frame.MAXIMIZED_BOTH);
                     }
                 }
-                case "X" -> dispose();
+                case "X" -> System.exit(0);
             }
         });
 
